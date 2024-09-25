@@ -3,432 +3,701 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shyam Patadia - portfolio</title>
-    <link rel="stylesheet" href="styles3.css" />
+    <title>Shyam Patadia</title>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
   </head>
-
-  <body itemscope itemtype="http://schema.org/Person">
-    <header>
-      <div class="photo">
+  <body
+    class="bg-gray-900 text-gray-300 font-roboto"
+    x-data="{ activeTab: 'summary' }"
+  >
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+      <header class="text-center mb-8">
         <img
           src="https://avatars.githubusercontent.com/u/65619938?v=4"
-          alt="Shyam Patadia's Photo"
+          alt="Shyam Patadia"
+          class="w-32 h-32 rounded-full border-4 border-blue-500 mx-auto mb-4"
         />
-      </div>
-      <h1 itemprop="name">SHYAM PATADIA</h1>
-    </header>
+        <h1 class="text-4xl font-bold text-blue-400 mb-2">SHYAM PATADIA</h1>
+        <p class="text-xl text-gray-400">Senior Developer</p>
+      </header>
 
-    <!-- Contact Section -->
-    <section class="contact-grid">
-      <div class="contact-item"><strong>Location:</strong> Rajkot, India</div>
-      <div class="contact-item">
-        <strong>Phone:</strong>
-        <a href="tel:+919987817964">+919987817964</a>
-      </div>
-      <div class="contact-item">
-        <strong>Email:</strong>
-        <a href="mailto:shyampatadia22@gmail.com">shyampatadia22@gmail.com</a>
-      </div>
-      <div class="contact-item">
-        <strong>Connect:</strong>
-        <a href="https://linkedin.com/in/shyampatadia/" target="_blank"
-          ><i class="fab fa-linkedin"></i
-        ></a>
-        <a href="https://github.com/shyampatadia" target="_blank"
-          ><i class="fab fa-github"></i
-        ></a>
-        <a href="https://x.com/shyam300420" target="_blank"
-        ><i class="fab fa-twitter"></i
-      ></a>
-      </div>
-    </section>
+      <nav class="mb-8">
+        <ul class="flex flex-wrap justify-center space-x-4">
+          <li>
+            <button
+              @click="activeTab = 'summary'"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'summary' }"
+              class="px-4 py-2 focus:outline-none"
+            >
+              Summary
+            </button>
+          </li>
+          <li>
+            <button
+              @click="activeTab = 'areas-of-focus'"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'areas-of-focus' }"
+              class="px-4 py-2 focus:outline-none"
+            >
+              Areas of Focus
+            </button>
+          </li>
+          <li>
+            <button
+              @click="activeTab = 'skills'"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'skills' }"
+              class="px-4 py-2 focus:outline-none"
+            >
+              Skills
+            </button>
+          </li>
+          <li>
+            <button
+              @click="activeTab = 'experience'"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'experience' }"
+              class="px-4 py-2 focus:outline-none"
+            >
+              Experience
+            </button>
+          </li>
+          <li>
+            <button
+              @click="activeTab = 'projects'"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'projects' }"
+              class="px-4 py-2 focus:outline-none"
+            >
+              Projects
+            </button>
+          </li>
+          <li>
+            <button
+              @click="activeTab = 'contact'"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'contact' }"
+              class="px-4 py-2 focus:outline-none"
+            >
+              Contact
+            </button>
+          </li>
+          <li>
+            <button
+              @click="activeTab = 'certifications'"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'certifications' }"
+              class="px-4 py-2 focus:outline-none"
+            >
+              Certifications
+            </button>
+          </li>
+        </ul>
+      </nav>
 
-    <!-- Professional Summary Section -->
-    <section>
-      <h2>PROFESSIONAL SUMMARY</h2>
-      <p itemprop="description">
-        Senior Automation Engineer with over 3 years of experience in developing
-        and improving test systems, enhancing development processes, and leading
-        technical teams. Proficient in AI agent development, GxP compliance, and
-        Agile methodologies. Azure DevOps certified professional focused on
-        advancing automation systems and streamlining validation processes.
-      </p>
-    </section>
-
-    <section>
-      <h2 style="color: #7a9ab8">SKILLS</h2>
-      <div class="skills-list" itemprop="skills">
-        <!-- Programming Languages -->
-        <div
-          class="skills-category"
-          style="
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-          "
+      <main>
+        <section
+          x-show="activeTab === 'summary'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-90"
+          x-transition:enter-end="opacity-100 transform scale-100"
         >
-          <h3 style="color: #73f4d6; margin-bottom: 10px">
-            Programming Languages and Databases
-          </h3>
-          <div class="skill-items">
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Python</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Julia</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c">C#</span>
-            <span class="skill-item" style="background-color: #3c3c3c">R</span>
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >SQL</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >PostgreSQL</span
-            >
+          <h2 class="text-2xl font-bold text-blue-400 mb-4">
+            Professional Summary
+          </h2>
+          <p class="mb-4">
+            Software Engineer with experience in developing test automation
+            infrastructure using Selenium Grid and integrating CI/CD pipelines.
+            Proficient in containerization with Docker and Azure DevOps to
+            streamline deployment processes. Experienced in implementing
+            GxP-compliant software development life cycle (SDLC) processes using
+            Jira for project management and compliance. Have developed end to
+            end test automation suits for validation of web based, desktop based
+            and api based testing of applications. Experienced in drafting
+            official documenttion and SOP drafting for establising various
+            processes and frameworks for internal and external project
+            lifecycles.
+          </p>
+          <p class="mb-4">
+            Skilled in creating automation scripts for data processing using
+            PowerShell and Python, facilitating efficient data extraction and
+            management. Certified in Azure DevOps, Scrum methodologies, and
+            software development processes, with a commitment to continuous
+            improvement and best practices in software development.
+          </p>
+        </section>
+
+        <section
+          x-show="activeTab === 'areas-of-focus'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-90"
+          x-transition:enter-end="opacity-100 transform scale-100"
+        >
+          <h2 class="text-2xl font-bold text-blue-400 mb-6">Areas of Focus</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-4">
+                Test Automation Infrastructure
+              </h3>
+              <p class="mb-4">
+                Developed and maintained a robust test automation
+                infrastructure, including the setup and optimization of Selenium
+                Grid for cross-browser and cross-platform testing. This enabled
+                the team to scale test execution efficiently and integrate
+                seamlessly with the CI/CD pipeline.
+              </p>
+              <div class="flex flex-wrap items-center gap-2 mb-4">
+                <i class="text-blue-400 mr-2" data-lucide="code"></i>
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Selenium</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >C#</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >.NET</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Appium</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >WinAppDriver</span
+                >
+              </div>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-4">
+                DevOps and Containerization
+              </h3>
+              <p class="mb-4">
+                Leveraged Docker and containerization techniques to streamline
+                the deployment and portability of internal Python-based
+                applications. Focused on optimizing container image sizes for
+                improved performance and scalability, and integrated the
+                containerized applications into Azure DevOps CI/CD pipelines.
+              </p>
+              <div class="flex flex-wrap items-center gap-2 mb-4">
+                <i class="text-blue-400 mr-2" data-lucide="package"></i>
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Docker</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Azure DevOps</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Python</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >PowerShell</span
+                >
+              </div>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-4">
+                GxP-Compliant SDLC Processes
+              </h3>
+              <p class="mb-4">
+                Designed and implemented end-to-end GxP-compliant software
+                development life cycle (SDLC) processes, leveraging Jira's
+                advanced features and integrations to streamline project
+                management, traceability, and compliance reporting. This
+                included automating workflows, leveraging Jira Automation Rules
+                and Webhooks, and integrating the toolchain with Azure DevOps,
+                Bitbucket, GitHub, and Atlassian Compass.
+              </p>
+              <div class="flex flex-wrap items-center gap-2 mb-4">
+                <i class="text-blue-400 mr-2" data-lucide="issue-opened"></i>
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Jira</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Azure DevOps</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Bitbucket</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >GitHub</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Atlassian Compass</span
+                >
+              </div>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-4">
+                Data Processing and Automation
+              </h3>
+              <p class="mb-4">
+                Developed a range of data processing and automation scripts
+                using tools like PowerShell and Selenium. This enabled efficient
+                data extraction, transformation, and ingestion into databases,
+                as well as web scraping at scale. The scripts also integrated
+                with external APIs and cloud storage solutions for comprehensive
+                data management.
+              </p>
+              <div class="flex flex-wrap items-center gap-2 mb-4">
+                <i class="text-blue-400 mr-2" data-lucide="database"></i>
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >PowerShell</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Selenium</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Python</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >SQL</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Azure Blob Storage</span
+                >
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <!-- Data & Analysis -->
-        <div
-          class="skills-category"
-          style="
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-          "
+        <section
+          x-show="activeTab === 'skills'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-90"
+          x-transition:enter-end="opacity-100 transform scale-100"
         >
-          <h3 style="color: #73f4d6; margin-bottom: 10px">Data & Analysis</h3>
-          <div class="skill-items">
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >SPSS</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Tableau</span
-            >
+          <h2 class="text-2xl font-bold text-blue-400 mb-4">Skills</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                Programming Languages and Databases
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Python</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Julia</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >C#</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >SQL</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >PostgreSQL</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Mongo DB</span
+                >
+              </div>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                Frameworks & Tools
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Flask</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >PyTorch</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >FAST API</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Streamlit</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Langchain</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >LangGraph</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >CrewAI</span
+                >
+              </div>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                Automation Testing
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Selenium</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Playwright</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >xUnit</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >SpecFlow</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >WindowsDriver</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Appium</span
+                >
+              </div>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                DevOps and Infrastucture
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Docker</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Powershell Scripting</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Azure Container Apps</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Azure DevOps</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Azure Administration</span
+                >
+              </div>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                Project Management and Compliance
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Jira Boards and Sprint Management</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >GxP Compliance</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Azure Container Apps</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Technical Documentation of Codebases and Processes</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >SOP Drafting</span
+                >
+                <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
+                  >Agile methodologies</span
+                >
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <!-- Frameworks & Tools -->
-        <div
-          class="skills-category"
-          style="
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-          "
+        <section
+          x-show="activeTab === 'experience'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-90"
+          x-transition:enter-end="opacity-100 transform scale-100"
         >
-          <h3 style="color: #73f4d6; margin-bottom: 10px">
-            Frameworks & Tools
-          </h3>
-          <div class="skill-items">
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Flask</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >PyTorch</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >FAST API</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Streamlit</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Langchain</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >LangGraph</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >CrewAI</span
-            >
+          <h2 class="text-2xl font-bold text-blue-400 mb-4">
+            Professional Experience
+          </h2>
+          <div class="bg-gray-800 p-6 rounded-lg mb-6">
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">
+              Senior Developer
+            </h3>
+            <p class="text-gray-400 mb-2">
+              xLM Continuous Validation LLC, Jacksonville, FL — July 2021 -
+              Present
+            </p>
+            <ul class="list-disc list-inside">
+              <li>
+                Led development team of AI Agent for GxP-focused web application
+                validation, managing functional and technical aspects
+              </li>
+              <li>
+                Developed end to end automation suites for validation of DMS,
+                LMS, and ERP systems, implemented various CI/CD pieplines for
+                the same.
+              </li>
+              <li>
+                Conducted client demonstrations and authored company newsletters
+                to showcase technical advancements also maintained the internal
+                documentation for various internal APIs.
+              </li>
+              <li>
+                Managed Azure Artifact feeds, maintained internal releases for
+                .NET-based automation packages, and developed comprehensive test
+                suites and unified frameworks to support testing for both web
+                and desktop applications.
+              </li>
+              <li>
+                Worked with Azure Storage Blobs APIs for data processing and
+                routine backups, and integrated Selenium with Windows Driver Kit
+                to enhance desktop automation within the testing framework.
+              </li>
+              <li>
+                Developed PowerShell scripts for automating data processing and
+                integration with external REST APIs, alongside creating
+                large-scale data scraping solutions using Selenium and Spyder
+                Crawler.
+              </li>
+              <li>
+                Designed and managed a GxP-compliant SDLC process centered on
+                Jira, integrating various tools such as Azure DevOps, Bitbucket,
+                GitHub, and Atlassian Compass. Extensively utilized Jira
+                Automation rules, webhooks, and APIs to streamline project
+                management, track progress, and integrate deployment links, time
+                logs, and automated vulnerability reports.
+              </li>
+              <li>
+                Optimized and containerized internal applications, including
+                reducing Docker image sizes and improving deployment workflows
+                for Python-based apps, enhancing performance, consistency, and
+                scalability.
+              </li>
+              <li>
+                Developed and maintained the team's testing infrastructure,
+                including setting up Selenium Grid for scalable automated
+                testing, and implemented end-to-end CI/CD pipelines using Azure
+                DevOps, streamlining deployment processes for internal
+                applications.
+              </li>
+              <li>
+                Developed end to end implementation of version control system
+                across the company, wrote an SOP for the same. Wrote several
+                SOPs for various internal processes around the SDLC and overall
+                development processes.
+              </li>
+            </ul>
           </div>
-        </div>
+        </section>
 
-        <!-- Automation & Testing -->
-        <div
-          class="skills-category"
-          style="
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-          "
+        <section
+          x-show="activeTab === 'projects'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-90"
+          x-transition:enter-end="opacity-100 transform scale-100"
         >
-          <h3 style="color: #73f4d6; margin-bottom: 10px">
-            Automation & Testing
-          </h3>
-          <div class="skill-items">
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Playwright</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Selenium</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >SpecFlow</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >xUnit</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Azure DevOps</span
-            >
+          <h2 class="text-2xl font-bold text-blue-400 mb-4">Projects</h2>
+          <div class="g rid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                AI-Powered Web Navigation Agent
+              </h3>
+              <ul class="list-disc list-inside">
+                <li>
+                  Managed end-to-end product development from concept to
+                  implementation, including agent coding
+                </li>
+                <li>
+                  Created system architecture and led a cross-functional team
+                  through agile sprints
+                </li>
+                <li>
+                  Integrated LLM technologies to improve web application testing
+                  efficiency
+                </li>
+              </ul>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                GxP-Compliant Agile Development Service
+              </h3>
+              <ul class="list-disc list-inside">
+                <li>
+                  Developed a comprehensive service on Atlassian Jira for
+                  GxP-based Agile sprint development
+                </li>
+                <li>
+                  Ensured compliance with regulatory requirements while
+                  maintaining Agile principles
+                </li>
+              </ul>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                Sentiment-Based Trading System
+              </h3>
+              <ul class="list-disc list-inside">
+                <li>
+                  Built an intraday trading system based on news sentiment
+                  analysis and the technical indicators
+                </li>
+                <li>
+                  Adapted BERT model for financial sentiment classification,
+                  finetune the modeled on a financial news data set, created a
+                  dataset of scraped headlines for backetesting, achieving 2.6%
+                  average daily return
+                </li>
+              </ul>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">
+                Wikipedia Content Extractor
+              </h3>
+              <ul class="list-disc list-inside">
+                <li>
+                  Wrote a Python script to extract and organize Wikipedia
+                  content
+                </li>
+                <li>Created JSON output with URLs and associated content</li>
+                <li>
+                  GitHub:
+                  <a
+                    href="https://github.com/shyampatadia/Wikipedia_Extractor"
+                    target="_blank"
+                    class="text-blue-400 hover:underline"
+                    >Wikipedia Content Extractor</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <!-- Add more projects here -->
           </div>
-        </div>
+        </section>
 
-        <!-- DevOps -->
-        <div
-          class="skills-category"
-          style="
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-          "
+        <section
+          x-show="activeTab === 'contact'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-90"
+          x-transition:enter-end="opacity-100 transform scale-100"
         >
-          <h3 style="color: #73f4d6; margin-bottom: 10px">DevOps</h3>
-          <div class="skill-items">
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Azure DevOps</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >CI/CD Pipelines</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >PowerShell Scripting / Bash Scripting</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Docker</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Selenium Grid</span
-            >
+          <h2 class="text-2xl font-bold text-blue-400 mb-4">
+            Contact Information
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">Location</h3>
+              <p>Rajkot, Gujarat, India</p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">Phone</h3>
+              <p>
+                <a href="tel:+919987817964" class="hover:text-blue-400"
+                  >+919987817964</a
+                >
+              </p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">Email</h3>
+              <p>
+                <a
+                  href="mailto:shyampatadia22@gmail.com"
+                  class="hover:text-blue-400"
+                  >shyampatadia22@gmail.com</a
+                >
+              </p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-2">Connect</h3>
+              <div class="flex space-x-4">
+                <a
+                  href="https://linkedin.com/in/shyampatadia/"
+                  target="_blank"
+                  class="text-blue-400 hover:text-blue-300"
+                  aria-label="LinkedIn"
+                >
+                  <i class="fab fa-linkedin fa-lg"></i>
+                </a>
+                <a
+                  href="https://github.com/shyampatadia"
+                  target="_blank"
+                  class="text-blue-400 hover:text-blue-300"
+                  aria-label="GitHub"
+                >
+                  <i class="fab fa-github fa-lg"></i>
+                </a>
+                <a
+                  href="https://x.com/shyam300420"
+                  target="_blank"
+                  class="text-blue-400 hover:text-blue-300"
+                  aria-label="Twitter"
+                >
+                  <i class="fab fa-twitter fa-lg"></i>
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <!-- Project Management & Compliance -->
-        <div
-          class="skills-category"
-          style="background-color: #2a2a2a; padding: 15px; border-radius: 12px"
+        <section
+          x-show="activeTab === 'certifications'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-90"
+          x-transition:enter-end="opacity-100 transform scale-100"
         >
-          <h3 style="color: #73f4d6; margin-bottom: 10px">
-            Project Management & Compliance
-          </h3>
-          <div class="skill-items">
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Jira</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >GxP compliance</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Technical writing</span
-            >
-            <span class="skill-item" style="background-color: #3c3c3c"
-              >Certified Scrum Developer</span
-            >
+          <h2 class="text-2xl font-bold text-blue-400 mb-6">Certifications</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-4">
+                Azure DevOps - AZ-900
+              </h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Gained foundational knowledge of Azure services, cloud concepts,
+                and core Azure DevOps principles, which enhanced my ability to
+                manage CI/CD pipelines and cloud resources effectively.
+              </p>
+              <a
+                href="https://www.credly.com/badges/xxxxxx"
+                target="_blank"
+                class="text-blue-400 hover:underline"
+                >View Certification</a
+              >
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-4">
+                Certified Scrum Developer
+              </h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Acquired practical skills in Agile methodologies, Scrum
+                practices, and teamwork, enabling me to contribute effectively
+                to agile development teams and deliver high-quality software
+                iteratively.
+              </p>
+              <a
+                href="https://www.credly.com/badges/yyyyyy"
+                target="_blank"
+                class="text-blue-400 hover:underline"
+                >View Certification</a
+              >
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-300 mb-4">
+                Software Development Processes and Methodologies
+              </h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Enhanced understanding of various software development
+                lifecycles, best practices, and methodologies, enabling me to
+                optimize project workflows and improve code quality through
+                structured processes.
+              </p>
+              <a
+                href="https://www.credly.com/badges/zzzzzz"
+                target="_blank"
+                class="text-blue-400 hover:underline"
+                >View Certification</a
+              >
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section>
-      <h2>CERTIFICATIONS</h2>
-      <ul>
-        <a
-          href="https://learn.microsoft.com/api/credentials/share/en-us/shyampatadia-8140/29B59629A9ED3204?sharingId=E0BA6AFC4738A529"
-        >
-          Azure DevOps - AZ-900 Certified
-        </a>
-        <br />
-        <a
-          href="https://www.linkedin.com/in/shyampatadia/details/certifications/1727168532659/single-media-viewer/?type=DOCUMENT&profileId=ACoAABwgP5MBGig335e2bdKco_sWHOZKwbBuM9g"
-          >Certified Scrum Developer</a
-        >
-        <br />
-        <a href="https://coursera.org/verify/LYMPLSJXAM5P"
-          >Software Development Processes and methodologies</a
-        >
-      </ul>
-    </section>
-
-    <!-- Professional Experience Section -->
-    <section>
-      <h2>PROFESSIONAL EXPERIENCE</h2>
-      <div class="experience-item">
-        <h3>Senior Developer</h3>
-        <p>
-          xLM Continuous Validation LLC, Jacksonville, FL —
-          <em>July 2021 - Present</em>
-        </p>
-        <ul>
-          <li>
-            Led development of AI Agent for GxP-based web application
-            validation, managing functional and technical aspects
-          </li>
-          <li>
-            Designed automation scripts using Python and Selenium for web
-            applications, later migrating to Playwright for improved efficiency
-          </li>
-          <li>
-            Implemented and executed comprehensive test plans in Azure DevOps
-            for desktop and web-based applications
-          </li>
-          <li>
-            Conducted functional, smoke-sanity, regression, and performance
-            testing across various applications
-          </li>
-          <li>
-            Managed defect lifecycle and collaborated with cross-functional
-            teams to ensure high-quality releases
-          </li>
-          <li>
-            Developed expertise in AI frameworks (Langchain, LangGraph, CrewAI)
-            and designed API for AI Web Navigation Agent
-          </li>
-          <li>
-            Created an end-to-end service on Atlassian Jira for GxP-based Agile
-            sprint development
-          </li>
-          <li>
-            Maintained internal Nugget packages for GxP-compliant automated test
-            reports
-          </li>
-          <li>
-            Implemented CI/CD pipelines, enhancing repository management and
-            sprint board configuration
-          </li>
-          <li>
-            Developed automation suites for DMS, LMS, and ERP systems, reducing
-            validation time in agile environments
-          </li>
-          <li>
-            Conducted client demonstrations and authored company newsletters to
-            showcase technical advancements
-          </li>
-          <li>
-            Demonstrated proficiency in managing multiple projects in a
-            fast-paced, dynamic environment
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Education Section -->
-    <section>
-      <h2>EDUCATION</h2>
-      <div
-        itemprop="education"
-        itemscope
-        itemtype="http://schema.org/EducationalOrganization"
-      >
-        <h3 itemprop="name">BSc. Applied Statistics & Analytics</h3>
-        <p itemprop="department">
-          Sunandan Divatia School of Science, NMIMS University, Mumbai, India,
-          2017 - 2021
-        </p>
-      </div>
-    </section>
-
-    <!-- Professional Projects Section -->
-    <section>
-      <h2>PROFESSIONAL PROJECTS</h2>
-      <div class="project-item">
-        <h3>AI-Powered Web Navigation Agent</h3>
-        <ul>
-          <li>
-            Managed end-to-end product development from concept to
-            implementation, including agent coding
-          </li>
-          <li>
-            Created system architecture and led a cross-functional team through
-            agile sprints
-          </li>
-          <li>
-            Integrated LLM technologies to improve web application testing
-            efficiency
-          </li>
-        </ul>
-      </div>
-      <div class="project-item">
-        <h3>GxP-Compliant Agile Development Service</h3>
-        <ul>
-          <li>
-            Developed a comprehensive service on Atlassian Jira for GxP-based
-            Agile sprint development
-          </li>
-          <li>
-            Ensured compliance with regulatory requirements while maintaining
-            Agile principles
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Personal Projects Section -->
-    <section>
-      <h2>PERSONAL PROJECTS</h2>
-      <div class="project-item"></div>
-        <h3>Sentiment-Based Trading System</h3>
-        <ul>
-          <li>
-            Built an intraday trading system using news sentiment analysis
-          </li>
-          <li>
-            Adapted BERT model for financial sentiment classification, finetune the modeled on a financial news data set, created a dataset of scraped headlines for backetesting, achieving
-            2.6% average daily return
-          </li>
-        </ul>
-      </div>
-      <div class="project-item">
-        <h3>Candlestick Screener App for Indian Stocks</h3>
-        <ul>
-          <li>
-            Developed a Flask-based application for traders to identify stock
-            opportunities
-          </li>
-          <li>
-            Implemented candlestick pattern recognition for trading decision
-            support
-          </li>
-        </ul>
-      </div>
-      <div class="project-item">
-        <h3>Big 5 Personality Test Analyzer</h3>
-        <ul>
-          <li>
-            Applied k-means clustering to classify individuals by personality
-            scores
-          </li>
-          <li>
-            Conducted research and developed recommendations for studying abroad
-          </li>
-        </ul>
-      </div>
-      <div class="project-item">
-        <h3>Wikipedia Content Extractor</h3>
-        <ul>
-          <li>
-            Wrote a Python script to extract and organize Wikipedia content
-          </li>
-          <li>Created JSON output with URLs and associated content</li>
-          <li>
-            GitHub:
-            <a href="https://github.com/shyampatadia/Wikipedia_Extractor"
-              >Wikipedia Content Extractor</a
-            >
-          </li>
-        </ul>
-      </div>
-    </section>
+        </section>
+      </main>
+    </div>
+    <script>
+      lucide.createIcons();
+    </script>
   </body>
 </html>
