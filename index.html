@@ -70,6 +70,15 @@
           </li>
           <li>
             <button
+              @click="activeTab = 'academics'"
+              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'academics' }"
+              class="px-4 py-2 focus:outline-none"
+            >
+              Academics
+            </button>
+          </li>
+          <li>
+            <button
               @click="activeTab = 'experience'"
               :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'experience' }"
               class="px-4 py-2 focus:outline-none"
@@ -403,6 +412,95 @@
                 >
               </div>
             </div>
+          </div>
+        </section>
+
+        <section
+          x-show="activeTab === 'academics'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-90"
+          x-transition:enter-end="opacity-100 transform scale-100"
+        >
+          <h2 class="text-2xl font-bold text-blue-400 mb-4">Academics</h2>
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">
+              Bachelor of Science in Applied Statistics & Analytics
+            </h3>
+            <p class="text-gray-300 mb-2">NMIMS University, Mumbai, India</p>
+            <div class="flex justify-between items-center mb-4">
+              <p class="text-blue-400 font-semibold">Duration: 2017 - 2021</p>
+              <p class="text-blue-400 font-semibold">CGPA: 2.95/4.00</p>
+            </div>
+            <ul class="list-disc list-inside text-gray-300">
+              <li>
+                Completed an intensive 151-credit program (3-year curriculum)
+              </li>
+              <li>
+                Credit equivalencies: Approx. 302 ECTS credits; comparable to
+                120-130 credits in the American system
+              </li>
+              <li>
+                Core focus: Statistics, Data Analysis, Programming, and Applied
+                Mathematics
+              </li>
+              <li>
+                Developed proficiency in R, Python, and C programming languages
+              </li>
+              <li>
+                Engaged in multiple research projects, applying statistical
+                concepts to real-world scenarios
+              </li>
+              <li>
+                Key courses: Data Science, Financial Risk Modeling, Time Series
+                Analysis, Multivariate Statistics
+              </li>
+            </ul>
+            <h4 class="text-lg font-semibold text-blue-300 mt-4 mb-2">
+              Key Skills Developed:
+            </h4>
+            <ul class="list-disc list-inside text-gray-300">
+              <li>
+                Statistical Analysis: Hypothesis testing, regression analysis,
+                experimental design
+              </li>
+              <li>
+                Data Science: Machine learning algorithms, predictive modeling,
+                data visualization
+              </li>
+              <li>
+                Programming: R, Python, C, SQL for data manipulation and
+                analysis
+              </li>
+              <li>
+                Financial Analysis: Risk assessment, actuarial science,
+                financial modeling
+              </li>
+              <li>
+                Research Methods: Data collection, analysis, and interpretation
+                of complex datasets
+              </li>
+            </ul>
+            <h4 class="text-lg font-semibold text-blue-300 mt-4 mb-2">
+              Program Highlights:
+            </h4>
+            <ul class="list-disc list-inside text-gray-300">
+              <li>
+                Accelerated learning pace: Completed comprehensive curriculum in
+                3 years
+              </li>
+              <li>
+                Practical Application: Balanced theoretical knowledge with
+                hands-on projects
+              </li>
+              <li>
+                Interdisciplinary Approach: Integrated statistics with
+                economics, finance, and computer science
+              </li>
+              <li>
+                International Equivalency: Program rigor comparable to
+                international standards
+              </li>
+            </ul>
           </div>
         </section>
 
