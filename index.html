@@ -1,51 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="{ activeTab: 'summary' }">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shyam Patadia</title>
+
+    <!-- Lucide Icons -->
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js -->
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
+
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <style>
-      [x-cloak] {
-        display: none !important;
-      }
-    </style>
+
+    <!-- Google Fonts: Roboto -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Your external CSS file -->
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body
-    class="bg-gray-900 text-gray-300 font-roboto"
-    x-data="{ activeTab: 'summary' }"
-  >
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
+
+  <body>
+    <!-- Glass Container for all content -->
+    <div
+      class="glass-container container mx-auto px-4 py-8 max-w-4xl mt-8 rounded-lg"
+    >
+      <!-- Header -->
       <header class="text-center mb-8">
-        <img
-          src="https://avatars.githubusercontent.com/u/65619938?v=4"
-          alt="Shyam Patadia"
-          class="w-32 h-32 rounded-full border-4 border-blue-500 mx-auto mb-4"
-        />
-        <h1 class="text-4xl font-bold text-blue-400 mb-2">SHYAM PATADIA</h1>
+        <div class="flex justify-center">
+          <!-- Replace "your-profile.jpg" with the actual image in "assets/images" -->
+          <img
+            src="https://avatars.githubusercontent.com/u/65619938?v=4"
+            alt="Shyam Patadia"
+            class="w-32 h-32 rounded-full border-4 border-blue-500 mb-4 transition-transform duration-500 profile-img"
+          />
+        </div>
+        <!-- Gradient Animated Text -->
+        <h1 class="gradient-text mb-2">SHYAM PATADIA</h1>
         <p class="text-xl text-gray-400">Developer</p>
       </header>
 
+      <!-- Navigation Tabs -->
       <nav class="mb-8">
         <ul class="flex flex-wrap justify-center space-x-4">
           <li>
             <button
               @click="activeTab = 'summary'"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'summary' }"
-              class="px-4 py-2 focus:outline-none"
+              :class="{
+                'text-blue-400 border-b-2 border-blue-400': activeTab === 'summary',
+                'hover:text-blue-300': activeTab !== 'summary'
+              }"
+              class="px-4 py-2 transition-colors duration-300 focus:outline-none"
             >
               Summary
             </button>
@@ -53,8 +71,11 @@
           <li>
             <button
               @click="activeTab = 'areas-of-focus'"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'areas-of-focus' }"
-              class="px-4 py-2 focus:outline-none"
+              :class="{
+                'text-blue-400 border-b-2 border-blue-400': activeTab === 'areas-of-focus',
+                'hover:text-blue-300': activeTab !== 'areas-of-focus'
+              }"
+              class="px-4 py-2 transition-colors duration-300 focus:outline-none"
             >
               Areas of Focus
             </button>
@@ -62,8 +83,11 @@
           <li>
             <button
               @click="activeTab = 'skills'"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'skills' }"
-              class="px-4 py-2 focus:outline-none"
+              :class="{
+                'text-blue-400 border-b-2 border-blue-400': activeTab === 'skills',
+                'hover:text-blue-300': activeTab !== 'skills'
+              }"
+              class="px-4 py-2 transition-colors duration-300 focus:outline-none"
             >
               Skills
             </button>
@@ -71,8 +95,11 @@
           <li>
             <button
               @click="activeTab = 'academics'"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'academics' }"
-              class="px-4 py-2 focus:outline-none"
+              :class="{
+                'text-blue-400 border-b-2 border-blue-400': activeTab === 'academics',
+                'hover:text-blue-300': activeTab !== 'academics'
+              }"
+              class="px-4 py-2 transition-colors duration-300 focus:outline-none"
             >
               Academics
             </button>
@@ -80,8 +107,11 @@
           <li>
             <button
               @click="activeTab = 'experience'"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'experience' }"
-              class="px-4 py-2 focus:outline-none"
+              :class="{
+                'text-blue-400 border-b-2 border-blue-400': activeTab === 'experience',
+                'hover:text-blue-300': activeTab !== 'experience'
+              }"
+              class="px-4 py-2 transition-colors duration-300 focus:outline-none"
             >
               Experience
             </button>
@@ -89,8 +119,11 @@
           <li>
             <button
               @click="activeTab = 'projects'"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'projects' }"
-              class="px-4 py-2 focus:outline-none"
+              :class="{
+                'text-blue-400 border-b-2 border-blue-400': activeTab === 'projects',
+                'hover:text-blue-300': activeTab !== 'projects'
+              }"
+              class="px-4 py-2 transition-colors duration-300 focus:outline-none"
             >
               Projects
             </button>
@@ -98,8 +131,11 @@
           <li>
             <button
               @click="activeTab = 'contact'"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'contact' }"
-              class="px-4 py-2 focus:outline-none"
+              :class="{
+                'text-blue-400 border-b-2 border-blue-400': activeTab === 'contact',
+                'hover:text-blue-300': activeTab !== 'contact'
+              }"
+              class="px-4 py-2 transition-colors duration-300 focus:outline-none"
             >
               Contact
             </button>
@@ -107,8 +143,11 @@
           <li>
             <button
               @click="activeTab = 'certifications'"
-              :class="{ 'text-blue-400 border-b-2 border-blue-400': activeTab === 'certifications' }"
-              class="px-4 py-2 focus:outline-none"
+              :class="{
+                'text-blue-400 border-b-2 border-blue-400': activeTab === 'certifications',
+                'hover:text-blue-300': activeTab !== 'certifications'
+              }"
+              class="px-4 py-2 transition-colors duration-300 focus:outline-none"
             >
               Certifications
             </button>
@@ -116,12 +155,18 @@
         </ul>
       </nav>
 
+      <!-- Main Content -->
       <main>
+        <!-- Summary -->
         <section
           x-show="activeTab === 'summary'"
-          x-transition:enter="transition ease-out duration-300"
-          x-transition:enter-start="opacity-0 transform scale-90"
-          x-transition:enter-end="opacity-100 transform scale-100"
+          x-transition:enter="transition transform ease-out duration-500"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition transform ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-2"
+          x-cloak
         >
           <h2 class="text-2xl font-bold text-blue-400 mb-4">
             Professional Summary
@@ -148,15 +193,22 @@
           </p>
         </section>
 
+        <!-- Areas of Focus -->
         <section
           x-show="activeTab === 'areas-of-focus'"
-          x-transition:enter="transition ease-out duration-300"
-          x-transition:enter-start="opacity-0 transform scale-90"
-          x-transition:enter-end="opacity-100 transform scale-100"
+          x-transition:enter="transition transform ease-out duration-500"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition transform ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-2"
+          x-cloak
         >
           <h2 class="text-2xl font-bold text-blue-400 mb-6">Areas of Focus</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-4">
                 Test Automation Infrastructure
               </h3>
@@ -186,7 +238,9 @@
                 >
               </div>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-4">
                 DevOps and Containerization
               </h3>
@@ -213,7 +267,9 @@
                 >
               </div>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-4">
                 GxP-Compliant SDLC Processes
               </h3>
@@ -245,7 +301,9 @@
                 >
               </div>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-4">
                 Data Processing and Automation
               </h3>
@@ -279,15 +337,22 @@
           </div>
         </section>
 
+        <!-- Skills -->
         <section
           x-show="activeTab === 'skills'"
-          x-transition:enter="transition ease-out duration-300"
-          x-transition:enter-start="opacity-0 transform scale-90"
-          x-transition:enter-end="opacity-100 transform scale-100"
+          x-transition:enter="transition transform ease-out duration-500"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition transform ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-2"
+          x-cloak
         >
           <h2 class="text-2xl font-bold text-blue-400 mb-4">Skills</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
                 Programming Languages and Databases
               </h3>
@@ -312,9 +377,11 @@
                 >
               </div>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
-                Frameworks & Tools
+                Frameworks &amp; Tools
               </h3>
               <div class="flex flex-wrap gap-2">
                 <span class="bg-gray-700 px-3 py-1 rounded-full text-sm"
@@ -340,7 +407,9 @@
                 >
               </div>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
                 Automation Testing
               </h3>
@@ -365,7 +434,9 @@
                 >
               </div>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
                 DevOps and Infrastucture
               </h3>
@@ -387,7 +458,9 @@
                 >
               </div>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
                 Project Management and Compliance
               </h3>
@@ -415,16 +488,23 @@
           </div>
         </section>
 
+        <!-- Academics -->
         <section
           x-show="activeTab === 'academics'"
-          x-transition:enter="transition ease-out duration-300"
-          x-transition:enter-start="opacity-0 transform scale-90"
-          x-transition:enter-end="opacity-100 transform scale-100"
+          x-transition:enter="transition transform ease-out duration-500"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition transform ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-2"
+          x-cloak
         >
           <h2 class="text-2xl font-bold text-blue-400 mb-4">Academics</h2>
-          <div class="bg-gray-800 p-6 rounded-lg">
+          <div
+            class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+          >
             <h3 class="text-xl font-semibold text-blue-300 mb-2">
-              Bachelor of Science in Applied Statistics & Analytics
+              Bachelor of Science in Applied Statistics &amp; Analytics
             </h3>
             <p class="text-gray-300 mb-2">NMIMS University, Mumbai, India</p>
             <div class="flex justify-between items-center mb-4">
@@ -504,16 +584,23 @@
           </div>
         </section>
 
+        <!-- Experience -->
         <section
           x-show="activeTab === 'experience'"
-          x-transition:enter="transition ease-out duration-300"
-          x-transition:enter-start="opacity-0 transform scale-90"
-          x-transition:enter-end="opacity-100 transform scale-100"
+          x-transition:enter="transition transform ease-out duration-500"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition transform ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-2"
+          x-cloak
         >
           <h2 class="text-2xl font-bold text-blue-400 mb-4">
             Professional Experience
           </h2>
-          <div class="bg-gray-800 p-6 rounded-lg mb-6">
+          <div
+            class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300 mb-6"
+          >
             <h3 class="text-xl font-semibold text-blue-300 mb-2">
               Senior Developer
             </h3>
@@ -584,15 +671,22 @@
           </div>
         </section>
 
+        <!-- Projects -->
         <section
           x-show="activeTab === 'projects'"
-          x-transition:enter="transition ease-out duration-300"
-          x-transition:enter-start="opacity-0 transform scale-90"
-          x-transition:enter-end="opacity-100 transform scale-100"
+          x-transition:enter="transition transform ease-out duration-500"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition transform ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-2"
+          x-cloak
         >
           <h2 class="text-2xl font-bold text-blue-400 mb-4">Projects</h2>
-          <div class="g rid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-gray-800 p-6 rounded-lg">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
                 AI-Powered Web Navigation Agent
               </h3>
@@ -611,7 +705,9 @@
                 </li>
               </ul>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
                 GxP-Compliant Agile Development Service
               </h3>
@@ -626,7 +722,9 @@
                 </li>
               </ul>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
                 Sentiment-Based Trading System
               </h3>
@@ -637,13 +735,14 @@
                 </li>
                 <li>
                   Adapted BERT model for financial sentiment classification,
-                  finetune the modeled on a financial news data set, created a
-                  dataset of scraped headlines for backetesting, achieving 2.6%
+                  finetuned on a financial news data set, achieving ~2.6%
                   average daily return
                 </li>
               </ul>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">
                 Wikipedia Content Extractor
               </h3>
@@ -659,30 +758,39 @@
                     href="https://github.com/shyampatadia/Wikipedia_Extractor"
                     target="_blank"
                     class="text-blue-400 hover:underline"
-                    >Wikipedia Content Extractor</a
                   >
+                    Wikipedia Content Extractor
+                  </a>
                 </li>
               </ul>
             </div>
-            <!-- Add more projects here -->
           </div>
         </section>
 
+        <!-- Contact -->
         <section
           x-show="activeTab === 'contact'"
-          x-transition:enter="transition ease-out duration-300"
-          x-transition:enter-start="opacity-0 transform scale-90"
-          x-transition:enter-end="opacity-100 transform scale-100"
+          x-transition:enter="transition transform ease-out duration-500"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition transform ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-2"
+          x-cloak
         >
           <h2 class="text-2xl font-bold text-blue-400 mb-4">
             Contact Information
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">Location</h3>
               <p>Rajkot, Gujarat, India</p>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">Phone</h3>
               <p>
                 <a href="tel:+919987817964" class="hover:text-blue-400"
@@ -690,7 +798,9 @@
                 >
               </p>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">Email</h3>
               <p>
                 <a
@@ -700,7 +810,9 @@
                 >
               </p>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
+            <div
+              class="bg-gray-800 p-4 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-2">Connect</h3>
               <div class="flex space-x-4">
                 <a
@@ -732,15 +844,22 @@
           </div>
         </section>
 
+        <!-- Certifications -->
         <section
           x-show="activeTab === 'certifications'"
-          x-transition:enter="transition ease-out duration-300"
-          x-transition:enter-start="opacity-0 transform scale-90"
-          x-transition:enter-end="opacity-100 transform scale-100"
+          x-transition:enter="transition transform ease-out duration-500"
+          x-transition:enter-start="opacity-0 -translate-y-2"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition transform ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-2"
+          x-cloak
         >
           <h2 class="text-2xl font-bold text-blue-400 mb-6">Certifications</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-4">
                 Azure DevOps - AZ-900
               </h3>
@@ -756,7 +875,9 @@
                 >View Certification</a
               >
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-4">
                 Certified Scrum Developer
               </h3>
@@ -773,7 +894,9 @@
                 >View Certification</a
               >
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg">
+            <div
+              class="bg-gray-800 p-6 rounded-lg card transition-transform duration-300"
+            >
               <h3 class="text-xl font-semibold text-blue-300 mb-4">
                 Software Development Processes and Methodologies
               </h3>
@@ -794,6 +917,11 @@
         </section>
       </main>
     </div>
+
+    <!-- main.js -->
+    <script src="js/main.js"></script>
+
+    <!-- Lucide Icons Initialization -->
     <script>
       lucide.createIcons();
     </script>

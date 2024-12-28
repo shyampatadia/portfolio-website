@@ -1,0 +1,102 @@
+/* styles.css */
+
+/* 0) Hide elements before Alpine transitions */
+[x-cloak] {
+    display: none !important;
+}
+
+/*
+    1) AURORA-STYLE BACKGROUND
+    We'll use a subtle wavy gradient animation with shades of blue & purple
+  */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(115deg,
+            #1f2937 0%,
+            #2f3e5f 25%,
+            #1f2937 50%,
+            #2f3e5f 75%,
+            #1f2937 100%);
+    background-size: 400% 400%;
+    animation: auroraWave 14s ease-in-out infinite;
+    color: #d1d5db;
+    /* text-gray-300 in Tailwind */
+}
+
+@keyframes auroraWave {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/*
+    2) GLASSMORPHISM CONTAINER
+    Slight blur, frosted glass effect, subtle border
+  */
+.glass-container {
+    background: rgba(17, 24, 39, 0.6);
+    /* near #111827 but transparent */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/*
+    3) ANIMATED GRADIENT TEXT
+    For "SHYAM PATADIA" heading
+  */
+.gradient-text {
+    font-weight: bold;
+    font-size: 2.25rem;
+    /* text-4xl */
+    background: linear-gradient(90deg,
+            #3b82f6,
+            #9333ea,
+            #ec4899,
+            #f59e0b,
+            #3b82f6);
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 6s ease infinite;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/*
+    4) PROFILE IMAGE HOVER
+    Subtle 3D tilt + box shadow
+  */
+.profile-img:hover {
+    transform: rotate(3deg) scale(1.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s;
+}
+
+/*
+    5) CARD HOVER EFFECT
+    More pronounced scale and shadow
+  */
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
