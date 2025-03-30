@@ -186,6 +186,13 @@
               <span>Projects</span>
             </button>
             
+            <button @click="changeTab('certifications')" 
+                    :class="activeTab === 'certifications' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
+                    class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
+              <i class="fas fa-certificate mr-2"></i>
+              <span>Certifications</span>
+            </button>
+            
             <!-- <button @click="changeTab('books')" 
                     :class="activeTab === 'books' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
                     class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
@@ -1079,65 +1086,89 @@
             </div>
           </section>
           
-          <!-- Books Section -->
-          <!-- <section x-show="activeTab === 'books'" x-transition.opacity.duration.300ms class="text-gray-300">
+          <!-- Certifications Section -->
+          <section x-show="activeTab === 'certifications'" 
+                   x-transition.opacity.duration.300ms 
+                   class="text-gray-300">
             <div class="section-header mb-6">
               <h2 class="text-2xl font-bold text-white relative inline-block">
-                <span class="relative z-10">Recommended Books</span>
+                <span class="relative z-10">Certifications</span>
                 <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-[#4ba6ef] to-transparent"></span>
               </h2>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="book-card bg-[#232a3a] rounded-lg p-6 border border-gray-800 shadow-md relative overflow-hidden flex">
-                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#4ba6ef] to-transparent"></div>
-                <div class="book-cover bg-gray-800 rounded mr-4 flex-shrink-0 w-16 h-20 flex items-center justify-center">
-                  <i class="fas fa-book text-blue-400 text-2xl"></i>
+            <!-- Certifications Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <!-- Azure DevOps -->
+              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                  <div class="p-3 bg-[#232a3a] rounded-lg mr-4">
+                    <i class="fas fa-cloud text-xl text-[#4ba6ef]"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-[#4ba6ef]">Azure DevOps - AZ-900</h3>
                 </div>
-                <div class="pl-2">
-                  <h3 class="text-xl font-semibold text-blue-400 mb-2">The Pragmatic Programmer</h3>
-                  <p class="text-sm text-gray-400 mb-1">By Andrew Hunt & David Thomas</p>
-                  <p class="text-sm">A practical guide for software developers to improve their craft and become more effective programmers.</p>
-                </div>
+                
+                <p class="text-gray-300 mb-4 text-sm">
+                  Gained foundational knowledge of Azure services, cloud concepts, and core Azure DevOps principles, 
+                  which enhanced my ability to manage CI/CD pipelines and cloud resources effectively.
+                </p>
+                
+                <a href="https://learn.microsoft.com/api/credentials/share/en-us/shyampatadia-8140/29B59629A9ED3204?sharingId=E0BA6AFC4738A529" 
+                   target="_blank" 
+                   class="inline-flex items-center text-[#4ba6ef] hover:text-white transition-colors duration-200">
+                  <i class="fas fa-certificate mr-2"></i>
+                  <span>View Certification</span>
+                  <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                </a>
               </div>
               
-              <div class="book-card bg-[#232a3a] rounded-lg p-6 border border-gray-800 shadow-md relative overflow-hidden flex">
-                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#4ba6ef] to-transparent"></div>
-                <div class="book-cover bg-gray-800 rounded mr-4 flex-shrink-0 w-16 h-20 flex items-center justify-center">
-                  <i class="fas fa-book text-blue-400 text-2xl"></i>
+              <!-- Certified Scrum Developer -->
+              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                  <div class="p-3 bg-[#232a3a] rounded-lg mr-4">
+                    <i class="fas fa-users-cog text-xl text-[#4ba6ef]"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-[#4ba6ef]">Certified Scrum Developer</h3>
                 </div>
-                <div class="pl-2">
-                  <h3 class="text-xl font-semibold text-blue-400 mb-2">Clean Code</h3>
-                  <p class="text-sm text-gray-400 mb-1">By Robert C. Martin</p>
-                  <p class="text-sm">A handbook of agile software craftsmanship with principles for writing clean, maintainable code.</p>
-                </div>
+                
+                <p class="text-gray-300 mb-4 text-sm">
+                  Acquired practical skills in Agile methodologies, Scrum practices, and teamwork, enabling me to 
+                  contribute effectively to agile development teams and deliver high-quality software iteratively.
+                </p>
+                
+                <a href="https://www.linkedin.com/in/shyampatadia/details/certifications/1727168532659/single-media-viewer/?type=DOCUMENT&profileId=ACoAABwgP5MBGig335e2bdKco_sWHOZKwbBuM9g" 
+                   target="_blank" 
+                   class="inline-flex items-center text-[#4ba6ef] hover:text-white transition-colors duration-200">
+                  <i class="fas fa-certificate mr-2"></i>
+                  <span>View Certification</span>
+                  <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                </a>
               </div>
               
-              <div class="book-card bg-[#232a3a] rounded-lg p-6 border border-gray-800 shadow-md relative overflow-hidden flex">
-                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#4ba6ef] to-transparent"></div>
-                <div class="book-cover bg-gray-800 rounded mr-4 flex-shrink-0 w-16 h-20 flex items-center justify-center">
-                  <i class="fas fa-book text-blue-400 text-2xl"></i>
+              <!-- Software Development Processes and Methodologies -->
+              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                  <div class="p-3 bg-[#232a3a] rounded-lg mr-4">
+                    <i class="fas fa-code-branch text-xl text-[#4ba6ef]"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-[#4ba6ef]">Software Development Processes and Methodologies</h3>
                 </div>
-                <div class="pl-2">
-                  <h3 class="text-xl font-semibold text-blue-400 mb-2">Designing Data-Intensive Applications</h3>
-                  <p class="text-sm text-gray-400 mb-1">By Martin Kleppmann</p>
-                  <p class="text-sm">Essential knowledge for building applications that can handle large amounts of data.</p>
-                </div>
-              </div>
-              
-              <div class="book-card bg-[#232a3a] rounded-lg p-6 border border-gray-800 shadow-md relative overflow-hidden flex">
-                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#4ba6ef] to-transparent"></div>
-                <div class="book-cover bg-gray-800 rounded mr-4 flex-shrink-0 w-16 h-20 flex items-center justify-center">
-                  <i class="fas fa-book text-blue-400 text-2xl"></i>
-                </div>
-                <div class="pl-2">
-                  <h3 class="text-xl font-semibold text-blue-400 mb-2">Python for Data Analysis</h3>
-                  <p class="text-sm text-gray-400 mb-1">By Wes McKinney</p>
-                  <p class="text-sm">Comprehensive guide to using Python for data processing, manipulation, and analysis.</p>
-                </div>
+                
+                <p class="text-gray-300 mb-4 text-sm">
+                  Enhanced understanding of various software development lifecycles, best practices, and methodologies, 
+                  enabling me to optimize project workflows and improve code quality through structured processes.
+                </p>
+                
+                <a href="https://coursera.org/verify/LYMPLSJXAM5P" 
+                   target="_blank" 
+                   class="inline-flex items-center text-[#4ba6ef] hover:text-white transition-colors duration-200">
+                  <i class="fas fa-certificate mr-2"></i>
+                  <span>View Certification</span>
+                  <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                </a>
               </div>
             </div>
-          </section> -->
+          </section>
         </div>
       </div>
     </div>
