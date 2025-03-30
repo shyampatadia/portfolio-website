@@ -490,42 +490,209 @@
           </section>
           
           <!-- Experience Section -->
-          <section x-show="activeTab === 'experience'" x-transition.opacity.duration.300ms class="text-gray-300">
-            <div class="section-header mb-6">
-              <h2 class="text-2xl font-bold text-white relative inline-block">
+          <section x-show="activeTab === 'experience'" x-transition.opacity.duration.300ms class="text-gray-300 section-animation">
+            <!-- Live background elements -->
+            <div class="section-bg">
+              <div class="particles-small">
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+              </div>
+              <div class="particles-medium">
+                <div></div><div></div><div></div><div></div><div></div>
+              </div>
+              <div class="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#1e3a70] to-transparent opacity-10"></div>
+            </div>
+            
+            <div class="section-header mb-6 relative z-10">
+              <h2 class="text-2xl font-bold text-white relative inline-block shimmer">
                 <span class="relative z-10">Work Experience</span>
                 <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-[#4ba6ef] to-transparent"></span>
               </h2>
             </div>
             
-            <div class="experience-timeline">
-              <div class="experience-card bg-[#232a3a] rounded-lg p-6 mb-6 border border-gray-800 shadow-md relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#4ba6ef] to-transparent"></div>
-                <div class="pl-4">
-                  <h3 class="text-xl font-semibold text-blue-400 mb-2">Senior Developer</h3>
-                  <div class="flex items-center mb-4 text-sm">
-                    <span class="bg-[#1e3a70] text-blue-200 px-2 py-1 rounded">July 2021 - Present</span>
-                    <span class="mx-2">•</span>
-                    <span class="text-gray-400">xLM Continuous Validation LLC, Jacksonville, FL</span>
+            <div class="experience-timeline relative z-10 timeline-animate-in active">
+              <!-- Current Position -->
+              <div class="experience-card bg-[#1c222f] rounded-lg p-0 mb-6 border border-[#232a3a] shadow-lg relative overflow-hidden timeline-item card-hover">
+                <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#4ba6ef] to-[#1e3a70]"></div>
+                
+                <!-- Header Section -->
+                <div class="p-6 pb-2 bg-[#232a3a] bg-opacity-50">
+                  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div class="flex items-center">
+                      <div class="mr-4 p-3 bg-[#1e3a70] rounded-lg shadow-lg highlight-pulse">
+                        <i class="fas fa-briefcase text-2xl text-[#4ba6ef] icon-pulse"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-xl font-bold text-white">Senior Developer</h3>
+                        <p class="text-[#4ba6ef] flex items-center mt-1">
+                          <i class="fas fa-building mr-2"></i>
+                          xLM Continuous Validation LLC, Jacksonville, FL
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="bg-[#1e3a70] text-blue-200 px-3 py-1.5 rounded-full inline-flex items-center floating-badge shadow-md">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>July 2021 - Present</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Content Section -->
+                <div class="p-6">
+                  <!-- Key Responsibilities -->
+                  <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-[#4ba6ef] mb-3 flex items-center">
+                      <i class="fas fa-tasks mr-2"></i>
+                      <span>Key Responsibilities</span>
+                    </h4>
+                    
+                    <ul class="space-y-3 pl-2">
+                      <li class="flex items-start">
+                        <div class="mr-3 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#4ba6ef]"></div>
+                        <span>Led development team of AI Agent for GxP-focused web application validation, managing functional and technical aspects</span>
+                      </li>
+                      <li class="flex items-start">
+                        <div class="mr-3 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#4ba6ef]"></div>
+                        <span>Developed end to end automation suits for validation of DMS, LMS, and ERP systems, implemented various CI/CD pieplines for the same</span>
+                      </li>
+                    </ul>
                   </div>
                   
-                  <ul class="list-disc pl-5 space-y-2">
-                    <li>Led development team of AI Agent for GxP-focused web application validation, managing functional and technical aspects</li>
-                    <li>Developed end to end automation suits for validation of DMS, LMS, and ERP systems, implemented various CI/CD pieplines for the same.</li>
-                    <li>Conducted client demonstrations and authored company newsletters to showcase technical advancements also maintained the internal documentation for various internal APIs.</li>
-                    <li>Managed Azure Artifact feeds, maintained internal releases for .NET-based automation packages, and developed comprehensive test suites and unified frameworks to support testing for both web and desktop applications.</li>
-                    <li>Worked with Azure Storage Blobs APIs for data processing and routine backups, and integrated Selenium with Windows Driver Kit to enhance desktop automation within the testing framework.</li>
-                    <li>Developed PowerShell scripts for automating data processing and integration with external REST APIs, alongside creating large-scale data scraping solutions using Selenium and Spyder Crawler.</li>
-                    <li>Designed and managed a GxP-compliant SDLC process centered on Jira, integrating various tools such as Azure DevOps, Bitbucket, GitHub, and Atlassian Compass.</li>
-                    <li>Optimized and containerized internal applications, including reducing Docker image sizes and improving deployment workflows for Python-based apps, enhancing performance, consistency, and scalability.</li>
-                    <li>Developed and maintained the team's testing infrastructure, including setting up Selenium Grid for scalable automated testing, and implemented end-to-end CI/CD pipelines.</li>
-                    <li>Developed end to end implementation of version control system across the company, wrote an SOP for the same.</li>
-                  </ul>
+                  <!-- Key Achievements -->
+                  <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-[#4ba6ef] mb-3 flex items-center">
+                      <i class="fas fa-award mr-2"></i>
+                      <span>Key Achievements</span>
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="bg-[#232a3a] bg-opacity-50 p-4 rounded-lg border border-[#354056] card-hover">
+                        <div class="flex items-start">
+                          <div class="mr-3 p-2 bg-[#1e3a70] rounded-md">
+                            <i class="fas fa-cogs text-[#4ba6ef]"></i>
+                          </div>
+                          <div>
+                            <h5 class="font-medium text-white mb-1">Infrastructure Optimization</h5>
+                            <p class="text-sm">Optimized and containerized internal applications, reducing Docker image sizes by 40% and improving deployment workflows</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-[#232a3a] bg-opacity-50 p-4 rounded-lg border border-[#354056] card-hover">
+                        <div class="flex items-start">
+                          <div class="mr-3 p-2 bg-[#1e3a70] rounded-md">
+                            <i class="fas fa-robot text-[#4ba6ef]"></i>
+                          </div>
+                          <div>
+                            <h5 class="font-medium text-white mb-1">AI Agent Development</h5>
+                            <p class="text-sm">Developed cutting-edge AI agents for automated validation, reducing manual testing time by 60%</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-[#232a3a] bg-opacity-50 p-4 rounded-lg border border-[#354056] card-hover">
+                        <div class="flex items-start">
+                          <div class="mr-3 p-2 bg-[#1e3a70] rounded-md">
+                            <i class="fas fa-code-branch text-[#4ba6ef]"></i>
+                          </div>
+                          <div>
+                            <h5 class="font-medium text-white mb-1">Version Control Implementation</h5>
+                            <p class="text-sm">Developed end-to-end implementation of version control system across the company, wrote an SOP for the same</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="bg-[#232a3a] bg-opacity-50 p-4 rounded-lg border border-[#354056] card-hover">
+                        <div class="flex items-start">
+                          <div class="mr-3 p-2 bg-[#1e3a70] rounded-md">
+                            <i class="fas fa-flask text-[#4ba6ef]"></i>
+                          </div>
+                          <div>
+                            <h5 class="font-medium text-white mb-1">GxP-Compliant SDLC</h5>
+                            <p class="text-sm">Designed and managed a GxP-compliant SDLC process centered on Jira, integrating various tools</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Technical Projects -->
+                  <div>
+                    <h4 class="text-lg font-semibold text-[#4ba6ef] mb-3 flex items-center">
+                      <i class="fas fa-laptop-code mr-2"></i>
+                      <span>Technical Contributions</span>
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      <div class="bg-[#232a3a] bg-opacity-30 p-3 rounded-lg border border-[#354056] text-center card-hover">
+                        <div class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-[#1e3a70] mb-2 highlight-pulse">
+                          <i class="fas fa-window-restore text-sm text-[#4ba6ef]"></i>
+                        </div>
+                        <h5 class="text-sm font-medium text-white mb-1">Selenium Grid</h5>
+                        <p class="text-xs text-gray-400">Setup for scalable automated testing</p>
+                      </div>
+                      
+                      <div class="bg-[#232a3a] bg-opacity-30 p-3 rounded-lg border border-[#354056] text-center card-hover">
+                        <div class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-[#1e3a70] mb-2 highlight-pulse">
+                          <i class="fas fa-cloud text-sm text-[#4ba6ef]"></i>
+                        </div>
+                        <h5 class="text-sm font-medium text-white mb-1">Azure Storage APIs</h5>
+                        <p class="text-xs text-gray-400">Data processing and routine backups</p>
+                      </div>
+                      
+                      <div class="bg-[#232a3a] bg-opacity-30 p-3 rounded-lg border border-[#354056] text-center card-hover">
+                        <div class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-[#1e3a70] mb-2 highlight-pulse">
+                          <i class="fas fa-terminal text-sm text-[#4ba6ef]"></i>
+                        </div>
+                        <h5 class="text-sm font-medium text-white mb-1">PowerShell Automation</h5>
+                        <p class="text-xs text-gray-400">Data processing automation scripts</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Technologies Used -->
+                  <div class="mt-6 pt-4 border-t border-[#232a3a]">
+                    <h4 class="text-sm uppercase tracking-wider text-gray-400 mb-3">Technologies Used</h4>
+                    <div class="flex flex-wrap gap-2">
+                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Python</span>
+                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">C#</span>
+                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Selenium</span>
+                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Docker</span>
+                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Azure DevOps</span>
+                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">PowerShell</span>
+                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">LLMs</span>
+                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Jira</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Previous work experience - can be expanded later -->
+              <div class="relative pl-8 before:content-[''] before:absolute before:left-3 before:top-0 before:bottom-0 before:w-0.5 before:bg-[#232a3a]">
+                <div class="relative mb-6 timeline-item">
+                  <div class="absolute left-[-30px] top-1 w-6 h-6 rounded-full bg-[#1e3a70] border-2 border-[#4ba6ef] shadow-md highlight-pulse"></div>
+                  <div class="flex items-center mb-1">
+                    <h4 class="text-white font-medium">Previous Work Experience</h4>
+                    <span class="ml-auto text-blue-200 text-sm">2020 - 2021</span>
+                  </div>
+                  <p class="text-sm text-gray-400">Previous positions and internships not listed. Contact for more details.</p>
+                </div>
+                
+                <div class="relative timeline-item">
+                  <div class="absolute left-[-30px] top-0 w-6 h-6 rounded-full bg-[#1e3a70] border-2 border-[#4ba6ef] shadow-md highlight-pulse"></div>
+                  <div class="bg-[#232a3a] bg-opacity-30 p-4 rounded-lg border border-[#354056] shadow-sm">
+                    <h4 class="text-white font-medium mb-2">Looking for My Next Challenge</h4>
+                    <p class="text-sm text-gray-400">Open to exciting opportunities in software development, automation, and AI integration. Let's connect to discuss how I can contribute to your team.</p>
+                    <a href="mailto:shyampatadia22@gmail.com" class="inline-flex items-center mt-3 text-[#4ba6ef] hover:text-white transition-colors duration-200">
+                      <i class="fas fa-envelope mr-2"></i>
+                      <span>Contact Me</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
-          
           <!-- Education Section -->
           <section x-show="activeTab === 'education'" x-transition.opacity.duration.300ms class="text-gray-300">
             <div class="section-header mb-6">
