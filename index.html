@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ activeTab: 'projects' }">
+<html lang="en" x-data="{ activeTab: 'summary' }">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -72,80 +72,191 @@
     <div class="container max-w-[1100px] mx-auto px-4 py-8">
       <div class="main-card bg-[#1a1f2e] rounded-lg shadow-lg border border-[#232a3a] overflow-hidden">
         
-        <!-- Header Section -->
-        <div class="header-section p-8 pb-4 text-center relative">
-          <!-- Enhanced background elements -->
+        <!-- Header Section - Modern Design with Animations -->
+        <div class="header-section p-8 pb-12 bg-[#1a2235] relative overflow-hidden">
+          <!-- Animated background elements -->
           <div class="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#1e3a70] to-transparent opacity-20"></div>
           <div class="absolute inset-0 overflow-hidden">
             <div class="stars-small"></div>
             <div class="stars-medium"></div>
             <div class="stars-large"></div>
-          </div>
-          
-          <div class="profile-container flex flex-col items-center mb-6 relative">
-            <div class="relative photo-frame">
-              <!-- Outer glow effect -->
-              <div class="absolute -inset-3 bg-gradient-to-r from-[#4ba6ef] via-[#69b9f0] to-[#4ba6ef] rounded-full opacity-30 blur-xl"></div>
-              
-              <!-- Inner glow and border -->
-              <div class="absolute -inset-1.5 bg-gradient-to-r from-[#4ba6ef] to-[#69b9f0] rounded-full opacity-80 blur-md"></div>
-              <div class="absolute inset-0 rounded-full bg-[#141824] p-1"></div>
-              
-              <!-- Actual image with proper styling -->
-              <div class="relative overflow-hidden rounded-full border-2 border-[#4ba6ef] z-10 shadow-glow">
-                <img src="https://avatars.githubusercontent.com/u/65619938?v=4" 
-                    alt="Shyam Patadia" 
-                    class="w-28 h-28 object-cover" />
-                <div class="absolute inset-0 bg-gradient-to-tr from-[#1a1f2e] to-transparent opacity-10"></div>
-              </div>
-              
-              <!-- Code badge with improved styling -->
-              <div class="absolute -bottom-2 -right-1 bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] rounded-full w-8 h-8 flex items-center justify-center text-white shadow-md z-20 border border-[#141824] code-badge">
-                <i class="fas fa-code text-sm"></i>
-              </div>
-            </div>
             
-            <!-- Developer badge -->
-            <div class="developer-badge bg-[#1e3a70] text-blue-200 px-3 py-1 rounded-full text-xs font-medium mt-3 flex items-center shadow-md">
-              <i class="fas fa-laptop-code mr-1.5"></i>
-              <span>Software Developer</span>
+            <!-- Added floating bubbles -->
+            <div class="floating-bubble absolute top-20 left-1/4 w-20 h-20 rounded-full bg-[#4ba6ef] opacity-5 blur-xl animate-float-slow"></div>
+            <div class="floating-bubble absolute bottom-24 right-1/5 w-32 h-32 rounded-full bg-[#4ba6ef] opacity-5 blur-xl animate-float-medium"></div>
+            <div class="floating-bubble absolute top-1/2 right-1/4 w-16 h-16 rounded-full bg-[#4ba6ef] opacity-5 blur-xl animate-float-fast"></div>
+          </div>
+          
+          <!-- Main content with proper spacing -->
+          <div class="relative z-10 max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-4 sm:gap-6 md:gap-12">
+              
+              <!-- Large circular profile image on the left with animation -->
+              <div class="profile-container relative animate-float mt-4 md:mt-0">
+                <!-- Glowing border animation -->
+                <div class="absolute -inset-1 bg-gradient-to-r from-[#4ba6ef] via-[#69b9f0] to-[#4ba6ef] rounded-full opacity-70 blur-sm animate-pulse-slow"></div>
+                
+                <!-- Image container -->
+                <div class="rounded-full border-4 border-[#4fa2eb] overflow-hidden w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 shadow-lg relative z-10">
+                  <img src="https://avatars.githubusercontent.com/u/65619938?v=4" 
+                      alt="Shyam Patadia" 
+                      class="w-full h-full object-cover" />
+                </div>
+                
+                <!-- Dev badge with subtle animation -->
+                <div class="absolute -bottom-2 sm:-bottom-3 left-1/2 transform -translate-x-1/2 bg-[#2f405e] text-[#c0d6f1] px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-medium shadow-md animate-bounce-subtle z-20">
+                  <i class="fas fa-code mr-1 sm:mr-2"></i>Dev
+                </div>
+              </div>
+              
+              <!-- Content aligned on the right with animations -->
+              <div class="flex-1 text-center md:text-left">
+                <!-- Name with shimmer animation -->
+                <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#4ba6ef] via-[#64dfdf] to-[#80ffdb] name-gradient mb-1">Shyam Patadia</h1>
+                
+                <!-- Role with accent color -->
+                <p class="text-[#4fa2eb] text-lg md:text-xl font-medium mb-5">Software Developer</p>
+                
+                <!-- Animated skill badges -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6">
+                  <span class="badge-animated bg-[#2f405e] text-[#c0d6f1] px-3.5 py-2 rounded-md text-sm inline-flex items-center">
+                    <i class="fas fa-laptop-code mr-2"></i>Full Stack
+                  </span>
+                  <span class="badge-animated bg-[#2f405e] text-[#c0d6f1] px-3.5 py-2 rounded-md text-sm inline-flex items-center" style="animation-delay: 0.2s;">
+                    <i class="fas fa-robot mr-2"></i>AI/ML
+                  </span>
+                  <span class="badge-animated bg-[#2f405e] text-[#c0d6f1] px-3.5 py-2 rounded-md text-sm inline-flex items-center" style="animation-delay: 0.4s;">
+                    <i class="fas fa-cloud mr-2"></i>Azure
+                  </span>
+                </div>
+                
+                <!-- Bio with fade-in animation -->
+                <p class="text-gray-300 max-w-xl md:mx-0 text-base leading-relaxed mb-6 animate-fade-in">
+                  Passionate developer with expertise in automation, GxP compliance, and AI systems. 
+                  Specializing in building scalable solutions and optimizing development workflows.
+                </p>
+                
+                <!-- Social links with hover effects -->
+                <div class="flex justify-center md:justify-start gap-4 animate-fade-in" style="animation-delay: 0.3s;">
+                  <a href="https://github.com/shyampatadia" target="_blank" class="social-icon bg-[#262f43] hover:bg-[#1e3a70] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
+                    <i class="fab fa-github"></i>
+                  </a>
+                  <a href="https://www.linkedin.com/in/shyampatadia/" target="_blank" class="social-icon bg-[#262f43] hover:bg-[#1e3a70] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a href="https://twitter.com/shyam300420" target="_blank" class="social-icon bg-[#262f43] hover:bg-[#1e3a70] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a href="mailto:shyampatadia22@gmail.com" class="social-icon bg-[#262f43] hover:bg-[#1e3a70] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
+                    <i class="fas fa-envelope"></i>
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
-          
-          <!-- Name and title with improved styling -->
-          <div class="name-container text-center mt-2 mb-4">
-            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#fff] via-[#e4e6eb] to-[#fff] mb-1 relative z-10">SHYAM PATADIA</h1>
-            <div class="inline-flex items-center rounded-full px-1 py-0.5 mb-4">
-              <!-- <div class="h-1.5 w-1.5 rounded-full bg-[#4ba6ef] mr-1.5 animate-pulse"></div> -->
-              <!-- <p class="text-gray-400 text-sm">Available for new opportunities</p> -->
-            </div>
-          </div>
-          
-          <div class="badge-container flex justify-center gap-2 mb-4">
-            <span class="bg-[#1e3a70] text-blue-200 px-2 py-1 rounded text-xs font-medium"><i class="fas fa-laptop-code mr-1"></i>Full Stack</span>
-            <span class="bg-[#1e3a70] text-blue-200 px-2 py-1 rounded text-xs font-medium"><i class="fas fa-robot mr-1"></i>AI/ML</span>
-            <span class="bg-[#1e3a70] text-blue-200 px-2 py-1 rounded text-xs font-medium"><i class="fas fa-cloud mr-1"></i>Azure</span>
-          </div>
-          
-          <p class="text-gray-300 max-w-2xl mx-auto mb-5 text-sm">
-            Passionate developer with expertise in automation, GxP compliance, and AI systems. Specializing in building scalable solutions and optimizing development workflows.
-          </p>
-          
-          <div class="social-links flex justify-center gap-4 mb-6">
-            <a href="https://github.com/shyampatadia" target="_blank" class="bg-[#232a3a] hover:bg-[#4ba6ef] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
-              <i class="fab fa-github text-lg"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/shyampatadia/" target="_blank" class="bg-[#232a3a] hover:bg-[#4ba6ef] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
-              <i class="fab fa-linkedin-in text-lg"></i>
-            </a>
-            <a href="https://twitter.com/shyam300420" target="_blank" class="bg-[#232a3a] hover:bg-[#4ba6ef] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
-              <i class="fab fa-twitter text-lg"></i>
-            </a>
-            <a href="mailto:shyampatadia22@gmail.com" class="bg-[#232a3a] hover:bg-[#4ba6ef] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
-              <i class="fas fa-envelope text-lg"></i>
-            </a>
           </div>
         </div>
+        
+        <!-- Add animation styles -->
+        <style>
+          .animate-float {
+            animation: float 4s ease-in-out infinite;
+          }
+          
+          .animate-float-slow {
+            animation: float 8s ease-in-out infinite;
+          }
+          
+          .animate-float-medium {
+            animation: float 6s ease-in-out infinite;
+          }
+          
+          .animate-float-fast {
+            animation: float 4s ease-in-out infinite;
+          }
+          
+          .animate-pulse-slow {
+            animation: pulse 3s ease-in-out infinite;
+          }
+          
+          .animate-bounce-subtle {
+            animation: bounce-subtle 2s ease-in-out infinite;
+          }
+          
+          .animate-shimmer {
+            background-size: 200% auto;
+            animation: shimmer 3s infinite;
+          }
+          
+          .animate-fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+          }
+          
+          .badge-animated {
+            animation: badgePulse 3s ease-in-out infinite;
+            box-shadow: 0 0 0 rgba(79, 162, 235, 0);
+          }
+          
+          .social-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+          }
+          
+          @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+          }
+          
+          @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.6; }
+          }
+          
+          @keyframes bounce-subtle {
+            0%, 100% { transform: translateX(-50%) translateY(0); z-index: 20; }
+            50% { transform: translateX(-50%) translateY(-3px); z-index: 20; }
+          }
+          
+          @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+          
+          @keyframes nameGradient {
+            0% { 
+              background-position: 0% 50%;
+              filter: hue-rotate(0deg) brightness(1); 
+            }
+            50% { 
+              background-position: 100% 50%;
+              filter: hue-rotate(5deg) brightness(1.05); 
+            }
+            100% { 
+              background-position: 0% 50%;
+              filter: hue-rotate(0deg) brightness(1); 
+            }
+          }
+          
+          @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          
+          @keyframes badgePulse {
+            0% { box-shadow: 0 0 0 rgba(79, 162, 235, 0); }
+            50% { box-shadow: 0 0 10px rgba(79, 162, 235, 0.3); }
+            100% { box-shadow: 0 0 0 rgba(79, 162, 235, 0); }
+          }
+          
+          .name-gradient {
+            background-size: 200% auto;
+            animation: nameGradient 8s infinite alternate;
+            letter-spacing: 0.02em;
+            filter: drop-shadow(0 0 8px rgba(75, 166, 239, 0.3));
+          }
+        </style>
         
         <!-- Navigation Tabs -->
         <div class="tabs-container bg-[#141824] p-3 flex justify-center relative">
@@ -192,13 +303,6 @@
               <i class="fas fa-certificate mr-2"></i>
               <span>Certifications</span>
             </button>
-            
-            <!-- <button @click="changeTab('books')" 
-                    :class="activeTab === 'books' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
-                    class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
-              <i class="fas fa-book mr-2"></i>
-              <span>Books</span>
-            </button> -->
           </div>
         </div>
         

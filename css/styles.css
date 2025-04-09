@@ -53,35 +53,40 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* Header styling */
+/* Header styling for modern dark design */
 .header-section {
-  padding: 2rem;
-  padding-bottom: 1rem;
-  text-align: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Profile image container with subtle animation */
 .profile-container {
-  margin-bottom: 2rem;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  z-index: 20;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 5;
+}
+
+.profile-container:hover {
+  transform: translateY(-8px) scale(1.02);
 }
 
 .profile-container img {
-  width: 7rem;
-  height: 7rem;
+  width: 100%;
+  height: 100%;
   border-radius: 9999px;
   border: 2px solid #4ba6ef;
   box-shadow: 0 4px 20px rgba(75, 166, 239, 0.4);
   object-fit: cover;
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   filter: brightness(1.05) contrast(1.05);
   transform: translateZ(0);
+  max-width: 100%;
 }
 
 .profile-container:hover img {
-  box-shadow: 0 8px 25px rgba(75, 166, 239, 0.55);
-  transform: translateY(-5px) translateZ(10px);
+  filter: brightness(1.1) contrast(1.1) saturate(1.1);
+  transform: scale(1.05);
 }
 
 /* Enhanced profile image styling */
@@ -91,25 +96,30 @@ body {
   transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.photo-frame:hover {
-  transform: translateY(-5px) rotateY(5deg);
-}
-
+/* Fixed photo-frame hover animation by moving to parent container */
 .shadow-glow {
   box-shadow: 
-    0 10px 30px -10px rgba(75, 166, 239, 0.3), 
-    0 0 10px rgba(75, 166, 239, 0.2),
-    inset 0 0 10px rgba(75, 166, 239, 0.05);
+    0 8px 20px -8px rgba(75, 166, 239, 0.25), 
+    0 0 8px rgba(75, 166, 239, 0.15),
+    inset 0 0 8px rgba(75, 166, 239, 0.05);
+  transition: all 0.3s ease;
+}
+
+.profile-container:hover .shadow-glow {
+  box-shadow: 
+    0 12px 25px -10px rgba(75, 166, 239, 0.35), 
+    0 0 12px rgba(75, 166, 239, 0.25),
+    inset 0 0 10px rgba(75, 166, 239, 0.1);
 }
 
 /* Code badge animation */
 .code-badge {
   transition: all 0.3s ease;
   animation: pulse 2s ease-in-out infinite;
-  box-shadow: 0 4px 12px rgba(53, 144, 217, 0.5);
+  box-shadow: 0 4px 8px rgba(53, 144, 217, 0.4);
 }
 
-.photo-frame:hover .code-badge {
+.profile-container:hover .code-badge {
   transform: scale(1.1) rotate(10deg);
 }
 
@@ -117,6 +127,53 @@ body {
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
+}
+
+/* Enhanced name container styling */
+.name-container {
+  position: relative;
+}
+
+.name-container::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #4ba6ef, transparent);
+  opacity: 0.6;
+  transition: width 0.3s ease;
+}
+
+.name-container:hover::after {
+  width: 100px;
+}
+
+@media (min-width: 768px) {
+  .name-container::after {
+    left: 0;
+    transform: none;
+  }
+  
+  .name-container:hover::after {
+    width: 120px;
+  }
+}
+
+.name-container h1 {
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  animation: shimmer 6s infinite;
+  background-size: 200% auto;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Navigation tabs */
@@ -145,8 +202,6 @@ body {
   cursor: pointer;
   outline: none;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  position: relative;
-  overflow: hidden;
 }
 
 .tab-btn i {
@@ -287,20 +342,27 @@ a:hover {
 /* Social links */
 .social-links {
   display: flex;
-  justify-content: center;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .social-links a {
   color: #8295ad;
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.4);
+  transition: all 0.3s ease;
   position: relative;
   z-index: 1;
+  border-radius: 9999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .social-links a:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
+  background-color: #4ba6ef;
+  color: white;
 }
 
 /* List styling fixes */
@@ -417,9 +479,25 @@ a:hover {
     margin: 0.5rem;
   }
   
-  .profile-container img {
-    width: 4rem;
-    height: 4rem;
+  /* Remove fixed width/height to use HTML-defined responsive sizes */
+  .profile-container {
+    margin-bottom: 1.5rem;
+  }
+  
+  .header-section {
+    padding: 1.5rem 1rem;
+  }
+  
+  .name-container h1 {
+    font-size: 1.5rem;
+  }
+  
+  .badge-container {
+    justify-content: center;
+  }
+  
+  .social-links {
+    justify-content: center;
   }
 }
 
@@ -431,14 +509,6 @@ a:hover {
   
   .tab-btn i {
     margin-right: 0.25rem;
-  }
-  
-  .header-section {
-    padding: 1.25rem 1rem;
-  }
-  
-  .social-links {
-    gap: 0.5rem;
   }
   
   .content-container {
@@ -456,6 +526,11 @@ a:hover {
   
   .card-heading {
     font-size: 1rem;
+  }
+
+  /* Adjust profile container for small screens */
+  .profile-container {
+    margin-bottom: 1rem;
   }
 }
 
@@ -492,6 +567,7 @@ a:hover {
   right: 0;
   bottom: 0;
   pointer-events: none;
+  opacity: 0.8;
 }
 
 .stars-small::before,
@@ -504,52 +580,201 @@ a:hover {
   right: 0;
   bottom: 0;
   background-image: 
-    radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.1) 100%, transparent),
-    radial-gradient(1px 1px at 30% 40%, rgba(255, 255, 255, 0.1) 100%, transparent),
-    radial-gradient(1px 1px at 50% 25%, rgba(255, 255, 255, 0.1) 100%, transparent),
-    radial-gradient(1px 1px at 70% 65%, rgba(255, 255, 255, 0.1) 100%, transparent),
-    radial-gradient(1px 1px at 85% 15%, rgba(255, 255, 255, 0.1) 100%, transparent),
-    radial-gradient(1px 1px at 65% 45%, rgba(75, 166, 239, 0.15) 100%, transparent),
-    radial-gradient(1px 1px at 20% 60%, rgba(75, 166, 239, 0.15) 100%, transparent);
+    radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.2) 100%, transparent),
+    radial-gradient(1px 1px at 30% 40%, rgba(255, 255, 255, 0.2) 100%, transparent),
+    radial-gradient(1px 1px at 50% 25%, rgba(255, 255, 255, 0.2) 100%, transparent),
+    radial-gradient(1px 1px at 70% 65%, rgba(255, 255, 255, 0.2) 100%, transparent),
+    radial-gradient(1px 1px at 85% 15%, rgba(255, 255, 255, 0.2) 100%, transparent),
+    radial-gradient(1px 1px at 65% 45%, rgba(75, 166, 239, 0.25) 100%, transparent),
+    radial-gradient(1px 1px at 20% 60%, rgba(75, 166, 239, 0.25) 100%, transparent);
   background-size: 200px 200px;
-  opacity: 0.5;
-  animation: twinkling 10s linear infinite;
+  opacity: 0.7;
+  animation: twinkling 15s linear infinite;
 }
 
 .stars-medium::before {
   background-image: 
-    radial-gradient(1.5px 1.5px at 25% 25%, rgba(255, 255, 255, 0.15) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 50% 45%, rgba(255, 255, 255, 0.15) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 75% 75%, rgba(255, 255, 255, 0.15) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 25% 75%, rgba(75, 166, 239, 0.2) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 75% 25%, rgba(75, 166, 239, 0.2) 100%, transparent);
+    radial-gradient(1.5px 1.5px at 25% 25%, rgba(255, 255, 255, 0.25) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 50% 45%, rgba(255, 255, 255, 0.25) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 75% 75%, rgba(255, 255, 255, 0.25) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 25% 75%, rgba(75, 166, 239, 0.3) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 75% 25%, rgba(75, 166, 239, 0.3) 100%, transparent);
   background-size: 250px 250px;
-  opacity: 0.5;
-  animation: twinkling 15s linear infinite;
+  opacity: 0.7;
+  animation: twinkling 20s linear infinite;
   animation-delay: -5s;
 }
 
 .stars-large::before {
   background-image: 
-    radial-gradient(2px 2px at 10% 90%, rgba(75, 166, 239, 0.25) 100%, transparent),
-    radial-gradient(2px 2px at 90% 10%, rgba(75, 166, 239, 0.25) 100%, transparent),
-    radial-gradient(2px 2px at 50% 50%, rgba(75, 166, 239, 0.25) 100%, transparent);
+    radial-gradient(2px 2px at 10% 90%, rgba(75, 166, 239, 0.35) 100%, transparent),
+    radial-gradient(2px 2px at 90% 10%, rgba(75, 166, 239, 0.35) 100%, transparent),
+    radial-gradient(2px 2px at 50% 50%, rgba(75, 166, 239, 0.35) 100%, transparent);
   background-size: 300px 300px;
-  opacity: 0.5;
-  animation: twinkling 20s linear infinite;
+  opacity: 0.7;
+  animation: twinkling 25s linear infinite;
   animation-delay: -10s;
 }
 
+/* Enhanced twinkling animation */
 @keyframes twinkling {
-  from { transform: translateY(0); }
-  to { transform: translateY(-100%); }
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+  50% { opacity: 0.9; }
+  100% { transform: translateY(-100%) rotate(5deg); opacity: 0.5; }
+}
+
+/* Floating bubbles animation */
+.floating-bubble {
+  animation-duration: 12s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  filter: blur(15px);
+}
+
+/* Enhanced badge animations */
+.badge-animated {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.badge-animated:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(75, 166, 239, 0.3);
+}
+
+.badge-animated::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(30deg);
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.badge-animated:hover::after {
+  opacity: 1;
+  animation: shine 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+}
+
+@keyframes shine {
+  0% { transform: rotate(30deg) translateX(-300%); }
+  100% { transform: rotate(30deg) translateX(300%); }
+}
+
+/* Enhanced social link animations */
+.social-icon {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.social-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(75, 166, 239, 0.8), transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: -1;
+}
+
+.social-icon:hover::before {
+  opacity: 0.4;
+  transform: scale(1.5);
+}
+
+.social-icon:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 8px 15px rgba(75, 166, 239, 0.25);
+}
+
+.social-icon i {
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover i {
+  transform: scale(1.1);
+  color: white;
+}
+
+/* Animation for shimmer text */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Custom animations for various elements */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes floatHorizontal {
+  0% { transform: translateX(0px); }
+  50% { transform: translateX(10px); }
+  100% { transform: translateX(0px); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.05); }
+  100% { opacity: 0.6; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhanced name text with glow effect */
+h1.animate-shimmer {
+  background: linear-gradient(90deg, #ffffff, #a3c7e7, #ffffff);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+  position: relative;
+  display: inline-block;
+}
+
+h1.animate-shimmer::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: blur(8px);
+  opacity: 0.5;
+  background: linear-gradient(90deg, #ffffff, #4ba6ef, #ffffff);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+  animation-delay: 0.5s;
 }
 
 /* Developer Badge Styling */
 .developer-badge {
   position: relative;
   z-index: 20;
-  box-shadow: 0 4px 12px rgba(30, 58, 112, 0.4);
+  box-shadow: 0 4px 8px rgba(30, 58, 112, 0.3);
   border: 1px solid rgba(75, 166, 239, 0.3);
   animation: float 3s ease-in-out infinite;
   transform: translateZ(0);
@@ -564,48 +789,14 @@ a:hover {
   100% { transform: translateY(0px); }
 }
 
-/* Name container styling */
-.name-container h1 {
-  letter-spacing: 0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  animation: shimmer 6s infinite;
-  background-size: 200% auto;
-}
-
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Enhanced badge styling */
+/* Badge container transitions */
 .badge-container span {
   transition: all 0.3s ease;
-  border: 1px solid rgba(75, 166, 239, 0.1);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.badge-container span::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: 0.5s;
 }
 
 .badge-container span:hover {
+  background-color: #243d78;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  background-color: #2a4885;
-}
-
-.badge-container span:hover::before {
-  left: 100%;
 }
 
 /* Updated skills section styling */
@@ -620,5 +811,27 @@ a:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   border-color: rgba(75, 166, 239, 0.3);
+}
+
+/* Updated badge styling */
+span[class*="bg-[#2f405e]"] {
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+span[class*="bg-[#2f405e]"]:hover {
+  transform: translateY(-2px);
+  background-color: #364d69;
+}
+
+/* Social links styling */
+.social-links a, 
+.flex a[class*="bg-[#262f43]"] {
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover,
+.flex a[class*="bg-[#262f43]"]:hover {
+  transform: translateY(-3px);
 }
   
