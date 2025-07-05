@@ -8,12 +8,22 @@ import Education from './components/Education';
 import Projects from './components/Projects';
 import Certifications from './components/Certifications';
 import Footer from './components/Footer';
-import './App.css';
 
 export type TabType = 'summary' | 'skills' | 'experience' | 'education' | 'projects' | 'certifications';
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('summary');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleTabChange = (newTab: TabType) => {
+    if (newTab === activeTab) return;
+    
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveTab(newTab);
+      setIsTransitioning(false);
+    }, 150);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -39,8 +49,10 @@ function App() {
       <div className="container max-w-[1100px] mx-auto px-4 py-8">
         <div className="main-card">
           <Header />
-          <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-          <div className="content-container p-6 md:p-8">
+          <TabNavigation activeTab={activeTab} setActiveTab={handleTabChange} />
+          <div className={`content-container p-6 md:p-8 transition-opacity duration-300 ${
+            isTransitioning ? 'opacity-0' : 'opacity-100'
+          }`}>
             {renderContent()}
           </div>
         </div>

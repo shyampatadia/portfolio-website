@@ -2,6 +2,33 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html",
+  ],
+  safelist: [
+    // Animation classes that might be used dynamically
+    'animate-float',
+    'animate-float-slow',
+    'animate-float-medium', 
+    'animate-float-fast',
+    'animate-pulse-slow',
+    'animate-bounce-subtle',
+    'animate-shimmer',
+    'animate-fade-in',
+    'animate-slide-in-up',
+    // Custom color classes
+    'bg-blue-primary',
+    'bg-blue-secondary',
+    'text-blue-primary',
+    'text-blue-secondary',
+    'border-blue-primary',
+    // Pattern classes
+    'bg-pattern',
+    'main-card',
+    'profile-container',
+    'name-gradient',
+    'badge-animated',
+    'social-icon',
+    'floating-bubble',
   ],
   theme: {
     extend: {
@@ -81,6 +108,10 @@ module.exports = {
       },
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
+      },
+      transitionProperty: {
+        'opacity': 'opacity',
+        'transform': 'transform',
       },
     },
   },
