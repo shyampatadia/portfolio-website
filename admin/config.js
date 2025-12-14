@@ -16,7 +16,7 @@ const getApiBase = () => {
   } else if (isGithubPages) {
     // Production - use Vercel backend
     // TODO: Replace this with your actual Vercel backend URL after deployment
-    return 'https://your-backend.vercel.app/api';
+    return 'https://portfolio-website-nine-red-56.vercel.app/api';
   } else {
     // Fallback to local
     return 'http://localhost:8000/api';
