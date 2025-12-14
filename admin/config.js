@@ -3,7 +3,7 @@
 
 const getApiBase = () => {
   // Check if running on GitHub Pages
-  const isGithubPages = window.location.hostname.includes('vercel.app');
+  const isGithubPages = window.location.hostname.includes('github.io');
 
   // Check if running on localhost
   const isLocalhost = window.location.hostname === 'localhost' ||
@@ -15,7 +15,6 @@ const getApiBase = () => {
     return 'http://localhost:8000/api';
   } else if (isGithubPages) {
     // Production - use Vercel backend
-    // TODO: Replace this with your actual Vercel backend URL after deployment
     return 'https://portfolio-website-nine-red-56.vercel.app/api';
   } else {
     // Fallback to local
