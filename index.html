@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ activeTab: 'summary' }">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,43 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Tailwind Config -->
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: '#f0f0ff',
-                100: '#e0e1ff',
-                200: '#c7c9fe',
-                300: '#a5a7fc',
-                400: '#8183f9',
-                500: '#6366f1',
-                600: '#4b4fe5',
-                700: '#3a3fce',
-                800: '#3035a7',
-                900: '#2c3183',
-                950: '#1a1c48',
-              },
-              secondary: {
-                50: '#f7f7f8',
-                100: '#eeeef0',
-                200: '#d9d9e0',
-                300: '#b8b9c5',
-                400: '#9294a6',
-                500: '#75778b',
-                600: '#5d5f71',
-                700: '#4b4c5c',
-                800: '#3f404d',
-                900: '#383842',
-                950: '#25252c',
-              },
-            }
-          },
-        },
-      };
-    </script>
+    <script src="assets/js/config.js"></script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -56,17 +20,12 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- Your external CSS file -->
-    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Optimized modular CSS -->
+    <link rel="stylesheet" href="assets/css/main.css" />
   </head>
 
   <body
-    x-data="{
-      changeTab(tabName) {
-        if (this.activeTab === tabName) return;
-        this.activeTab = tabName;
-      }
-    }"
+    x-data="{ activeTab: 'summary', changeTab(tab) { this.activeTab = tab; }, isActiveTab(tab) { return this.activeTab === tab; } }"
     class="bg-pattern bg-[#101420]"
   >
     <div class="container max-w-[1100px] mx-auto px-4 py-8">
@@ -1552,6 +1511,16 @@
                 <i class="fab fa-linkedin-in mr-2"></i> LinkedIn
               </a>
             </div>
+
+            <!-- Quick Links -->
+            <div class="flex justify-center gap-6 mb-6 text-sm">
+              <a href="blog/index.html" class="text-gray-400 hover:text-blue-400 transition-colors">
+                <i class="fas fa-blog mr-1"></i> Blog
+              </a>
+              <a href="bookshelf/index.html" class="text-gray-400 hover:text-blue-400 transition-colors">
+                <i class="fas fa-book mr-1"></i> Bookshelf
+              </a>
+            </div>
           </div>
           
           <!-- <div class="border-t border-gray-800 pt-6">
@@ -1567,33 +1536,9 @@
         <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f17] to-transparent opacity-70"></div>
       </div>
     </footer>
-    
-    <script>
-      // Add subtle background pattern
-      document.addEventListener('DOMContentLoaded', () => {
-        // Any additional initialization
-        
-        // Skills category filtering
-        const categoryButtons = document.querySelectorAll('.skill-category-btn');
-        if (categoryButtons.length > 0) {
-          categoryButtons.forEach(button => {
-            button.addEventListener('click', function() {
-              // Remove active class from all buttons
-              categoryButtons.forEach(btn => btn.classList.remove('active'));
-              
-              // Add active class to clicked button
-              this.classList.add('active');
-              
-              // Here you would add filtering logic if needed
-              const category = this.textContent.trim().toLowerCase();
-              
-              // For demonstration, just log the selected category
-              console.log('Selected category:', category);
-            });
-          });
-        }
-      });
-    </script>
+
+    <!-- Main Application Script -->
+    <script src="assets/js/app.js"></script>
   </body>
 </html>
 
