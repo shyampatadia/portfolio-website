@@ -3,48 +3,170 @@
    Helper classes and overrides
    ============================================== */
 
-/* Text Colors */
+/* ==============================================
+   TEXT COLORS
+   ============================================== */
+
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-tertiary {
+  color: var(--text-tertiary) !important;
+}
+
+.text-accent {
+  color: var(--text-accent) !important;
+}
+
+.text-accent-primary {
+  color: var(--accent-primary) !important;
+}
+
+.text-accent-secondary {
+  color: var(--accent-secondary) !important;
+}
+
+.text-accent-coral {
+  color: var(--accent-coral) !important;
+}
+
+.text-accent-gold {
+  color: var(--accent-gold) !important;
+}
+
+/* Legacy color classes - mapped to CSS variables */
 .text-gray-100 {
-  color: #f3f4f6 !important;
+  color: var(--text-primary) !important;
 }
 
 .text-gray-300 {
-  color: #d1d5db !important;
+  color: var(--text-secondary) !important;
 }
 
 .text-gray-400 {
-  color: #9ca3af !important;
+  color: var(--text-tertiary) !important;
 }
 
 .text-blue-400 {
-  color: #4ba6ef !important;
+  color: var(--accent-primary) !important;
 }
 
 .text-blue-200 {
-  color: #bfdbfe !important;
+  color: var(--text-secondary) !important;
 }
 
 .text-white {
   color: #ffffff !important;
 }
 
-/* Background Colors */
-.bg-blue-700 {
-  background-color: #4ba6ef !important;
+/* ==============================================
+   BACKGROUND COLORS
+   ============================================== */
+
+.bg-primary {
+  background-color: var(--bg-primary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary) !important;
+}
+
+.bg-elevated {
+  background-color: var(--bg-elevated) !important;
+}
+
+.bg-accent-primary {
+  background-color: var(--accent-primary) !important;
   color: #ffffff !important;
-  font-weight: 600;
-  box-shadow: 0 2px 5px rgba(75, 166, 239, 0.25);
 }
 
-.bg-gray-800, .bg-transparent {
-  background-color: #1a1f2e !important;
-  color: #9ca3af !important;
+.bg-accent-secondary {
+  background-color: var(--accent-secondary) !important;
+  color: #ffffff !important;
 }
 
-.bg-gray-800:hover, .bg-transparent:hover {
-  background-color: #232a3a !important;
-  color: #d1d5db !important;
+.bg-navy-dark {
+  background-color: var(--navy-dark) !important;
+}
+
+.bg-navy-medium {
+  background-color: var(--navy-medium) !important;
+}
+
+/* Legacy background classes - mapped to CSS variables */
+.bg-blue-700 {
+  background-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+  font-weight: var(--font-semibold);
+  box-shadow: var(--shadow-glow);
+}
+
+.bg-gray-800,
+.bg-transparent {
+  background-color: var(--bg-header) !important;
+  color: var(--text-tertiary) !important;
+}
+
+.bg-gray-800:hover,
+.bg-transparent:hover {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
   transform: translateY(-1px);
+}
+
+/* ==============================================
+   GRADIENT BACKGROUNDS
+   ============================================== */
+
+.bg-gradient-warm {
+  background: var(--gradient-warm);
+  color: #ffffff;
+}
+
+.bg-gradient-navy-warm {
+  background: var(--gradient-navy-warm);
+  color: #ffffff;
+}
+
+.bg-gradient-subtle {
+  background: var(--gradient-subtle);
+}
+
+/* ==============================================
+   BORDER UTILITIES
+   ============================================== */
+
+.border-default {
+  border-color: var(--border-color) !important;
+}
+
+.border-accent {
+  border-color: var(--border-accent) !important;
+}
+
+/* ==============================================
+   SHADOW UTILITIES
+   ============================================== */
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-glow {
+  box-shadow: var(--shadow-glow);
 }
 
 /* Responsive Design */

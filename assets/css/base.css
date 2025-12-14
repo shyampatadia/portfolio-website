@@ -3,25 +3,194 @@
    Foundation styles, resets, and typography
    ============================================== */
 
-/* CSS Reset */
+/* ==============================================
+   CSS CUSTOM PROPERTIES - WARM PROFESSIONAL THEME
+   ============================================== */
+
+:root {
+  /* Light Mode Colors (Default) */
+  /* Backgrounds - Warm Whites */
+  --bg-primary: #fafaf9;
+  --bg-secondary: #f5f5f4;
+  --bg-elevated: #ffffff;
+  --bg-header: #fff7ed;
+  --bg-pattern-color: rgba(65, 82, 120, 0.03);
+
+  /* Warm Accents */
+  --accent-primary: #ea580c;
+  --accent-secondary: #f97316;
+  --accent-coral: #dc2626;
+  --accent-gold: #ca8a04;
+
+  /* Navy Foundation */
+  --navy-dark: #1e3a8a;
+  --navy-medium: #3b82f6;
+  --navy-light: #60a5fa;
+
+  /* Text Colors */
+  --text-primary: #18181b;
+  --text-secondary: #3f3f46;
+  --text-tertiary: #71717a;
+  --text-accent: #ea580c;
+
+  /* Gradients */
+  --gradient-warm: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fbbf24 100%);
+  --gradient-navy-warm: linear-gradient(135deg, #3b82f6 0%, #ea580c 100%);
+  --gradient-subtle: linear-gradient(135deg, #ffffff 0%, #f5f5f4 100%);
+  --gradient-glow: radial-gradient(circle, rgba(234, 88, 12, 0.15), transparent 70%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(234, 88, 12, 0.3);
+
+  /* Borders */
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-accent: rgba(234, 88, 12, 0.3);
+
+  /* Fluid Typography Scale */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 2rem + 2vw, 3rem);
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Color Overrides */
+:root.dark {
+  /* Backgrounds - Charcoal with Navy */
+  --bg-primary: #18181b;
+  --bg-secondary: #1e1e24;
+  --bg-elevated: #262630;
+  --bg-header: #1a1f2e;
+  --bg-pattern-color: rgba(65, 82, 120, 0.05);
+
+  /* Warm Accents - Amber & Coral */
+  --accent-primary: #f59e0b;
+  --accent-secondary: #fb923c;
+  --accent-coral: #f97066;
+  --accent-gold: #fbbf24;
+
+  /* Navy Foundation */
+  --navy-dark: #1e3a70;
+  --navy-medium: #2a4885;
+  --navy-light: #3e5172;
+
+  /* Text Colors */
+  --text-primary: #f5f5f5;
+  --text-secondary: #e4e4e7;
+  --text-tertiary: #a1a1aa;
+  --text-accent: #fbbf24;
+
+  /* Gradients */
+  --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #fb923c 50%, #f97066 100%);
+  --gradient-navy-warm: linear-gradient(135deg, #1e3a70 0%, #f59e0b 100%);
+  --gradient-subtle: linear-gradient(135deg, #262630 0%, #1e1e24 100%);
+  --gradient-glow: radial-gradient(circle, rgba(245, 158, 11, 0.15), transparent 70%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 20px rgba(245, 158, 11, 0.3);
+
+  /* Borders */
+  --border-color: rgba(255, 255, 255, 0.05);
+  --border-accent: rgba(245, 158, 11, 0.3);
+}
+
+/* ==============================================
+   CSS RESET
+   ============================================== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body and Typography */
+/* Smooth theme transitions */
+*,
+*::before,
+*::after {
+  transition: background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base),
+              box-shadow var(--transition-base);
+}
+
+/* Disable transitions on specific elements for performance */
+.no-transition,
+.no-transition *,
+[x-cloak] {
+  transition: none !important;
+}
+
+/* ==============================================
+   BODY AND TYPOGRAPHY
+   ============================================== */
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #e4e6eb;
-  background-color: #101420;
-  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  line-height: var(--leading-normal);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
 }
 
 /* Hide Alpine.js elements before initialization */
 [x-cloak] {
   display: none !important;
 }
+
+/* ==============================================
+   LAYOUT UTILITIES
+   ============================================== */
 
 /* Background pattern */
 .bg-pattern {
@@ -31,41 +200,124 @@ body {
   min-height: 100vh;
 }
 
-/* Text styling */
-p.text-gray-300, p.text-gray-400 {
-  line-height: 1.6;
-}
-
-/* Links */
-a {
-  color: #4ba6ef;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-a:hover {
-  color: #6cbdf0;
-  text-decoration: underline;
-}
-
-/* List styling */
-.list-disc {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-}
-
-.list-disc li {
-  position: relative;
-  margin-bottom: 0.5rem;
-}
-
-.list-disc li::marker {
-  color: #4ba6ef;
-}
-
 /* Grid layout */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  gap: var(--space-md);
+}
+
+/* ==============================================
+   TEXT STYLES
+   ============================================== */
+
+/* Text styling */
+p.text-gray-300,
+p.text-gray-400 {
+  line-height: var(--leading-relaxed);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+}
+
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-2xl); }
+h4 { font-size: var(--text-xl); }
+h5 { font-size: var(--text-lg); }
+h6 { font-size: var(--text-base); }
+
+/* ==============================================
+   LINKS
+   ============================================== */
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ==============================================
+   LISTS
+   ============================================== */
+
+.list-disc {
+  list-style-type: disc;
+  padding-left: var(--space-lg);
+}
+
+.list-disc li {
+  position: relative;
+  margin-bottom: var(--space-sm);
+}
+
+.list-disc li::marker {
+  color: var(--accent-primary);
+}
+
+/* ==============================================
+   ACCESSIBILITY
+   ============================================== */
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--accent-primary);
+  color: #ffffff;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 0 0 var(--radius-md) 0;
+  z-index: 9999;
+  transition: top var(--transition-base);
+  font-weight: var(--font-semibold);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================== */
+
+/* GPU acceleration for animations */
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }

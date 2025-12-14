@@ -5,11 +5,11 @@
 
 /* Main Card */
 .main-card {
-  background-color: #1a1f2e;
-  border: 1px solid #232a3a;
-  border-radius: 0.5rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
   position: relative;
 }
 
@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #4ba6ef, #69b9f0, #4ba6ef);
+  background: var(--gradient-warm);
   background-size: 200% 100%;
   animation: gradientMove 8s ease infinite;
 }
@@ -46,9 +46,9 @@
 .profile-container img {
   width: 100%;
   height: 100%;
-  border-radius: 9999px;
-  border: 2px solid #4ba6ef;
-  box-shadow: 0 4px 20px rgba(75, 166, 239, 0.4);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--accent-primary);
+  box-shadow: var(--shadow-glow);
   object-fit: cover;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   filter: brightness(1.05) contrast(1.05);
@@ -96,7 +96,7 @@
   transform: translateX(-50%);
   width: 50px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #4ba6ef, transparent);
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
   opacity: 0.6;
   transition: width 0.3s ease;
 }
@@ -115,11 +115,11 @@
 
 /* Navigation Tabs */
 .tabs-container {
-  background-color: #141824;
+  background-color: var(--bg-secondary);
   padding: 0.75rem;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #232a3a;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .tabs-wrapper {
@@ -172,27 +172,29 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, #4ba6ef, transparent);
+  background: linear-gradient(90deg, var(--accent-primary), transparent);
 }
 
 /* Cards - Unified Styling */
 .skill-card, .project-card, .experience-card, .education-card, .book-card {
-  background-color: #232a3a;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
+  background-color: var(--bg-elevated);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
   height: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  margin-bottom: 1rem;
+  transition: transform var(--transition-base),
+              box-shadow var(--transition-base),
+              border-color var(--transition-base);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-md);
   position: relative;
   overflow: hidden;
 }
 
 .skill-card:hover, .project-card:hover, .experience-card:hover, .education-card:hover, .book-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-color: rgba(75, 166, 239, 0.2);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--border-accent);
 }
 
 /* Card gradient accents */
@@ -203,11 +205,11 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #4ba6ef, #69b9f0, #4ba6ef);
+  background: var(--gradient-warm);
   background-size: 200% 100%;
   animation: gradientFlow 8s ease infinite;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-base);
 }
 
 .skill-card:hover::before, .project-card:hover::before, .experience-card:hover::before, .education-card:hover::before, .book-card:hover::before {
@@ -216,40 +218,40 @@
 
 /* Card Headings */
 .skill-card h3, .project-card h3, .experience-card h3, .book-card h3 {
-  color: #4ba6ef;
-  font-size: 1.125rem;
-  margin-bottom: 0.75rem;
-  font-weight: 600;
+  color: var(--accent-primary);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-sm);
+  font-weight: var(--font-semibold);
 }
 
 .education-card h2 {
-  color: #ffffff;
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-sm);
+  font-weight: var(--font-semibold);
 }
 
 .education-card h3 {
-  color: #4ba6ef;
-  font-size: 1.125rem;
-  margin-bottom: 0.75rem;
-  font-weight: 600;
+  color: var(--accent-primary);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-sm);
+  font-weight: var(--font-semibold);
 }
 
 /* Card Lists */
 .project-card ul, .skill-card ul, .education-card ul, .experience-card ul, .book-card ul {
-  padding-left: 1.25rem;
-  color: #bfd1e3;
-  margin-top: 0.5rem;
+  padding-left: var(--space-lg);
+  color: var(--text-secondary);
+  margin-top: var(--space-sm);
 }
 
 .project-card li, .skill-card li, .education-card li, .experience-card li, .book-card li {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-sm);
 }
 
 .experience-card p {
-  color: #8295ad;
-  margin-bottom: 1rem;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-md);
 }
 
 /* Education Card Spacing */
@@ -263,22 +265,26 @@
 
 /* Skill Tags */
 .skill-card span,
-span[class*="bg-[#2f405e]"] {
+span[class*="bg-[#2f405e]"],
+.badge-animated {
   display: inline-block;
-  background-color: #3a3f54;
-  color: #b8d8ff;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  transition: all 0.3s ease;
-  font-weight: 500;
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-medium) 100%);
+  color: var(--accent-gold);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  margin-right: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  transition: all var(--transition-base);
+  font-weight: var(--font-medium);
+  border: 1px solid var(--border-accent);
 }
 
-span[class*="bg-[#2f405e]"]:hover {
-  transform: translateY(-2px);
-  background-color: #364d69;
+span[class*="bg-[#2f405e]"]:hover,
+.badge-animated:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: linear-gradient(135deg, var(--navy-medium) 0%, var(--accent-primary) 100%);
+  box-shadow: var(--shadow-glow);
 }
 
 /* Social Links */
@@ -290,11 +296,11 @@ span[class*="bg-[#2f405e]"]:hover {
 
 .social-links a,
 .social-icon {
-  color: #8295ad;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: var(--text-tertiary);
+  transition: all var(--transition-base) cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   z-index: 1;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   width: 2.5rem;
   height: 2.5rem;
   display: flex;
@@ -305,10 +311,10 @@ span[class*="bg-[#2f405e]"]:hover {
 
 .social-links a:hover,
 .social-icon:hover {
-  transform: translateY(-5px) scale(1.1);
-  background-color: #4ba6ef;
+  transform: translateY(-5px) scale(1.15) rotate(5deg);
+  background: var(--gradient-warm);
   color: white;
-  box-shadow: 0 8px 15px rgba(75, 166, 239, 0.25);
+  box-shadow: var(--shadow-glow);
 }
 
 .social-icon::before {
@@ -318,7 +324,7 @@ span[class*="bg-[#2f405e]"]:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(75, 166, 239, 0.8), transparent 70%);
+  background: var(--gradient-glow);
   opacity: 0;
   transform: scale(0);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -346,11 +352,12 @@ span[class*="bg-[#2f405e]"]:hover {
 .code-badge {
   position: relative;
   z-index: 20;
-  box-shadow: 0 4px 8px rgba(30, 58, 112, 0.3);
-  border: 1px solid rgba(75, 166, 239, 0.3);
-  background: linear-gradient(90deg, #1e3a70, #2a4885, #1e3a70);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-accent);
+  background: var(--gradient-navy-warm);
   background-size: 200% 100%;
-  transition: all 0.3s ease;
+  transition: all var(--transition-base);
+  animation: gradientMove 8s ease infinite;
 }
 
 .code-badge {
