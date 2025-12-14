@@ -3,7 +3,7 @@
 
 const getApiBase = () => {
   // Check if running on GitHub Pages
-  const isGithubPages = window.location.hostname.includes('github.io');
+  const isGithubPages = window.location.hostname.includes('vercel.app');
 
   // Check if running on localhost
   const isLocalhost = window.location.hostname === 'localhost' ||
