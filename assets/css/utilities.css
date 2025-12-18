@@ -31,12 +31,16 @@
   color: var(--accent-secondary) !important;
 }
 
-.text-accent-coral {
-  color: var(--accent-coral) !important;
+.text-success {
+  color: var(--success) !important;
 }
 
-.text-accent-gold {
-  color: var(--accent-gold) !important;
+.text-warning {
+  color: var(--warning) !important;
+}
+
+.text-error {
+  color: var(--error) !important;
 }
 
 /* Legacy color classes - mapped to CSS variables */
@@ -62,6 +66,14 @@
 
 .text-white {
   color: #ffffff !important;
+}
+
+.text-accent-gold {
+  color: var(--accent-primary) !important;
+}
+
+.border-accent {
+  border-color: var(--accent-primary) !important;
 }
 
 /* ==============================================
@@ -90,12 +102,12 @@
   color: #ffffff !important;
 }
 
-.bg-navy-dark {
-  background-color: var(--navy-dark) !important;
+.bg-accent-subtle {
+  background-color: var(--accent-subtle) !important;
 }
 
-.bg-navy-medium {
-  background-color: var(--navy-medium) !important;
+.bg-accent-light {
+  background-color: var(--accent-light) !important;
 }
 
 /* Legacy background classes - mapped to CSS variables */
@@ -108,15 +120,23 @@
 
 .bg-gray-800,
 .bg-transparent {
-  background-color: var(--bg-header) !important;
-  color: var(--text-tertiary) !important;
+  background-color: transparent !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-secondary) !important;
 }
 
 .bg-gray-800:hover,
 .bg-transparent:hover {
-  background-color: var(--bg-secondary) !important;
-  color: var(--text-secondary) !important;
+  background-color: var(--accent-subtle) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--accent-primary) !important;
   transform: translateY(-1px);
+}
+
+/* Card background utilities */
+.bg-navy-dark {
+  background-color: var(--bg-secondary) !important;
+  border: 1.5px solid var(--border-primary) !important;
 }
 
 /* ==============================================
@@ -128,8 +148,8 @@
   color: #ffffff;
 }
 
-.bg-gradient-navy-warm {
-  background: var(--gradient-navy-warm);
+.bg-gradient-teal {
+  background: var(--gradient-teal);
   color: #ffffff;
 }
 
@@ -141,12 +161,21 @@
    BORDER UTILITIES
    ============================================== */
 
-.border-default {
-  border-color: var(--border-color) !important;
+.border-primary {
+  border-color: var(--border-primary) !important;
+}
+
+.border-secondary {
+  border-color: var(--border-secondary) !important;
 }
 
 .border-accent {
   border-color: var(--border-accent) !important;
+}
+
+/* Legacy support */
+.border-default {
+  border-color: var(--border-primary) !important;
 }
 
 /* ==============================================
