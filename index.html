@@ -34,6 +34,7 @@
 
     <!-- Optimized modular CSS -->
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/skills_terminal.css" />
 
     <!-- Force Dark Mode Only -->
     <script>
@@ -525,381 +526,588 @@
               </div>
             </div>
           </section>
-
-          <!-- Skills Section - Completely Redesigned -->
+          <!-- Skills Section - Terminal/Code Editor Aesthetic -->
           <section
             x-show="activeTab === 'skills'"
             x-transition.opacity.duration.300ms
+            class="skills-terminal"
           >
-            <!-- Section Header -->
-            <div class="skills-section-header">
-              <h2>Technical Skills & Expertise</h2>
-              <p>Technologies I work with daily to build amazing solutions</p>
+            <!-- Header -->
+            <div class="skills-terminal-header">
+              <h2 class="skills-terminal-title">$ ls ./skills</h2>
+              <p class="skills-terminal-subtitle">// Technical stack and expertise</p>
             </div>
 
-            <!-- Skill Categories Grid -->
-            <div
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
-            >
-              <!-- Category 1: Core Development -->
-              <div class="skill-category-card core">
-                <div class="category-header">
-                  <div class="icon">
-                    <i class="fas fa-code"></i>
-                  </div>
-                  <h3>Core Development</h3>
-                </div>
-                <div class="skills-grid">
-                  <div class="skill-badge-large">
-                    <i class="fas fa-python skill-icon"></i>
-                    <span class="skill-name">Python</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fab fa-microsoft skill-icon"></i>
-                    <span class="skill-name">C#</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-database skill-icon"></i>
-                    <span class="skill-name">SQL</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fab fa-js skill-icon"></i>
-                    <span class="skill-name">JavaScript</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                </div>
+            <!-- Terminal Container -->
+            <div class="skills-terminal-container" x-data="{ activeSkill: 'languages' }">
+
+              <!-- Tab Navigation -->
+              <div class="terminal-tabs">
+                <button
+                  @click="activeSkill = 'languages'"
+                  :class="{ 'active': activeSkill === 'languages' }"
+                  class="terminal-tab">
+                  <i class="fas fa-code"></i>
+                  <span>languages.ts</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'ai'"
+                  :class="{ 'active': activeSkill === 'ai' }"
+                  class="terminal-tab">
+                  <i class="fas fa-brain"></i>
+                  <span>ai-ml.py</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'testing'"
+                  :class="{ 'active': activeSkill === 'testing' }"
+                  class="terminal-tab">
+                  <i class="fas fa-vial"></i>
+                  <span>testing.spec</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'cloud'"
+                  :class="{ 'active': activeSkill === 'cloud' }"
+                  class="terminal-tab">
+                  <i class="fas fa-cloud"></i>
+                  <span>cloud.yml</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'data'"
+                  :class="{ 'active': activeSkill === 'data' }"
+                  class="terminal-tab">
+                  <i class="fas fa-database"></i>
+                  <span>data.sql</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'backend'"
+                  :class="{ 'active': activeSkill === 'backend' }"
+                  class="terminal-tab">
+                  <i class="fas fa-server"></i>
+                  <span>backend.js</span>
+                </button>
               </div>
 
-              <!-- Category 2: Testing & Automation -->
-              <div class="skill-category-card testing">
-                <div class="category-header">
-                  <div class="icon">
-                    <i class="fas fa-vial"></i>
-                  </div>
-                  <h3>Testing & Automation</h3>
-                </div>
-                <div class="skills-grid">
-                  <div class="skill-badge-large">
-                    <i class="fas fa-robot skill-icon"></i>
-                    <span class="skill-name">Selenium</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-theater-masks skill-icon"></i>
-                    <span class="skill-name">Playwright</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-check-circle skill-icon"></i>
-                    <span class="skill-name">xUnit</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-file-code skill-icon"></i>
-                    <span class="skill-name">SpecFlow</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!-- Content Area -->
+              <div class="terminal-content">
 
-              <!-- Category 3: Cloud & DevOps -->
-              <div class="skill-category-card cloud">
-                <div class="category-header">
-                  <div class="icon">
-                    <i class="fas fa-cloud"></i>
-                  </div>
-                  <h3>Cloud & DevOps</h3>
-                </div>
-                <div class="skills-grid">
-                  <div class="skill-badge-large">
-                    <i class="fab fa-microsoft skill-icon"></i>
-                    <span class="skill-name">Azure DevOps</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                <!-- Languages Panel -->
+                <div x-show="activeSkill === 'languages'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-python terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Python</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fab fa-docker skill-icon"></i>
-                    <span class="skill-name">Docker</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-sync skill-icon"></i>
-                    <span class="skill-name">CI/CD</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-terminal skill-icon"></i>
-                    <span class="skill-name">PowerShell</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <!-- Category 4: AI & Machine Learning -->
-              <div class="skill-category-card ai">
-                <div class="category-header">
-                  <div class="icon">
-                    <i class="fas fa-brain"></i>
-                  </div>
-                  <h3>AI & Machine Learning</h3>
-                </div>
-                <div class="skills-grid">
-                  <div class="skill-badge-large">
-                    <i class="fas fa-robot skill-icon"></i>
-                    <span class="skill-name">LLMs</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-microsoft terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">C# / .NET</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-project-diagram skill-icon"></i>
-                    <span class="skill-name">RAG Architecture</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-link skill-icon"></i>
-                    <span class="skill-name">Langchain</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-users skill-icon"></i>
-                    <span class="skill-name">CrewAI</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <!-- Category 5: Data & Databases -->
-              <div class="skill-category-card data">
-                <div class="category-header">
-                  <div class="icon">
-                    <i class="fas fa-database"></i>
-                  </div>
-                  <h3>Data & Databases</h3>
-                </div>
-                <div class="skills-grid">
-                  <div class="skill-badge-large">
-                    <i class="fas fa-leaf skill-icon"></i>
-                    <span class="skill-name">MongoDB</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-database terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">SQL</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-server skill-icon"></i>
-                    <span class="skill-name">SQL Server</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-elephant skill-icon"></i>
-                    <span class="skill-name">PostgreSQL</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-vector-square skill-icon"></i>
-                    <span class="skill-name">Vector DB</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <!-- Category 6: Frameworks & Tools -->
-              <div class="skill-category-card frameworks">
-                <div class="category-header">
-                  <div class="icon">
-                    <i class="fas fa-cogs"></i>
-                  </div>
-                  <h3>Frameworks & Tools</h3>
-                </div>
-                <div class="skills-grid">
-                  <div class="skill-badge-large">
-                    <i class="fas fa-flask skill-icon"></i>
-                    <span class="skill-name">Flask</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-java terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Java</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-bolt skill-icon"></i>
-                    <span class="skill-name">FastAPI</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fas fa-chart-line skill-icon"></i>
-                    <span class="skill-name">Streamlit</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="skill-badge-large">
-                    <i class="fab fa-microsoft skill-icon"></i>
-                    <span class="skill-name">.NET Core</span>
-                    <div class="stars">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <!-- Featured Expertise Section -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <!-- Expertise 1: Test Automation Expert -->
-              <div class="expertise-card">
-                <div class="expertise-icon">
-                  <i class="fas fa-crosshairs"></i>
-                </div>
-                <h3>Test Automation Expert</h3>
-                <p class="tagline">End-to-end test automation specialist</p>
-                <p class="details">
-                  Selenium Grid · Playwright · CI/CD Integration ·
-                  Multi-platform Testing
-                </p>
-              </div>
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-code terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Julia</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                      </div>
+                    </div>
 
-              <!-- Expertise 2: GxP Compliance Specialist -->
-              <div class="expertise-card">
-                <div class="expertise-icon">
-                  <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3>GxP Compliance Specialist</h3>
-                <p class="tagline">Regulatory-compliant development</p>
-                <p class="details">
-                  SDLC Processes · Validation · Documentation · Quality
-                  Assurance
-                </p>
-              </div>
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-js terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">JavaScript</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
+                    </div>
 
-              <!-- Expertise 3: AI Systems Developer -->
-              <div class="expertise-card">
-                <div class="expertise-icon">
-                  <i class="fas fa-robot"></i>
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-terminal terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Bash / PowerShell</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-code terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">C++</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 65%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-microchip terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">CUDA</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3>AI Systems Developer</h3>
-                <p class="tagline">Building intelligent automation</p>
-                <p class="details">
-                  LLMs · RAG · Agent-based Systems · AI Integration
-                </p>
+
+                <!-- AI & ML Panel -->
+                <div x-show="activeSkill === 'ai'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-robot terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">LLMs & VLMs</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-project-diagram terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">RAG Architecture</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-fire terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">PyTorch</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-link terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">LangChain</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-users terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">CrewAI</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-project-diagram terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">LangGraph</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-lightbulb terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">DSPy</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-microchip terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">vLLM</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-comment terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">NLP</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-fire terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">PySpark</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-paw terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Pandas</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-brain terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Scikit-learn</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Testing Panel -->
+                <div x-show="activeSkill === 'testing'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-robot terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Selenium</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-theater-masks terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Playwright</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-vial terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">PyTest</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-file-code terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">SpecFlow</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-mobile-alt terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Appium</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-seedling terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Cucumber</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-network-wired terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Postman</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cloud & DevOps Panel -->
+                <div x-show="activeSkill === 'cloud'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-aws terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">AWS</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-microsoft terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Azure</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-docker terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Docker</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-dharmachakra terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Kubernetes</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-layer-group terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Terraform</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-sync terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">CI/CD Pipelines</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-database terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Redis</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Data Panel -->
+                <div x-show="activeSkill === 'data'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-server terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">SQL Server</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-database terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">MySQL</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-elephant terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">PostgreSQL</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-leaf terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">MongoDB</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-aws terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">DynamoDB</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-vector-square terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Vector Databases</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-memory terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Mem0</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-chart-line terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Tableau</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-chart-bar terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Power BI</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Backend Panel -->
+                <div x-show="activeSkill === 'backend'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-bolt terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">FastAPI</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-flask terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Flask</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-python terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Django</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-microsoft terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">.NET Core</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </section>
-
-          <style>
-            .skill-tag {
-              @apply bg-navy-dark px-2 py-1 rounded text-xs text-accent-gold hover:badge-animated hover:text-white transition-colors duration-300;
-            }
-          </style>
-
           <!-- Experience Section -->
           <section
             x-show="activeTab === 'experience'"
