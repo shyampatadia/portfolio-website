@@ -15,7 +15,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize lazy loading for images
   initializeLazyLoading();
+
+  // Initialize hash-based tab routing
+  initializeHashRouting();
 });
+
+/**
+ * Initialize hash-based routing for tabs
+ * Allows deep linking to specific tabs (e.g., #blog, #bookshelf)
+ */
+function initializeHashRouting() {
+  const validTabs = ['summary', 'skills', 'experience', 'education', 'projects', 'certifications', 'blog', 'bookshelf'];
+
+  // Handle hash changes (back/forward browser navigation)
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.slice(1);
+    if (hash && validTabs.includes(hash)) {
+      // Dispatch custom event that Alpine.js can listen to
+      window.dispatchEvent(new CustomEvent('tabchange', { detail: { tab: hash } }));
+    }
+  });
+
+  // Check initial hash on page load
+  const initialHash = window.location.hash.slice(1);
+  if (initialHash && validTabs.includes(initialHash)) {
+    // Dispatch event after a short delay to ensure Alpine is initialized
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('tabchange', { detail: { tab: initialHash } }));
+    }, 100);
+  }
+}
 
 /**
  * Initialize skills category filtering
@@ -134,5 +163,6 @@ window.portfolioApp = {
   initializeSkillsFilter,
   initializeSmoothScroll,
   initializeLazyLoading,
+  initializeHashRouting,
   debounce
 };

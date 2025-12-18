@@ -60,3 +60,5 @@ temp/
 backend/.venv
 backend/hello.py
 __pycache__/
+
+*.png

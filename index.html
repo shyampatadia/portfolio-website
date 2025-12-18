@@ -7,106 +7,209 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Tailwind Config -->
     <script src="assets/js/config.js"></script>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
 
     <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Portfolio Logic (must load before Alpine.js initializes) -->
+    <script src="assets/js/portfolio.js"></script>
 
     <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
 
     <!-- Optimized modular CSS -->
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/skills_terminal.css" />
+
+    <!-- Force Dark Mode Only -->
+    <script>
+      (function () {
+        // Always use dark mode
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("portfolio-theme", "dark");
+      })();
+    </script>
+
+    <!-- Meta theme-color for mobile browsers -->
+    <meta name="theme-color" content="#18181b" />
   </head>
 
-  <body
-    x-data="{ activeTab: 'summary', changeTab(tab) { this.activeTab = tab; }, isActiveTab(tab) { return this.activeTab === tab; } }"
-    class="bg-pattern bg-[#101420]"
-  >
+  <body x-data="portfolio" class="bg-pattern">
     <div class="container max-w-[1100px] mx-auto px-4 py-8">
-      <div class="main-card bg-[#1a1f2e] rounded-lg shadow-lg border border-[#232a3a] overflow-hidden">
-        
+      <div class="main-card rounded-lg shadow-lg overflow-hidden">
         <!-- Header Section - Modern Design with Animations -->
-        <div class="header-section p-8 pb-12 bg-[#1a2235] relative overflow-hidden">
+        <div
+          class="header-section p-8 pb-12 relative overflow-hidden"
+          style="background-color: var(--bg-header)"
+        >
           <!-- Animated background elements -->
-          <div class="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#1e3a70] to-transparent opacity-20"></div>
+          <div
+            class="absolute top-0 left-0 right-0 h-40 opacity-20"
+            style="
+              background: linear-gradient(
+                to bottom,
+                var(--navy-dark),
+                transparent
+              );
+            "
+          ></div>
           <div class="absolute inset-0 overflow-hidden">
             <div class="stars-small"></div>
             <div class="stars-medium"></div>
             <div class="stars-large"></div>
-            
+
             <!-- Added floating bubbles -->
-            <div class="floating-bubble absolute top-20 left-1/4 w-20 h-20 rounded-full bg-[#4ba6ef] opacity-5 blur-xl animate-float-slow"></div>
-            <div class="floating-bubble absolute bottom-24 right-1/5 w-32 h-32 rounded-full bg-[#4ba6ef] opacity-5 blur-xl animate-float-medium"></div>
-            <div class="floating-bubble absolute top-1/2 right-1/4 w-16 h-16 rounded-full bg-[#4ba6ef] opacity-5 blur-xl animate-float-fast"></div>
+            <div
+              class="floating-bubble absolute top-20 left-1/4 w-20 h-20 rounded-full opacity-5 blur-xl animate-float-slow"
+              style="background-color: var(--accent-primary)"
+            ></div>
+            <div
+              class="floating-bubble absolute bottom-24 right-1/5 w-32 h-32 rounded-full opacity-5 blur-xl animate-float-medium"
+              style="background-color: var(--accent-primary)"
+            ></div>
+            <div
+              class="floating-bubble absolute top-1/2 right-1/4 w-16 h-16 rounded-full opacity-5 blur-xl animate-float-fast"
+              style="background-color: var(--accent-primary)"
+            ></div>
           </div>
-          
+
+          <!-- Theme Toggle Removed - Dark Mode Only -->
+
           <!-- Main content with proper spacing -->
           <div class="relative z-10 max-w-5xl mx-auto">
-            <div class="flex flex-col md:flex-row items-center md:items-start gap-4 sm:gap-6 md:gap-12">
-              
+            <div
+              class="flex flex-col md:flex-row items-center md:items-start gap-4 sm:gap-6 md:gap-12"
+            >
               <!-- Large circular profile image on the left with animation -->
-              <div class="profile-container relative animate-float mt-4 md:mt-0">
+              <div class="profile-container relative mt-4 md:mt-0">
                 <!-- Glowing border animation -->
-                <div class="absolute -inset-1 bg-gradient-to-r from-[#4ba6ef] via-[#69b9f0] to-[#4ba6ef] rounded-full opacity-70 blur-sm animate-pulse-slow"></div>
-                
+                <div
+                  class="absolute -inset-1 rounded-full opacity-70 blur-sm animate-pulse-slow"
+                  style="background: var(--gradient-warm)"
+                ></div>
+
                 <!-- Image container -->
-                <div class="rounded-full border-4 border-[#4fa2eb] overflow-hidden w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 shadow-lg relative z-10">
-                  <img src="https://avatars.githubusercontent.com/u/65619938?v=4" 
-                      alt="Shyam Patadia" 
-                      class="w-full h-full object-cover" />
+                <div
+                  class="rounded-full border-4 overflow-hidden w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 shadow-lg relative z-10"
+                  style="border-color: var(--accent-primary)"
+                >
+                  <img
+                    src="https://avatars.githubusercontent.com/u/65619938?v=4"
+                    alt="Shyam Patadia"
+                    class="w-full h-full object-cover"
+                  />
                 </div>
-                
-                <!-- Dev badge with subtle animation -->
-                <div class="absolute -bottom-2 sm:-bottom-3 left-1/2 transform -translate-x-1/2 bg-[#2f405e] text-[#c0d6f1] px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-medium shadow-md animate-bounce-subtle z-20">
+
+                <!-- Dev badge -->
+                <!-- <div
+                  class="absolute -bottom-2 sm:-bottom-3 left-1/2 transform -translate-x-1/2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-medium shadow-md z-20"
+                  style="
+                    background: var(--accent-subtle);
+                    color: var(--accent-primary);
+                    border: 1px solid var(--accent-primary);
+                  "
+                >
                   <i class="fas fa-code mr-1 sm:mr-2"></i>Dev
-                </div>
+                </div> -->
               </div>
-              
+
               <!-- Content aligned on the right with animations -->
               <div class="flex-1 text-center md:text-left">
                 <!-- Name with shimmer animation -->
-                <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#4ba6ef] via-[#64dfdf] to-[#80ffdb] name-gradient mb-1">Shyam Patadia</h1>
-                
+                <h1
+                  class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text name-gradient mb-1"
+                  style="background-image: var(--gradient-warm)"
+                >
+                  Shyam Patadia
+                </h1>
+
                 <!-- Role with accent color -->
-                <p class="text-[#4fa2eb] text-lg md:text-xl font-medium mb-5">Software Developer</p>
-                
+                <p
+                  class="text-lg md:text-xl font-medium mb-5"
+                  style="color: var(--accent-primary)"
+                >
+                  Data Scientist & Software Developer
+                </p>
+
                 <!-- Animated skill badges -->
-                <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6">
-                  <span class="badge-animated bg-[#2f405e] text-[#c0d6f1] px-3.5 py-2 rounded-md text-sm inline-flex items-center">
-                    <i class="fas fa-laptop-code mr-2"></i>Full Stack
+                <div
+                  class="flex flex-wrap justify-center md:justify-start gap-3 mb-6"
+                >
+                  <span
+                    class="badge-animated px-3.5 py-2 rounded-md text-sm inline-flex items-center"
+                  >
+                    <i class="fas fa-laptop-code mr-2"></i>Full Stack AI
+                    Engineer
                   </span>
-                  <span class="badge-animated bg-[#2f405e] text-[#c0d6f1] px-3.5 py-2 rounded-md text-sm inline-flex items-center" style="animation-delay: 0.2s;">
+                  <span
+                    class="badge-animated px-3.5 py-2 rounded-md text-sm inline-flex items-center"
+                    style="animation-delay: 0.2s"
+                  >
                     <i class="fas fa-robot mr-2"></i>AI/ML
                   </span>
-                  <span class="badge-animated bg-[#2f405e] text-[#c0d6f1] px-3.5 py-2 rounded-md text-sm inline-flex items-center" style="animation-delay: 0.4s;">
+                  <span
+                    class="badge-animated px-3.5 py-2 rounded-md text-sm inline-flex items-center"
+                    style="animation-delay: 0.4s"
+                  >
                     <i class="fas fa-cloud mr-2"></i>Azure
                   </span>
                 </div>
-                
+
                 <!-- Bio with fade-in animation -->
-                <p class="text-gray-300 max-w-xl md:mx-0 text-base leading-relaxed mb-6 animate-fade-in">
-                  Passionate developer with expertise in automation, GxP compliance, and AI systems. 
-                  Specializing in building scalable solutions and optimizing development workflows.
+                <p
+                  class="text-secondary max-w-xl md:mx-0 text-base leading-relaxed mb-6 animate-fade-in"
+                >
+                  Passionate developer with expertise in automation, GxP
+                  compliance, and AI systems. Specializing in building scalable
+                  solutions and optimizing development workflows.
                 </p>
-                
+
                 <!-- Social links with hover effects -->
-                <div class="flex justify-center md:justify-start gap-4 animate-fade-in" style="animation-delay: 0.3s;">
-                  <a href="https://github.com/shyampatadia" target="_blank" class="social-icon bg-[#262f43] hover:bg-[#1e3a70] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
+                <div
+                  class="flex justify-center md:justify-start gap-4 animate-fade-in"
+                  style="animation-delay: 0.3s"
+                >
+                  <a
+                    href="https://github.com/shyampatadia"
+                    target="_blank"
+                    class="social-icon rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300"
+                    style="background-color: var(--bg-elevated)"
+                  >
                     <i class="fab fa-github"></i>
                   </a>
-                  <a href="https://www.linkedin.com/in/shyampatadia/" target="_blank" class="social-icon bg-[#262f43] hover:bg-[#1e3a70] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
+                  <a
+                    href="https://www.linkedin.com/in/shyampatadia/"
+                    target="_blank"
+                    class="social-icon bg-elevated hover:bg-secondary text-secondary hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300"
+                  >
                     <i class="fab fa-linkedin-in"></i>
                   </a>
-                  <a href="https://twitter.com/shyam300420" target="_blank" class="social-icon bg-[#262f43] hover:bg-[#1e3a70] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
+                  <a
+                    href="https://twitter.com/shyam300420"
+                    target="_blank"
+                    class="social-icon bg-elevated hover:bg-secondary text-secondary hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300"
+                  >
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a href="mailto:shyampatadia22@gmail.com" class="social-icon bg-[#262f43] hover:bg-[#1e3a70] text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
+                  <a
+                    href="mailto:shyampatadia22@gmail.com"
+                    class="social-icon bg-elevated hover:bg-secondary text-secondary hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300"
+                  >
                     <i class="fas fa-envelope"></i>
                   </a>
                 </div>
@@ -114,101 +217,138 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Add animation styles -->
         <style>
           .animate-float {
             animation: float 4s ease-in-out infinite;
           }
-          
+
           .animate-float-slow {
             animation: float 8s ease-in-out infinite;
           }
-          
+
           .animate-float-medium {
             animation: float 6s ease-in-out infinite;
           }
-          
+
           .animate-float-fast {
             animation: float 4s ease-in-out infinite;
           }
-          
+
           .animate-pulse-slow {
             animation: pulse 3s ease-in-out infinite;
           }
-          
+
           .animate-bounce-subtle {
             animation: bounce-subtle 2s ease-in-out infinite;
           }
-          
+
           .animate-shimmer {
             background-size: 200% auto;
             animation: shimmer 3s infinite;
           }
-          
+
           .animate-fade-in {
             animation: fadeIn 1s ease-in-out forwards;
           }
-          
+
           .badge-animated {
             animation: badgePulse 3s ease-in-out infinite;
             box-shadow: 0 0 0 rgba(79, 162, 235, 0);
           }
-          
+
           .social-icon:hover {
             transform: translateY(-3px) scale(1.1);
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
           }
-          
+
           @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+            100% {
+              transform: translateY(0px);
+            }
           }
-          
+
           @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.6; }
+            0% {
+              opacity: 0.6;
+            }
+            50% {
+              opacity: 0.8;
+            }
+            100% {
+              opacity: 0.6;
+            }
           }
-          
+
           @keyframes bounce-subtle {
-            0%, 100% { transform: translateX(-50%) translateY(0); z-index: 20; }
-            50% { transform: translateX(-50%) translateY(-3px); z-index: 20; }
+            0%,
+            100% {
+              transform: translateX(-50%) translateY(0);
+              z-index: 20;
+            }
+            50% {
+              transform: translateX(-50%) translateY(-3px);
+              z-index: 20;
+            }
           }
-          
+
           @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-          }
-          
-          @keyframes nameGradient {
-            0% { 
+            0% {
               background-position: 0% 50%;
-              filter: hue-rotate(0deg) brightness(1); 
             }
-            50% { 
+            50% {
               background-position: 100% 50%;
-              filter: hue-rotate(5deg) brightness(1.05); 
             }
-            100% { 
+            100% {
               background-position: 0% 50%;
-              filter: hue-rotate(0deg) brightness(1); 
             }
           }
-          
+
+          @keyframes nameGradient {
+            0% {
+              background-position: 0% 50%;
+              filter: hue-rotate(0deg) brightness(1);
+            }
+            50% {
+              background-position: 100% 50%;
+              filter: hue-rotate(5deg) brightness(1.05);
+            }
+            100% {
+              background-position: 0% 50%;
+              filter: hue-rotate(0deg) brightness(1);
+            }
+          }
+
           @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
           }
-          
+
           @keyframes badgePulse {
-            0% { box-shadow: 0 0 0 rgba(79, 162, 235, 0); }
-            50% { box-shadow: 0 0 10px rgba(79, 162, 235, 0.3); }
-            100% { box-shadow: 0 0 0 rgba(79, 162, 235, 0); }
+            0% {
+              box-shadow: 0 0 0 rgba(79, 162, 235, 0);
+            }
+            50% {
+              box-shadow: 0 0 10px rgba(79, 162, 235, 0.3);
+            }
+            100% {
+              box-shadow: 0 0 0 rgba(79, 162, 235, 0);
+            }
           }
-          
+
           .name-gradient {
             background-size: 200% auto;
             animation: nameGradient 8s infinite alternate;
@@ -216,102 +356,168 @@
             filter: drop-shadow(0 0 8px rgba(75, 166, 239, 0.3));
           }
         </style>
-        
+
         <!-- Navigation Tabs -->
-        <div class="tabs-container bg-[#141824] p-3 flex justify-center relative">
-          <div class="absolute left-0 top-0 w-full h-full bg-gradient-to-r from-transparent via-[#1e3a70] to-transparent opacity-5"></div>
+        <div class="tabs-container p-3 flex justify-center relative">
+          <div
+            class="absolute left-0 top-0 w-full h-full opacity-5"
+            style="
+              background: linear-gradient(
+                to right,
+                transparent,
+                var(--navy-dark),
+                transparent
+              );
+            "
+          ></div>
           <div class="tabs-wrapper flex space-x-1 relative z-10">
-            <button @click="changeTab('summary')" 
-                    :class="activeTab === 'summary' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
-                    class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
+            <button
+              @click="changeTab('summary')"
+              :class="activeTab === 'summary' ? 'bg-gradient-warm text-white shadow-md' : 'bg-transparent text-tertiary hover:text-secondary'"
+              class="tab-btn px-4 py-2 rounded-md flex items-center transition-all"
+            >
               <i class="fas fa-user-circle mr-2"></i>
               <span>Summary</span>
             </button>
-            
-            <button @click="changeTab('skills')" 
-                    :class="activeTab === 'skills' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
-                    class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
+
+            <button
+              @click="changeTab('skills')"
+              :class="activeTab === 'skills' ? 'bg-gradient-warm text-white shadow-md' : 'bg-transparent text-tertiary hover:text-secondary'"
+              class="tab-btn px-4 py-2 rounded-md flex items-center transition-all"
+            >
               <i class="fas fa-laptop-code mr-2"></i>
               <span>Skills</span>
             </button>
-            
-            <button @click="changeTab('experience')" 
-                    :class="activeTab === 'experience' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
-                    class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
+
+            <button
+              @click="changeTab('experience')"
+              :class="activeTab === 'experience' ? 'bg-gradient-warm text-white shadow-md' : 'bg-transparent text-tertiary hover:text-secondary'"
+              class="tab-btn px-4 py-2 rounded-md flex items-center transition-all"
+            >
               <i class="fas fa-briefcase mr-2"></i>
               <span>Experience</span>
             </button>
-            
-            <button @click="changeTab('education')" 
-                    :class="activeTab === 'education' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
-                    class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
+
+            <button
+              @click="changeTab('education')"
+              :class="activeTab === 'education' ? 'bg-gradient-warm text-white shadow-md' : 'bg-transparent text-tertiary hover:text-secondary'"
+              class="tab-btn px-4 py-2 rounded-md flex items-center transition-all"
+            >
               <i class="fas fa-graduation-cap mr-2"></i>
               <span>Education</span>
             </button>
-            
-            <button @click="changeTab('projects')" 
-                    :class="activeTab === 'projects' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
-                    class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
+
+            <button
+              @click="changeTab('projects')"
+              :class="activeTab === 'projects' ? 'bg-gradient-warm text-white shadow-md' : 'bg-transparent text-tertiary hover:text-secondary'"
+              class="tab-btn px-4 py-2 rounded-md flex items-center transition-all"
+            >
               <i class="fas fa-code-branch mr-2"></i>
               <span>Projects</span>
             </button>
-            
-            <button @click="changeTab('certifications')" 
-                    :class="activeTab === 'certifications' ? 'bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white shadow-md' : 'bg-transparent text-gray-400 hover:text-gray-300'" 
-                    class="tab-btn px-4 py-2 rounded-md flex items-center transition-all">
+
+            <button
+              @click="changeTab('certifications')"
+              :class="activeTab === 'certifications' ? 'bg-gradient-warm text-white shadow-md' : 'bg-transparent text-tertiary hover:text-secondary'"
+              class="tab-btn px-4 py-2 rounded-md flex items-center transition-all"
+            >
               <i class="fas fa-certificate mr-2"></i>
               <span>Certifications</span>
             </button>
+            <button
+              @click="changeTab('blog')"
+              :class="activeTab === 'blog' ? 'bg-gradient-warm text-white shadow-md' : 'bg-transparent text-tertiary hover:text-secondary'"
+              class="tab-btn px-4 py-2 rounded-md flex items-center transition-all"
+            >
+              <i class="fas fa-blog mr-2"></i>
+              <span>Blog</span>
+            </button>
+            <button
+              @click="changeTab('bookshelf')"
+              :class="activeTab === 'bookshelf' ? 'bg-gradient-warm text-white shadow-md' : 'bg-transparent text-tertiary hover:text-secondary'"
+              class="tab-btn px-4 py-2 rounded-md flex items-center transition-all"
+            >
+              <i class="fas fa-book mr-2"></i>
+              <span>Bookshelf</span>
+            </button>
           </div>
         </div>
-        
+
         <!-- Content Sections -->
         <div class="content-container p-6 md:p-8">
           <!-- Summary Section -->
-          <section x-show="activeTab === 'summary'" x-transition.opacity.duration.300ms class="text-gray-300">
+          <section
+            x-show="activeTab === 'summary'"
+            x-transition.opacity.duration.300ms
+            class="text-secondary"
+          >
             <div class="section-header mb-6">
               <h2 class="text-2xl font-bold text-white relative inline-block">
                 <span class="relative z-10">About Me</span>
-                <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-[#4ba6ef] to-transparent"></span>
+                <span
+                  class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-accent-primary to-transparent"
+                ></span>
               </h2>
             </div>
-            
+
             <div class="summary-content">
               <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
                 <div class="md:col-span-3">
-                  <div class="bg-[#232a3a] rounded-lg p-5 shadow-md border border-gray-800">
+                  <div
+                    class="bg-elevated rounded-lg p-5 shadow-md border border-gray-800"
+                  >
                     <p class="mb-4">
-                      Software Engineer with experience in developing test automation infrastructure using Selenium Grid and integrating CI/CD pipelines. Proficient in containerization with Docker and Azure DevOps to streamline deployment processes.
+                      Software Engineer with experience in developing test
+                      automation infrastructure using Selenium Grid and
+                      integrating CI/CD pipelines. Proficient in
+                      containerization with Docker and Azure DevOps to
+                      streamline deployment processes.
                     </p>
                     <p class="mb-4">
-                      Experienced in implementing GxP-compliant software development life cycle (SDLC) processes and developing end-to-end test automation suits for web, desktop, and API applications.
+                      Experienced in implementing GxP-compliant software
+                      development life cycle (SDLC) processes and developing
+                      end-to-end test automation suits for web, desktop, and API
+                      applications.
                     </p>
                     <p class="mb-4">
-                      Skilled in creating automation scripts for data processing using PowerShell and Python. Certified in Azure DevOps, Scrum methodologies, and committed to best practices in software development.
+                      Skilled in creating automation scripts for data processing
+                      using PowerShell and Python. Certified in Azure DevOps,
+                      Scrum methodologies, and committed to best practices in
+                      software development.
                     </p>
                   </div>
                 </div>
-                
+
                 <div class="md:col-span-1">
-                  <div class="bg-[#232a3a] rounded-lg p-5 shadow-md border border-gray-800 h-full">
-                    <h3 class="text-blue-400 font-semibold mb-3 flex items-center">
+                  <div
+                    class="bg-elevated rounded-lg p-5 shadow-md border border-gray-800 h-full"
+                  >
+                    <h3
+                      class="text-accent-primary font-semibold mb-3 flex items-center"
+                    >
                       <i class="fas fa-certificate mr-2"></i>Quick Facts
                     </h3>
                     <ul class="space-y-2 text-sm">
                       <li class="flex items-start">
-                        <i class="fas fa-map-marker-alt text-blue-400 mt-1 mr-2"></i>
+                        <i
+                          class="fas fa-map-marker-alt text-accent-primary mt-1 mr-2"
+                        ></i>
                         <span>Rajkot, Gujarat, India</span>
                       </li>
                       <li class="flex items-start">
-                        <i class="fas fa-language text-blue-400 mt-1 mr-2"></i>
+                        <i
+                          class="fas fa-language text-accent-primary mt-1 mr-2"
+                        ></i>
                         <span>English, Hindi, Gujarati</span>
                       </li>
                       <li class="flex items-start">
-                        <i class="fas fa-clock text-blue-400 mt-1 mr-2"></i>
+                        <i
+                          class="fas fa-clock text-accent-primary mt-1 mr-2"
+                        ></i>
                         <span>3.5+ Years Experience</span>
                       </li>
                       <!-- <li class="flex items-start">
-                        <i class="fas fa-passport text-blue-400 mt-1 mr-2"></i>
+                        <i class="fas fa-passport text-accent-primary mt-1 mr-2"></i>
                         <span>Available for Remote Work</span>
                       </li> -->
                     </ul>
@@ -320,728 +526,1122 @@
               </div>
             </div>
           </section>
-          
-          <!-- Skills Section -->
-          <section x-show="activeTab === 'skills'" x-transition.opacity.duration.300ms class="text-gray-300">
-            <div class="section-header mb-6">
-              <h2 class="text-2xl font-bold text-white relative inline-block">
-                <span class="relative z-10">Technical Skills</span>
-                <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-[#4ba6ef] to-transparent"></span>
-              </h2>
+          <!-- Skills Section - Terminal/Code Editor Aesthetic -->
+          <section
+            x-show="activeTab === 'skills'"
+            x-transition.opacity.duration.300ms
+            class="skills-terminal"
+          >
+            <!-- Header -->
+            <div class="skills-terminal-header">
+              <h2 class="skills-terminal-title">$ ls ./skills</h2>
+              <p class="skills-terminal-subtitle">// Technical stack and expertise</p>
             </div>
-            
-            <!-- Skills Overview -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div class="bg-gradient-to-br from-[#1e3a70] to-[#1c222f] rounded-lg p-6 shadow-lg transform hover:-translate-y-1 transition-transform duration-300">
-                <div class="text-center mb-3">
-                  <div class="inline-flex justify-center items-center w-16 h-16 rounded-full bg-[#232a3a] border-2 border-[#4ba6ef] mb-3">
-                    <i class="fas fa-code text-2xl text-[#4ba6ef]"></i>
-                  </div>
-                  <h3 class="text-lg font-semibold text-white">Development</h3>
-                </div>
-                <div class="space-y-2">
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">Python</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                    </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">C#</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
-                    </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">SQL</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
-                    </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">MongoDB</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
-                    </div>
-                  </div>
-                </div>
+
+            <!-- Terminal Container -->
+            <div class="skills-terminal-container" x-data="{ activeSkill: 'languages' }">
+
+              <!-- Tab Navigation -->
+              <div class="terminal-tabs">
+                <button
+                  @click="activeSkill = 'languages'"
+                  :class="{ 'active': activeSkill === 'languages' }"
+                  class="terminal-tab">
+                  <i class="fas fa-code"></i>
+                  <span>languages.ts</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'ai'"
+                  :class="{ 'active': activeSkill === 'ai' }"
+                  class="terminal-tab">
+                  <i class="fas fa-brain"></i>
+                  <span>ai-ml.py</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'testing'"
+                  :class="{ 'active': activeSkill === 'testing' }"
+                  class="terminal-tab">
+                  <i class="fas fa-vial"></i>
+                  <span>testing.spec</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'cloud'"
+                  :class="{ 'active': activeSkill === 'cloud' }"
+                  class="terminal-tab">
+                  <i class="fas fa-cloud"></i>
+                  <span>cloud.yml</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'data'"
+                  :class="{ 'active': activeSkill === 'data' }"
+                  class="terminal-tab">
+                  <i class="fas fa-database"></i>
+                  <span>data.sql</span>
+                </button>
+
+                <button
+                  @click="activeSkill = 'backend'"
+                  :class="{ 'active': activeSkill === 'backend' }"
+                  class="terminal-tab">
+                  <i class="fas fa-server"></i>
+                  <span>backend.js</span>
+                </button>
               </div>
-              
-              <div class="bg-gradient-to-br from-[#1e3a70] to-[#1c222f] rounded-lg p-6 shadow-lg transform hover:-translate-y-1 transition-transform duration-300">
-                <div class="text-center mb-3">
-                  <div class="inline-flex justify-center items-center w-16 h-16 rounded-full bg-[#232a3a] border-2 border-[#4ba6ef] mb-3">
-                    <i class="fas fa-vial text-2xl text-[#4ba6ef]"></i>
-                  </div>
-                  <h3 class="text-lg font-semibold text-white">Testing & Automation</h3>
-                </div>
-                <div class="space-y-2">
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">Selenium</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
+
+              <!-- Content Area -->
+              <div class="terminal-content">
+
+                <!-- Languages Panel -->
+                <div x-show="activeSkill === 'languages'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-python terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Python</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">Playwright</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-microsoft terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">C# / .NET</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">xUnit</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-database terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">SQL</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">SpecFlow</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-java terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Java</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="bg-gradient-to-br from-[#1e3a70] to-[#1c222f] rounded-lg p-6 shadow-lg transform hover:-translate-y-1 transition-transform duration-300">
-                <div class="text-center mb-3">
-                  <div class="inline-flex justify-center items-center w-16 h-16 rounded-full bg-[#232a3a] border-2 border-[#4ba6ef] mb-3">
-                    <i class="fas fa-server text-2xl text-[#4ba6ef]"></i>
-                  </div>
-                  <h3 class="text-lg font-semibold text-white">DevOps & Cloud</h3>
-                </div>
-                <div class="space-y-2">
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">Azure DevOps</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-code terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Julia</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">Docker</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-js terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">JavaScript</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">CI/CD</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-terminal terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Bash / PowerShell</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm text-blue-200">PowerShell</span>
-                    <div class="flex space-x-1">
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#4ba6ef]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
-                      <span class="w-2 h-2 rounded-full bg-[#232a3a]"></span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-code terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">C++</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 65%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-microchip terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">CUDA</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            
-            <!-- Skills Categories -->
-            <div class="bg-[#1c222f] rounded-xl shadow-lg border border-[#232a3a] overflow-hidden mb-8">
-              <div class="p-5 bg-gradient-to-r from-[#232a3a] to-[#1c222f]">
-                <h3 class="text-xl font-semibold text-white">Technical Expertise</h3>
-                <p class="text-gray-400 text-sm mt-1">Grouped by category and specialization</p>
-              </div>
-              
-              <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#232a3a]">
-                <!-- Column 1 -->
-                <div class="p-5">
-                  <div class="mb-6">
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-code text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">Programming</h4>
+
+                <!-- AI & ML Panel -->
+                <div x-show="activeSkill === 'ai'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-robot terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">LLMs & VLMs</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
                     </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">Python</span>
-                      <span class="skill-tag">C#</span>
-                      <span class="skill-tag">SQL</span>
-                      <span class="skill-tag">Julia</span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-project-diagram terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">RAG Architecture</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div class="mb-6">
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-database text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">Data & Storage</h4>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-fire terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">PyTorch</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">MongoDB</span>
-                      <span class="skill-tag">SQL Server</span>
-                      <span class="skill-tag">PostgreSQL</span>
-                      <span class="skill-tag">Vector DB</span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-link terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">LangChain</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div>
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-brain text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">AI & ML</h4>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-users terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">CrewAI</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">LLMs</span>
-                      <span class="skill-tag">RAG</span>
-                      <span class="skill-tag">Langchain</span>
-                      <span class="skill-tag">CrewAI</span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-project-diagram terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">LangGraph</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                
-                <!-- Column 2 -->
-                <div class="p-5">
-                  <div class="mb-6">
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-vial text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">Testing</h4>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-lightbulb terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">DSPy</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
                     </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">Selenium</span>
-                      <span class="skill-tag">Playwright</span>
-                      <span class="skill-tag">xUnit</span>
-                      <span class="skill-tag">SpecFlow</span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-microchip terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">vLLM</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div class="mb-6">
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-laptop-code text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">Frameworks</h4>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-comment terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">NLP</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">Flask</span>
-                      <span class="skill-tag">FAST API</span>
-                      <span class="skill-tag">Streamlit</span>
-                      <span class="skill-tag">.NET Core</span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-fire terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">PySpark</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div>
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-window-restore text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">UI Tools</h4>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-paw terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Pandas</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
                     </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">Appium</span>
-                      <span class="skill-tag">WindowsDriver</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Column 3 -->
-                <div class="p-5">
-                  <div class="mb-6">
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-server text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">DevOps</h4>
-                    </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">Azure DevOps</span>
-                      <span class="skill-tag">Docker</span>
-                      <span class="skill-tag">CI/CD</span>
-                      <span class="skill-tag">PowerShell</span>
-                    </div>
-                  </div>
-                  
-                  <div class="mb-6">
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-tasks text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">Management</h4>
-                    </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">Agile</span>
-                      <span class="skill-tag">Jira</span>
-                      <span class="skill-tag">SDLC</span>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div class="flex items-center mb-3">
-                      <i class="fas fa-flask text-[#4ba6ef] mr-3"></i>
-                      <h4 class="text-white font-medium">Compliance</h4>
-                    </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                      <span class="skill-tag">GxP</span>
-                      <span class="skill-tag">Technical Docs</span>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-brain terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Scikit-learn</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            
-            <!-- Key expertise -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div class="bg-[#1c222f] rounded-lg p-5 border border-[#232a3a] text-center transform transition-transform duration-300 hover:scale-105">
-                <div class="flex justify-center mb-4">
-                  <div class="w-20 h-20 rounded-full bg-gradient-to-r from-[#1e3a70] to-[#4ba6ef] flex items-center justify-center">
-                    <i class="fas fa-robot text-3xl text-white"></i>
+
+                <!-- Testing Panel -->
+                <div x-show="activeSkill === 'testing'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-robot terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Selenium</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-theater-masks terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Playwright</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-vial terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">PyTest</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-file-code terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">SpecFlow</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-mobile-alt terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Appium</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-seedling terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Cucumber</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-network-wired terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Postman</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <h3 class="text-white font-semibold mb-2">Automation Expert</h3>
-                <p class="text-sm text-gray-400">End-to-end test automation with Selenium, Playwright, and CI/CD integration</p>
-              </div>
-              
-              <div class="bg-[#1c222f] rounded-lg p-5 border border-[#232a3a] text-center transform transition-transform duration-300 hover:scale-105">
-                <div class="flex justify-center mb-4">
-                  <div class="w-20 h-20 rounded-full bg-gradient-to-r from-[#1e3a70] to-[#4ba6ef] flex items-center justify-center">
-                    <i class="fas fa-flask text-3xl text-white"></i>
+
+                <!-- Cloud & DevOps Panel -->
+                <div x-show="activeSkill === 'cloud'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-aws terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">AWS</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-microsoft terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Azure</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-docker terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Docker</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-dharmachakra terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Kubernetes</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-layer-group terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Terraform</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-sync terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">CI/CD Pipelines</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-database terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Redis</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <h3 class="text-white font-semibold mb-2">GxP Compliance</h3>
-                <p class="text-sm text-gray-400">Specialized in regulatory compliant development practices and validation</p>
-              </div>
-              
-              <div class="bg-[#1c222f] rounded-lg p-5 border border-[#232a3a] text-center transform transition-transform duration-300 hover:scale-105">
-                <div class="flex justify-center mb-4">
-                  <div class="w-20 h-20 rounded-full bg-gradient-to-r from-[#1e3a70] to-[#4ba6ef] flex items-center justify-center">
-                    <i class="fas fa-brain text-3xl text-white"></i>
+
+                <!-- Data Panel -->
+                <div x-show="activeSkill === 'data'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-server terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">SQL Server</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-database terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">MySQL</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-elephant terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">PostgreSQL</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-leaf terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">MongoDB</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-aws terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">DynamoDB</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-vector-square terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Vector Databases</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-memory terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Mem0</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-chart-line terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Tableau</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-chart-bar terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Power BI</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <h3 class="text-white font-semibold mb-2">AI Integration</h3>
-                <p class="text-sm text-gray-400">Experience with LLMs, RAG architectures and AI agent implementation</p>
+
+                <!-- Backend Panel -->
+                <div x-show="activeSkill === 'backend'" class="terminal-panel">
+                  <div class="terminal-skills-grid">
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-bolt terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">FastAPI</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fas fa-flask terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Flask</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-python terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">Django</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="terminal-skill-card">
+                      <div class="terminal-skill-header">
+                        <i class="fab fa-microsoft terminal-skill-icon"></i>
+                        <span class="terminal-skill-name">.NET Core</span>
+                      </div>
+                      <div class="terminal-progress">
+                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </section>
-          
-          <style>
-            .skill-tag {
-              @apply bg-[#1e3a70] px-2 py-1 rounded text-xs text-blue-200 hover:bg-[#4ba6ef] hover:text-white transition-colors duration-300;
-            }
-          </style>
-          
           <!-- Experience Section -->
-          <section x-show="activeTab === 'experience'" x-transition.opacity.duration.300ms class="text-gray-300 section-animation">
-            <!-- Live background elements -->
-            <div class="section-bg">
-              <div class="particles-small">
-                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-              </div>
-              <div class="particles-medium">
-                <div></div><div></div><div></div><div></div><div></div>
-              </div>
-              <div class="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#1e3a70] to-transparent opacity-10"></div>
-            </div>
-            
-            <div class="section-header mb-6 relative z-10">
-              <h2 class="text-2xl font-bold text-white relative inline-block shimmer">
+          <section
+            x-show="activeTab === 'experience'"
+            x-transition.opacity.duration.300ms
+            class="text-secondary section-animation"
+          >
+            <div class="section-header mb-8">
+              <h2
+                class="font-bold relative inline-block"
+                style="font-size: 36px; color: var(--text-primary)"
+              >
                 <span class="relative z-10">Work Experience</span>
-                <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-[#4ba6ef] to-transparent"></span>
+                <span
+                  class="absolute -bottom-1 left-0 w-24 h-1"
+                  style="background: var(--accent-primary)"
+                ></span>
               </h2>
+              <p class="mt-3" style="color: var(--text-secondary); font-size: 18px">
+                xLM Continuous Validation - Jacksonville, FL (2021-2025)
+              </p>
             </div>
-            
-            <div class="experience-timeline relative z-10 timeline-animate-in active">
-              <!-- Current Position -->
-              <div class="experience-card bg-[#1c222f] rounded-lg p-0 mb-6 border border-[#232a3a] shadow-lg relative overflow-hidden timeline-item card-hover">
-                <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#4ba6ef] to-[#1e3a70]"></div>
-                
-                <!-- Header Section -->
-                <div class="p-6 pb-2 bg-[#232a3a] bg-opacity-50">
-                  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div class="flex items-center">
-                      <div class="mr-4 p-3 bg-[#1e3a70] rounded-lg shadow-lg highlight-pulse">
-                        <i class="fas fa-briefcase text-2xl text-[#4ba6ef] icon-pulse"></i>
-                      </div>
-                      <div>
-                        <h3 class="text-xl font-bold text-white">Senior Developer</h3>
-                        <p class="text-[#4ba6ef] flex items-center mt-1">
-                          <i class="fas fa-building mr-2"></i>
-                          xLM Continuous Validation LLC, Jacksonville, FL
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <span class="bg-[#1e3a70] text-blue-200 px-3 py-1.5 rounded-full inline-flex items-center floating-badge shadow-md">
-                        <i class="fas fa-calendar-alt mr-2"></i>
-                        <span>July 2021 - Present</span>
-                      </span>
-                    </div>
+
+            <div class="experience-timeline-new">
+
+              <!-- Position 1: Lead Software Engineer - AI -->
+              <div class="experience-card-modern">
+                <div class="experience-header">
+                  <div class="experience-title-group">
+                    <h3 class="experience-position">Lead Software Engineer - AI</h3>
+                    <span class="experience-date">
+                      <i class="fas fa-calendar-alt"></i>Nov 2023 – Jul 2025
+                    </span>
+                  </div>
+                  <div class="experience-tldr">
+                    <div class="tldr-label">TL;DR</div>
+                    <p>Architected AI test automation platform with RAG workflows, reducing manual effort by 90% while leading cross-functional team of 5 engineers.</p>
                   </div>
                 </div>
-                
-                <!-- Content Section -->
-                <div class="p-6">
-                  <!-- Key Responsibilities -->
-                  <div class="mb-6">
-                    <h4 class="text-lg font-semibold text-[#4ba6ef] mb-3 flex items-center">
-                      <i class="fas fa-tasks mr-2"></i>
-                      <span>Key Responsibilities</span>
-                    </h4>
-                    
-                    <ul class="space-y-3 pl-2">
-                      <li class="flex items-start">
-                        <div class="mr-3 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#4ba6ef]"></div>
-                        <span>Led development team of AI Agent for GxP-focused web application validation, managing functional and technical aspects</span>
-                      </li>
-                      <li class="flex items-start">
-                        <div class="mr-3 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#4ba6ef]"></div>
-                        <span>Developed end to end automation suits for validation of DMS, LMS, and ERP systems, implemented various CI/CD pieplines for the same</span>
-                      </li>
+
+                <div class="experience-content-grid">
+                  <div class="experience-achievements">
+                    <h4 class="section-title">Key Achievements</h4>
+                    <ul class="achievement-list">
+                      <li>Led cross-functional team delivering cIV AI Platform with RAG & prompt-engineering workflows, cutting manual test-authoring by 90% (21 CFR Part 11 compliant)</li>
+                      <li>Designed GPU-accelerated inference with PyTorch/vLLM on AWS/Azure with robust evaluation loops</li>
+                      <li>Instrumented Git/GitHub CI/CD pipelines and automated release governance with standardized SOPs</li>
+                      <li>Orchestrated Kubernetes/Selenium Grid device-farm for parallel experimentation</li>
+                      <li>Led SQL Server to cloud migration with extensive PowerShell automation</li>
                     </ul>
                   </div>
-                  
-                  <!-- Key Achievements -->
-                  <div class="mb-6">
-                    <h4 class="text-lg font-semibold text-[#4ba6ef] mb-3 flex items-center">
-                      <i class="fas fa-award mr-2"></i>
-                      <span>Key Achievements</span>
-                    </h4>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div class="bg-[#232a3a] bg-opacity-50 p-4 rounded-lg border border-[#354056] card-hover">
-                        <div class="flex items-start">
-                          <div class="mr-3 p-2 bg-[#1e3a70] rounded-md">
-                            <i class="fas fa-cogs text-[#4ba6ef]"></i>
-                          </div>
-                          <div>
-                            <h5 class="font-medium text-white mb-1">Infrastructure Optimization</h5>
-                            <p class="text-sm">Optimized and containerized internal applications, reducing Docker image sizes by 40% and improving deployment workflows</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="bg-[#232a3a] bg-opacity-50 p-4 rounded-lg border border-[#354056] card-hover">
-                        <div class="flex items-start">
-                          <div class="mr-3 p-2 bg-[#1e3a70] rounded-md">
-                            <i class="fas fa-robot text-[#4ba6ef]"></i>
-                          </div>
-                          <div>
-                            <h5 class="font-medium text-white mb-1">AI Agent Development</h5>
-                            <p class="text-sm">Developed cutting-edge AI agents for automated validation, reducing manual testing time by 60%</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="bg-[#232a3a] bg-opacity-50 p-4 rounded-lg border border-[#354056] card-hover">
-                        <div class="flex items-start">
-                          <div class="mr-3 p-2 bg-[#1e3a70] rounded-md">
-                            <i class="fas fa-code-branch text-[#4ba6ef]"></i>
-                          </div>
-                          <div>
-                            <h5 class="font-medium text-white mb-1">Version Control Implementation</h5>
-                            <p class="text-sm">Developed end-to-end implementation of version control system across the company, wrote an SOP for the same</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="bg-[#232a3a] bg-opacity-50 p-4 rounded-lg border border-[#354056] card-hover">
-                        <div class="flex items-start">
-                          <div class="mr-3 p-2 bg-[#1e3a70] rounded-md">
-                            <i class="fas fa-flask text-[#4ba6ef]"></i>
-                          </div>
-                          <div>
-                            <h5 class="font-medium text-white mb-1">GxP-Compliant SDLC</h5>
-                            <p class="text-sm">Designed and managed a GxP-compliant SDLC process centered on Jira, integrating various tools</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Technical Projects -->
-                  <div>
-                    <h4 class="text-lg font-semibold text-[#4ba6ef] mb-3 flex items-center">
-                      <i class="fas fa-laptop-code mr-2"></i>
-                      <span>Technical Contributions</span>
-                    </h4>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div class="bg-[#232a3a] bg-opacity-30 p-3 rounded-lg border border-[#354056] text-center card-hover">
-                        <div class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-[#1e3a70] mb-2 highlight-pulse">
-                          <i class="fas fa-window-restore text-sm text-[#4ba6ef]"></i>
-                        </div>
-                        <h5 class="text-sm font-medium text-white mb-1">Selenium Grid</h5>
-                        <p class="text-xs text-gray-400">Setup for scalable automated testing</p>
-                      </div>
-                      
-                      <div class="bg-[#232a3a] bg-opacity-30 p-3 rounded-lg border border-[#354056] text-center card-hover">
-                        <div class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-[#1e3a70] mb-2 highlight-pulse">
-                          <i class="fas fa-cloud text-sm text-[#4ba6ef]"></i>
-                        </div>
-                        <h5 class="text-sm font-medium text-white mb-1">Azure Storage APIs</h5>
-                        <p class="text-xs text-gray-400">Data processing and routine backups</p>
-                      </div>
-                      
-                      <div class="bg-[#232a3a] bg-opacity-30 p-3 rounded-lg border border-[#354056] text-center card-hover">
-                        <div class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-[#1e3a70] mb-2 highlight-pulse">
-                          <i class="fas fa-terminal text-sm text-[#4ba6ef]"></i>
-                        </div>
-                        <h5 class="text-sm font-medium text-white mb-1">PowerShell Automation</h5>
-                        <p class="text-xs text-gray-400">Data processing automation scripts</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Technologies Used -->
-                  <div class="mt-6 pt-4 border-t border-[#232a3a]">
-                    <h4 class="text-sm uppercase tracking-wider text-gray-400 mb-3">Technologies Used</h4>
-                    <div class="flex flex-wrap gap-2">
-                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Python</span>
-                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">C#</span>
-                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Selenium</span>
-                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Docker</span>
-                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Azure DevOps</span>
-                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">PowerShell</span>
-                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">LLMs</span>
-                      <span class="bg-[#1e3a70] bg-opacity-30 px-3 py-1 rounded-full text-xs text-blue-200 floating-badge">Jira</span>
+
+                  <div class="experience-tools">
+                    <h4 class="section-title">Technologies</h4>
+                    <div class="tools-grid">
+                      <span class="tool-badge"><i class="fas fa-brain"></i>LLMs & VLMs</span>
+                      <span class="tool-badge"><i class="fas fa-robot"></i>CrewAI</span>
+                      <span class="tool-badge"><i class="fas fa-project-diagram"></i>LangGraph</span>
+                      <span class="tool-badge"><i class="fas fa-database"></i>Vector DBs</span>
+                      <span class="tool-badge"><i class="fas fa-fire"></i>PyTorch</span>
+                      <span class="tool-badge"><i class="fas fa-microchip"></i>vLLM</span>
+                      <span class="tool-badge"><i class="fab fa-aws"></i>AWS</span>
+                      <span class="tool-badge"><i class="fab fa-microsoft"></i>Azure</span>
+                      <span class="tool-badge"><i class="fas fa-dharmachakra"></i>Kubernetes</span>
+                      <span class="tool-badge"><i class="fas fa-code-branch"></i>Git/GitHub</span>
+                      <span class="tool-badge"><i class="fab fa-microsoft"></i>Azure DevOps</span>
+                      <span class="tool-badge"><i class="fas fa-terminal"></i>PowerShell</span>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <!-- Previous work experience - can be expanded later -->
-              <div class="relative pl-8 before:content-[''] before:absolute before:left-3 before:top-0 before:bottom-0 before:w-0.5 before:bg-[#232a3a]">
-                <div class="relative mb-6 timeline-item">
-                  <div class="absolute left-[-30px] top-1 w-6 h-6 rounded-full bg-[#1e3a70] border-2 border-[#4ba6ef] shadow-md highlight-pulse"></div>
-                  <div class="flex items-center mb-1">
-                    <h4 class="text-white font-medium">Previous Work Experience</h4>
-                    <span class="ml-auto text-blue-200 text-sm">2020 - 2021</span>
+
+              <!-- Position 2: SDET II -->
+              <div class="experience-card-modern">
+                <div class="experience-header">
+                  <div class="experience-title-group">
+                    <h3 class="experience-position">SDET II</h3>
+                    <span class="experience-date">
+                      <i class="fas fa-calendar-alt"></i>Sep 2022 – Oct 2023
+                    </span>
                   </div>
-                  <p class="text-sm text-gray-400">Previous positions and internships not listed. Contact for more details.</p>
+                  <div class="experience-tldr">
+                    <div class="tldr-label">TL;DR</div>
+                    <p>Built enterprise automation frameworks reducing deployment cycles by 40%, led xLMCore NuGet development through 15+ versions.</p>
+                  </div>
                 </div>
-                
-                <div class="relative timeline-item">
-                  <div class="absolute left-[-30px] top-0 w-6 h-6 rounded-full bg-[#1e3a70] border-2 border-[#4ba6ef] shadow-md highlight-pulse"></div>
-                  <div class="bg-[#232a3a] bg-opacity-30 p-4 rounded-lg border border-[#354056] shadow-sm">
-                    <h4 class="text-white font-medium mb-2">Looking for My Next Challenge</h4>
-                    <p class="text-sm text-gray-400">Open to exciting opportunities in software development, automation, and AI integration. Let's connect to discuss how I can contribute to your team.</p>
-                    <a href="mailto:shyampatadia22@gmail.com" class="inline-flex items-center mt-3 text-[#4ba6ef] hover:text-white transition-colors duration-200">
-                      <i class="fas fa-envelope mr-2"></i>
-                      <span>Contact Me</span>
-                    </a>
+
+                <div class="experience-content-grid">
+                  <div class="experience-achievements">
+                    <h4 class="section-title">Key Achievements</h4>
+                    <ul class="achievement-list">
+                      <li>Designed end-to-end automation frameworks with Selenium/Playwright/SpecFlow, cutting deployment cycles by 40%</li>
+                      <li>Led xLMCore NuGet package development (v0.0.1 to v2.0.15) for GxP test automation</li>
+                      <li>Integrated test suites into CI/CD pipelines with Azure DevOps and Docker</li>
+                      <li>Developed Jira/Azure DevOps integration eliminating duplicate reporting</li>
+                      <li>Conducted comprehensive API testing ensuring data integrity and system reliability</li>
+                    </ul>
+                  </div>
+
+                  <div class="experience-tools">
+                    <h4 class="section-title">Technologies</h4>
+                    <div class="tools-grid">
+                      <span class="tool-badge"><i class="fas fa-robot"></i>Selenium</span>
+                      <span class="tool-badge"><i class="fas fa-theater-masks"></i>Playwright</span>
+                      <span class="tool-badge"><i class="fas fa-vial"></i>SpecFlow</span>
+                      <span class="tool-badge"><i class="fas fa-boxes"></i>NuGet</span>
+                      <span class="tool-badge"><i class="fab fa-microsoft"></i>Azure DevOps</span>
+                      <span class="tool-badge"><i class="fab fa-docker"></i>Docker</span>
+                      <span class="tool-badge"><i class="fab fa-jira"></i>Jira</span>
+                      <span class="tool-badge"><i class="fas fa-network-wired"></i>Postman</span>
+                      <span class="tool-badge"><i class="fas fa-code"></i>C#/.NET</span>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <!-- Position 3: SDET I -->
+              <div class="experience-card-modern">
+                <div class="experience-header">
+                  <div class="experience-title-group">
+                    <h3 class="experience-position">SDET I</h3>
+                    <span class="experience-date">
+                      <i class="fas fa-calendar-alt"></i>Jul 2021 – Aug 2022
+                    </span>
+                  </div>
+                  <div class="experience-tldr">
+                    <div class="tldr-label">TL;DR</div>
+                    <p>Automated enterprise application validation ensuring 21 CFR Part 11 compliance, deployed real-time Power BI dashboards for test visibility.</p>
+                  </div>
+                </div>
+
+                <div class="experience-content-grid">
+                  <div class="experience-achievements">
+                    <h4 class="section-title">Key Achievements</h4>
+                    <ul class="achievement-list">
+                      <li>Performed UAT and API testing with SpecFlow ensuring 21 CFR Part 11 compliance</li>
+                      <li>Automated validation for enterprise apps (Veeva, Sage, Rhythm) using Selenium/Appium/WinAppDriver</li>
+                      <li>Established end-to-end reporting pipeline with automated data ingestion</li>
+                      <li>Deployed live Power BI dashboards for real-time test execution visibility</li>
+                    </ul>
+                  </div>
+
+                  <div class="experience-tools">
+                    <h4 class="section-title">Technologies</h4>
+                    <div class="tools-grid">
+                      <span class="tool-badge"><i class="fas fa-vial"></i>SpecFlow</span>
+                      <span class="tool-badge"><i class="fas fa-robot"></i>Selenium</span>
+                      <span class="tool-badge"><i class="fas fa-mobile-alt"></i>Appium</span>
+                      <span class="tool-badge"><i class="fab fa-windows"></i>WinAppDriver</span>
+                      <span class="tool-badge"><i class="fas fa-chart-bar"></i>Power BI</span>
+                      <span class="tool-badge"><i class="fas fa-boxes"></i>xLMCore</span>
+                      <span class="tool-badge"><i class="fas fa-code"></i>C#/.NET</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </section>
           <!-- Education Section -->
-          <section x-show="activeTab === 'education'" x-transition.opacity.duration.300ms class="text-gray-300">
+          <section
+            x-show="activeTab === 'education'"
+            x-transition.opacity.duration.300ms
+            class="text-secondary"
+          >
             <div class="section-header mb-6">
               <h2 class="text-2xl font-bold text-white relative inline-block">
                 <span class="relative z-10">Education</span>
-                <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-[#4ba6ef] to-transparent"></span>
+                <span
+                  class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-accent-primary to-transparent"
+                ></span>
               </h2>
             </div>
-            
-            <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] shadow-lg overflow-hidden">
+
+            <!-- MS Data Science -->
+            <div
+              class="rounded-lg border border-default shadow-lg overflow-hidden mb-6"
+            >
               <!-- Degree Header -->
-              <div class="bg-[#232a3a] p-6 relative">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+              <div class="bg-elevated p-6 relative">
+                <div
+                  class="flex flex-col md:flex-row md:items-center md:justify-between"
+                >
                   <div class="mb-4 md:mb-0">
-                    <h3 class="text-xl font-bold text-white">Bachelor of Science in Applied Statistics & Analytics</h3>
-                    <p class="text-[#4ba6ef] mt-1 flex items-center">
+                    <h3 class="text-xl font-bold text-white">
+                      Master of Science in Data Science
+                    </h3>
+                    <p class="text-accent-primary mt-1 flex items-center">
+                      <i class="fas fa-university mr-2"></i>
+                      Worcester Polytechnic Institute, Worcester, MA
+                    </p>
+                  </div>
+
+                  <div class="space-y-2">
+                    <div class="flex items-center text-accent-gold">
+                      <i class="fas fa-calendar-alt mr-2"></i>
+                      <span>August 2025 - Present</span>
+                    </div>
+                    <div class="flex items-center text-accent-gold">
+                      <i class="fas fa-award mr-2"></i>
+                      <span>GPA: 4.00/4.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Program Details -->
+              <div class="p-6">
+                <div class="bg-elevated rounded-lg p-5 border border-default">
+                  <h4
+                    class="text-base font-semibold text-white mb-4 pb-2 border-b border-accent flex items-center"
+                  >
+                    <i
+                      class="fas fa-graduation-cap text-accent-primary mr-2"
+                    ></i>
+                    <span>Program Overview</span>
+                  </h4>
+                  <p class="text-secondary mb-3">
+                    Currently pursuing advanced graduate studies in Data Science
+                    with focus on machine learning, statistical modeling, and
+                    data engineering.
+                  </p>
+                  <p class="text-secondary">
+                    <span class="text-white font-medium"
+                      >Semester 1 Completed:</span
+                    >
+                    Achieved perfect 4.00 GPA in first semester coursework.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bachelor's Degree -->
+            <div
+              class="rounded-lg border border-default shadow-lg overflow-hidden"
+            >
+              <!-- Degree Header -->
+              <div class="bg-elevated p-6 relative">
+                <div
+                  class="flex flex-col md:flex-row md:items-center md:justify-between"
+                >
+                  <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold text-white">
+                      Bachelor of Science in Applied Statistics & Analytics
+                    </h3>
+                    <p class="text-accent-primary mt-1 flex items-center">
                       <i class="fas fa-university mr-2"></i>
                       NMIMS University, Mumbai, India
                     </p>
                   </div>
-                  
+
                   <div class="space-y-2">
-                    <div class="flex items-center text-blue-200">
+                    <div class="flex items-center text-accent-gold">
                       <i class="fas fa-calendar-alt mr-2"></i>
                       <span>2017 - 2021</span>
                     </div>
-                    <div class="flex items-center text-blue-200">
+                    <div class="flex items-center text-accent-gold">
                       <i class="fas fa-award mr-2"></i>
                       <span>CGPA: 2.95/4.00</span>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               <!-- Program Details -->
               <div class="p-6">
-                <div class="bg-[#232a3a] rounded-lg p-5 mb-6 border border-[#2c3346]">
-                  <h4 class="text-lg font-semibold text-white mb-4 pb-2 border-b border-[#354056] flex items-center">
-                    <i class="fas fa-graduation-cap text-[#4ba6ef] mr-2"></i>
+                <div
+                  class="bg-elevated rounded-lg p-5 mb-6 border border-default"
+                >
+                  <h4
+                    class="text-lg font-semibold text-white mb-4 pb-2 border-b border-accent flex items-center"
+                  >
+                    <i
+                      class="fas fa-graduation-cap text-accent-primary mr-2"
+                    ></i>
                     <span>Program Overview</span>
                   </h4>
-                  
+
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <ul class="space-y-3">
                         <li class="flex items-start">
-                          <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2"></i>
-                          <span>Completed an intensive 151-credit program (3-year curriculum)</span>
+                          <i
+                            class="fas fa-check-circle text-accent-primary mt-1 mr-2"
+                          ></i>
+                          <span
+                            >Completed an intensive 151-credit program (3-year
+                            curriculum)</span
+                          >
                         </li>
                         <li class="flex items-start">
-                          <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2"></i>
-                          <span>Credit equivalencies: Approx. 302 ECTS credits; comparable to 120-130 credits in the American system</span>
+                          <i
+                            class="fas fa-check-circle text-accent-primary mt-1 mr-2"
+                          ></i>
+                          <span
+                            >Credit equivalencies: Approx. 302 ECTS credits;
+                            comparable to 120-130 credits in the American
+                            system</span
+                          >
                         </li>
                         <li class="flex items-start">
-                          <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2"></i>
-                          <span>Core focus: Statistics, Data Analysis, Programming, and Applied Mathematics</span>
+                          <i
+                            class="fas fa-check-circle text-accent-primary mt-1 mr-2"
+                          ></i>
+                          <span
+                            >Core focus: Statistics, Data Analysis, Programming,
+                            and Applied Mathematics</span
+                          >
                         </li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <ul class="space-y-3">
                         <li class="flex items-start">
-                          <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2"></i>
-                          <span>Developed proficiency in R, Python, and C programming languages</span>
+                          <i
+                            class="fas fa-check-circle text-accent-primary mt-1 mr-2"
+                          ></i>
+                          <span
+                            >Developed proficiency in R, Python, and C
+                            programming languages</span
+                          >
                         </li>
                         <li class="flex items-start">
-                          <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2"></i>
-                          <span>Engaged in multiple research projects, applying statistical concepts to real-world scenarios</span>
+                          <i
+                            class="fas fa-check-circle text-accent-primary mt-1 mr-2"
+                          ></i>
+                          <span
+                            >Engaged in multiple research projects, applying
+                            statistical concepts to real-world scenarios</span
+                          >
                         </li>
                         <li class="flex items-start">
-                          <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2"></i>
-                          <span>Key courses: Data Science, Financial Risk Modeling, Time Series Analysis, Multivariate Statistics</span>
+                          <i
+                            class="fas fa-check-circle text-accent-primary mt-1 mr-2"
+                          ></i>
+                          <span
+                            >Key courses: Data Science, Financial Risk Modeling,
+                            Time Series Analysis, Multivariate Statistics</span
+                          >
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <!-- Skills Developed -->
-                  <div class="bg-[#232a3a] rounded-lg p-5 border border-[#2c3346]">
-                    <h4 class="text-lg font-semibold text-white mb-4 pb-2 border-b border-[#354056] flex items-center">
-                      <i class="fas fa-tools text-[#4ba6ef] mr-2"></i>
+                  <div class="bg-elevated rounded-lg p-5 border border-default">
+                    <h4
+                      class="text-lg font-semibold text-white mb-4 pb-2 border-b border-accent flex items-center"
+                    >
+                      <i class="fas fa-tools text-accent-primary mr-2"></i>
                       <span>Key Skills Developed</span>
                     </h4>
-                    
+
                     <ul class="space-y-3">
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-chart-line text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-chart-line text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">Statistical Analysis:</span> Hypothesis testing, regression analysis, experimental design</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >Statistical Analysis:</span
+                          >
+                          Hypothesis testing, regression analysis, experimental
+                          design</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-database text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-database text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">Data Science:</span> Machine learning algorithms, predictive modeling, data visualization</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >Data Science:</span
+                          >
+                          Machine learning algorithms, predictive modeling, data
+                          visualization</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-code text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-code text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">Programming:</span> R, Python, C, SQL for data manipulation and analysis</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >Programming:</span
+                          >
+                          R, Python, C, SQL for data manipulation and
+                          analysis</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-coins text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-coins text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">Financial Analysis:</span> Risk assessment, actuarial science, financial modeling</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >Financial Analysis:</span
+                          >
+                          Risk assessment, actuarial science, financial
+                          modeling</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-microscope text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-microscope text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">Research Methods:</span> Data collection, analysis, and interpretation of complex datasets</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >Research Methods:</span
+                          >
+                          Data collection, analysis, and interpretation of
+                          complex datasets</span
+                        >
                       </li>
                     </ul>
                   </div>
-                  
+
                   <!-- Program Highlights -->
-                  <div class="bg-[#232a3a] rounded-lg p-5 border border-[#2c3346]">
-                    <h4 class="text-lg font-semibold text-white mb-4 pb-2 border-b border-[#354056] flex items-center">
-                      <i class="fas fa-star text-[#4ba6ef] mr-2"></i>
+                  <div class="bg-elevated rounded-lg p-5 border border-default">
+                    <h4
+                      class="text-lg font-semibold text-white mb-4 pb-2 border-b border-accent flex items-center"
+                    >
+                      <i class="fas fa-star text-accent-primary mr-2"></i>
                       <span>Program Highlights</span>
                     </h4>
-                    
+
                     <ul class="space-y-3">
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-bolt text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-bolt text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">Accelerated Learning:</span> Completed comprehensive curriculum in 3 years</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >Accelerated Learning:</span
+                          >
+                          Completed comprehensive curriculum in 3 years</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-laptop-code text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-laptop-code text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">Practical Application:</span> Balanced theoretical knowledge with hands-on projects</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >Practical Application:</span
+                          >
+                          Balanced theoretical knowledge with hands-on
+                          projects</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-project-diagram text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-project-diagram text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">Interdisciplinary Approach:</span> Integrated statistics with economics, finance, and computer science</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >Interdisciplinary Approach:</span
+                          >
+                          Integrated statistics with economics, finance, and
+                          computer science</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="bg-[#1e3a70] rounded-full p-1 mt-0.5 mr-2">
-                          <i class="fas fa-globe text-xs text-[#4ba6ef]"></i>
+                        <div class="bg-navy-dark rounded-full p-1 mt-0.5 mr-2">
+                          <i
+                            class="fas fa-globe text-xs text-accent-primary"
+                          ></i>
                         </div>
-                        <span><span class="text-white font-medium">International Equivalency:</span> Program rigor comparable to international standards</span>
+                        <span
+                          ><span class="text-white font-medium"
+                            >International Equivalency:</span
+                          >
+                          Program rigor comparable to international
+                          standards</span
+                        >
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-              
+
               <!-- Key Course Highlights -->
               <div class="px-6 pb-6">
-                <div class="bg-[#1e3a70] bg-opacity-30 rounded-lg p-5 border border-[#354056]">
-                  <h4 class="text-lg font-semibold text-white mb-4 flex items-center">
-                    <i class="fas fa-book text-[#4ba6ef] mr-2"></i>
+                <div
+                  class="bg-navy-dark bg-opacity-30 rounded-lg p-5 border border-accent"
+                >
+                  <h4
+                    class="text-lg font-semibold text-white mb-4 flex items-center"
+                  >
+                    <i class="fas fa-book text-accent-primary mr-2"></i>
                     <span>Key Courses</span>
                   </h4>
-                  
+
                   <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div class="bg-[#232a3a] rounded p-3 text-center border border-[#354056]">
-                      <i class="fas fa-chart-pie text-[#4ba6ef] mb-2"></i>
+                    <div
+                      class="bg-elevated rounded p-3 text-center border border-accent"
+                    >
+                      <i class="fas fa-chart-pie text-accent-primary mb-2"></i>
                       <p class="text-sm">Data Science</p>
                     </div>
-                    <div class="bg-[#232a3a] rounded p-3 text-center border border-[#354056]">
-                      <i class="fas fa-chart-line text-[#4ba6ef] mb-2"></i>
+                    <div
+                      class="bg-elevated rounded p-3 text-center border border-accent"
+                    >
+                      <i class="fas fa-chart-line text-accent-primary mb-2"></i>
                       <p class="text-sm">Time Series Analysis</p>
                     </div>
-                    <div class="bg-[#232a3a] rounded p-3 text-center border border-[#354056]">
-                      <i class="fas fa-shield-alt text-[#4ba6ef] mb-2"></i>
+                    <div
+                      class="bg-elevated rounded p-3 text-center border border-accent"
+                    >
+                      <i class="fas fa-shield-alt text-accent-primary mb-2"></i>
                       <p class="text-sm">Financial Risk Modeling</p>
                     </div>
-                    <div class="bg-[#232a3a] rounded p-3 text-center border border-[#354056]">
-                      <i class="fas fa-cubes text-[#4ba6ef] mb-2"></i>
+                    <div
+                      class="bg-elevated rounded p-3 text-center border border-accent"
+                    >
+                      <i class="fas fa-cubes text-accent-primary mb-2"></i>
                       <p class="text-sm">Multivariate Statistics</p>
                     </div>
                   </div>
@@ -1049,196 +1649,343 @@
               </div>
             </div>
           </section>
-          
+
           <!-- Projects Section -->
-          <section x-show="activeTab === 'projects'" x-transition.opacity.duration.300ms class="text-gray-300">
+          <section
+            x-show="activeTab === 'projects'"
+            x-transition.opacity.duration.300ms
+            class="text-secondary"
+          >
             <div class="section-header mb-6">
               <h2 class="text-2xl font-bold text-white relative inline-block">
                 <span class="relative z-10">Projects</span>
-                <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-[#4ba6ef] to-transparent"></span>
+                <span
+                  class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-accent-primary to-transparent"
+                ></span>
               </h2>
             </div>
-            
+
             <!-- Featured Project -->
-            <div class="mb-8 bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg">
+            <div
+              class="mb-8 rounded-lg border border-default overflow-hidden shadow-lg"
+            >
               <div class="flex flex-col md:flex-row">
                 <!-- Project Image/Icon -->
-                <div class="md:w-1/3 bg-[#1e3a70] bg-opacity-30 flex items-center justify-center p-8">
-                  <div class="w-32 h-32 rounded-full bg-[#232a3a] flex items-center justify-center shadow-lg">
-                    <i class="fas fa-robot text-5xl text-[#4ba6ef]"></i>
+                <div
+                  class="md:w-1/3 bg-navy-dark bg-opacity-30 flex items-center justify-center p-8"
+                >
+                  <div
+                    class="w-32 h-32 rounded-full bg-elevated flex items-center justify-center shadow-lg"
+                  >
+                    <i class="fas fa-robot text-5xl text-accent-primary"></i>
                   </div>
                 </div>
-                
+
                 <!-- Project Details -->
                 <div class="md:w-2/3 p-6">
                   <div class="flex items-center mb-4">
-                    <h3 class="text-2xl font-bold text-white">AI-Powered Web Navigation Agent</h3>
-                    <span class="ml-auto bg-[#1e3a70] text-blue-200 px-3 py-1 rounded-full text-sm">Featured</span>
+                    <h3 class="text-2xl font-bold text-white">
+                      AI-Powered Web Navigation Agent
+                    </h3>
+                    <span
+                      class="ml-auto bg-navy-dark text-accent-gold px-3 py-1 rounded-full text-sm"
+                      >Featured</span
+                    >
                   </div>
-                  
-                  <p class="text-gray-300 mb-4">
-                    An intelligent agent that autonomously navigates web applications for testing and validation purposes. 
-                    Built with state-of-the-art LLM technologies to improve efficiency and reduce manual testing efforts.
+
+                  <p class="text-secondary mb-4">
+                    An intelligent agent that autonomously navigates web
+                    applications for testing and validation purposes. Built with
+                    state-of-the-art LLM technologies to improve efficiency and
+                    reduce manual testing efforts.
                   </p>
-                  
+
                   <div class="mb-4">
-                    <h4 class="text-[#4ba6ef] font-semibold mb-2 flex items-center">
+                    <h4
+                      class="text-accent-primary font-semibold mb-2 flex items-center"
+                    >
                       <i class="fas fa-tasks mr-2"></i>
                       <span>Key Responsibilities</span>
                     </h4>
                     <ul class="space-y-2 pl-6">
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Managed end-to-end product development from concept to implementation, including agent coding</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Managed end-to-end product development from concept
+                          to implementation, including agent coding</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Created system architecture and led a cross-functional team through agile sprints</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Created system architecture and led a
+                          cross-functional team through agile sprints</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Integrated LLM technologies to improve web application testing efficiency</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Integrated LLM technologies to improve web
+                          application testing efficiency</span
+                        >
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div class="flex flex-wrap gap-2">
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">AI/ML</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">Python</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">Selenium</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">LLMs</span>
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >AI/ML</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Python</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Selenium</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >LLMs</span
+                    >
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <!-- Other Projects Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- GxP-Compliant Agile Development Service -->
-              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg">
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg"
+              >
                 <div class="p-6">
                   <div class="flex items-center mb-4">
-                    <div class="p-3 bg-[#232a3a] rounded-lg mr-4">
-                      <i class="fas fa-clipboard-check text-xl text-[#4ba6ef]"></i>
+                    <div class="p-3 bg-elevated rounded-lg mr-4">
+                      <i
+                        class="fas fa-clipboard-check text-xl text-accent-primary"
+                      ></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white">GxP-Compliant Agile Development Service</h3>
+                    <h3 class="text-xl font-semibold text-white">
+                      GxP-Compliant Agile Development Service
+                    </h3>
                   </div>
-                  
-                  <p class="text-gray-300 mb-4">
-                    A comprehensive service built on Atlassian Jira to enable GxP-compliant Agile sprint development, 
-                    balancing regulatory requirements with Agile methodologies.
+
+                  <p class="text-secondary mb-4">
+                    A comprehensive service built on Atlassian Jira to enable
+                    GxP-compliant Agile sprint development, balancing regulatory
+                    requirements with Agile methodologies.
                   </p>
-                  
+
                   <div class="mb-4">
                     <ul class="space-y-2">
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Developed a comprehensive service on Atlassian Jira for GxP-based Agile sprint development</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Developed a comprehensive service on Atlassian Jira
+                          for GxP-based Agile sprint development</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Ensured compliance with regulatory requirements while maintaining Agile principles</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Ensured compliance with regulatory requirements while
+                          maintaining Agile principles</span
+                        >
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div class="flex flex-wrap gap-2">
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">Jira</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">GxP</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">Agile</span>
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Jira</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >GxP</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Agile</span
+                    >
                   </div>
                 </div>
               </div>
-              
+
               <!-- Sentiment-Based Trading System -->
-              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg">
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg"
+              >
                 <div class="p-6">
                   <div class="flex items-center mb-4">
-                    <div class="p-3 bg-[#232a3a] rounded-lg mr-4">
-                      <i class="fas fa-chart-line text-xl text-[#4ba6ef]"></i>
+                    <div class="p-3 bg-elevated rounded-lg mr-4">
+                      <i
+                        class="fas fa-chart-line text-xl text-accent-primary"
+                      ></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white">Sentiment-Based Trading System</h3>
+                    <h3 class="text-xl font-semibold text-white">
+                      Sentiment-Based Trading System
+                    </h3>
                   </div>
-                  
-                  <p class="text-gray-300 mb-4">
-                    An innovative intraday trading system leveraging news sentiment analysis and technical indicators 
-                    to make informed trading decisions, achieving impressive returns.
+
+                  <p class="text-secondary mb-4">
+                    An innovative intraday trading system leveraging news
+                    sentiment analysis and technical indicators to make informed
+                    trading decisions, achieving impressive returns.
                   </p>
-                  
+
                   <div class="mb-4">
                     <ul class="space-y-2">
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Built an intraday trading system based on news sentiment analysis and technical indicators</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Built an intraday trading system based on news
+                          sentiment analysis and technical indicators</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Adapted BERT model for financial sentiment classification, achieving ~2.6% average daily return</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Adapted BERT model for financial sentiment
+                          classification, achieving ~2.6% average daily
+                          return</span
+                        >
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div class="flex flex-wrap gap-2">
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">Python</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">BERT</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">NLP</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">Finance</span>
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Python</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >BERT</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >NLP</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Finance</span
+                    >
                   </div>
                 </div>
               </div>
-              
+
               <!-- Wikipedia Content Extractor -->
-              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg">
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg"
+              >
                 <div class="p-6">
                   <div class="flex items-center mb-4">
-                    <div class="p-3 bg-[#232a3a] rounded-lg mr-4">
-                      <i class="fas fa-code text-xl text-[#4ba6ef]"></i>
+                    <div class="p-3 bg-elevated rounded-lg mr-4">
+                      <i class="fas fa-code text-xl text-accent-primary"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white">Wikipedia Content Extractor</h3>
+                    <h3 class="text-xl font-semibold text-white">
+                      Wikipedia Content Extractor
+                    </h3>
                   </div>
-                  
-                  <p class="text-gray-300 mb-4">
-                    A Python utility that efficiently extracts and organizes content from Wikipedia pages,
-                    outputting structured JSON data for further use in applications or research.
+
+                  <p class="text-secondary mb-4">
+                    A Python utility that efficiently extracts and organizes
+                    content from Wikipedia pages, outputting structured JSON
+                    data for further use in applications or research.
                   </p>
-                  
+
                   <div class="mb-4">
                     <ul class="space-y-2">
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Wrote a Python script to extract and organize Wikipedia content</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Wrote a Python script to extract and organize
+                          Wikipedia content</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <i class="fas fa-check-circle text-[#4ba6ef] mt-1 mr-2 text-sm"></i>
-                        <span>Created JSON output with URLs and associated content</span>
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Created JSON output with URLs and associated
+                          content</span
+                        >
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">Python</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">Web Scraping</span>
-                    <span class="bg-[#232a3a] px-3 py-1 rounded-full text-xs text-blue-200">JSON</span>
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Python</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Web Scraping</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >JSON</span
+                    >
                   </div>
-                  
-                  <a href="https://github.com/shyampatadia/Wikipedia_Extractor" target="_blank" class="inline-flex items-center text-[#4ba6ef] hover:text-white transition-colors duration-200">
+
+                  <a
+                    href="https://github.com/shyampatadia/Wikipedia_Extractor"
+                    target="_blank"
+                    class="inline-flex items-center text-accent-primary hover:text-white transition-colors duration-200"
+                  >
                     <i class="fab fa-github mr-2"></i>
                     <span>View on GitHub</span>
                     <i class="fas fa-external-link-alt ml-1 text-xs"></i>
                   </a>
                 </div>
               </div>
-              
+
               <!-- Add another project or a "More Projects Coming Soon" card -->
-              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg">
-                <div class="p-6 flex flex-col items-center justify-center text-center h-full">
-                  <div class="w-16 h-16 rounded-full bg-[#232a3a] flex items-center justify-center mb-4">
-                    <i class="fas fa-rocket text-2xl text-[#4ba6ef]"></i>
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg"
+              >
+                <div
+                  class="p-6 flex flex-col items-center justify-center text-center h-full"
+                >
+                  <div
+                    class="w-16 h-16 rounded-full bg-elevated flex items-center justify-center mb-4"
+                  >
+                    <i class="fas fa-rocket text-2xl text-accent-primary"></i>
                   </div>
-                  <h3 class="text-xl font-semibold text-white mb-2">More Projects</h3>
-                  <p class="text-gray-400 mb-4">Additional projects and open source contributions coming soon!</p>
-                  
-                  <a href="https://github.com/shyampatadia" target="_blank" class="inline-flex items-center bg-[#232a3a] hover:bg-[#1e3a70] text-[#4ba6ef] hover:text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                  <h3 class="text-xl font-semibold text-white mb-2">
+                    More Projects
+                  </h3>
+                  <p class="text-tertiary mb-4">
+                    Additional projects and open source contributions coming
+                    soon!
+                  </p>
+
+                  <a
+                    href="https://github.com/shyampatadia"
+                    target="_blank"
+                    class="inline-flex items-center bg-elevated hover:bg-secondary text-accent-primary hover:text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                  >
                     <i class="fab fa-github mr-2"></i>
                     <span>Follow on GitHub</span>
                   </a>
@@ -1246,160 +1993,230 @@
               </div>
             </div>
           </section>
-          
+
           <!-- Certifications Section -->
-          <section x-show="activeTab === 'certifications'" 
-                   x-transition.opacity.duration.300ms 
-                   class="text-gray-300">
+          <section
+            x-show="activeTab === 'certifications'"
+            x-transition.opacity.duration.300ms
+            class="text-secondary"
+          >
             <div class="section-header mb-6">
               <h2 class="text-2xl font-bold text-white relative inline-block">
                 <span class="relative z-10">Certifications</span>
-                <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-[#4ba6ef] to-transparent"></span>
+                <span
+                  class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-accent-primary to-transparent"
+                ></span>
               </h2>
-              <p class="text-gray-400 mt-2 text-sm max-w-3xl">
-                Professional certifications that validate my expertise in cloud computing, agile methodologies, and software development best practices.
+              <p class="text-tertiary mt-2 text-sm max-w-3xl">
+                Professional certifications that validate my expertise in cloud
+                computing, agile methodologies, and software development best
+                practices.
               </p>
             </div>
-            
+
             <!-- Certifications Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+            >
               <!-- Azure DevOps -->
-              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg group hover:border-[#4ba6ef] transition-all duration-300 h-full flex flex-col">
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg group hover:border-accent transition-all duration-300 h-full flex flex-col"
+              >
                 <!-- Certificate Header -->
-                <div class="bg-[#232a3a] p-4 relative">
-                  <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#4ba6ef] to-[#1e3a70]"></div>
+                <div class="bg-elevated p-4 relative">
+                  <div
+                    class="absolute top-0 left-0 w-1 h-full bg-gradient-warm"
+                  ></div>
                   <div class="flex items-center">
-                    <div class="p-3 bg-[#1e3a70] rounded-lg shadow-md mr-4 group-hover:bg-[#4ba6ef] transition-all duration-300">
+                    <div
+                      class="p-3 bg-navy-dark rounded-lg shadow-md mr-4 group-hover:badge-animated transition-all duration-300"
+                    >
                       <i class="fas fa-cloud text-xl text-white"></i>
                     </div>
                     <div>
-                      <h3 class="text-lg font-semibold text-white">Azure DevOps - AZ-900</h3>
-                      <p class="text-[#4ba6ef] text-sm mt-1">Microsoft</p>
+                      <h3 class="text-lg font-semibold text-white">
+                        Azure DevOps - AZ-900
+                      </h3>
+                      <p class="text-accent-primary text-sm mt-1">Microsoft</p>
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Certificate Content -->
                 <div class="p-5 flex-grow flex flex-col">
-                  <div class="mb-2 pb-2 border-b border-[#354056]">
-                    <div class="flex items-center text-sm text-gray-400">
-                      <i class="fas fa-calendar-alt text-[#4ba6ef] mr-2"></i>
+                  <div class="mb-2 pb-2 border-b border-accent">
+                    <div class="flex items-center text-sm text-tertiary">
+                      <i
+                        class="fas fa-calendar-alt text-accent-primary mr-2"
+                      ></i>
                       <span>Issued: 2024</span>
                       <span class="mx-2">•</span>
                       <span>No Expiration</span>
                     </div>
                   </div>
-                  
-                  <p class="text-gray-300 mb-4 text-sm flex-grow">
-                    Gained foundational knowledge of Azure services, cloud concepts, and core Azure DevOps principles, 
-                    which enhanced my ability to manage CI/CD pipelines and cloud resources effectively.
+
+                  <p class="text-secondary mb-4 text-sm flex-grow">
+                    Gained foundational knowledge of Azure services, cloud
+                    concepts, and core Azure DevOps principles, which enhanced
+                    my ability to manage CI/CD pipelines and cloud resources
+                    effectively.
                   </p>
-                  
+
                   <div class="flex items-center justify-between mt-auto">
                     <div class="flex flex-wrap gap-2">
-                      <span class="bg-[#1e3a70] bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-blue-200">Azure</span>
-                      <span class="bg-[#1e3a70] bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-blue-200">Cloud</span>
+                      <span
+                        class="bg-navy-dark bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-accent-gold"
+                        >Azure</span
+                      >
+                      <span
+                        class="bg-navy-dark bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-accent-gold"
+                        >Cloud</span
+                      >
                     </div>
-                    
-                    <a href="https://learn.microsoft.com/api/credentials/share/en-us/shyampatadia-8140/29B59629A9ED3204?sharingId=E0BA6AFC4738A529" 
-                       target="_blank" 
-                       class="inline-flex items-center text-[#4ba6ef] hover:text-white transition-colors duration-200 text-sm">
+
+                    <a
+                      href="https://learn.microsoft.com/api/credentials/share/en-us/shyampatadia-8140/29B59629A9ED3204?sharingId=E0BA6AFC4738A529"
+                      target="_blank"
+                      class="inline-flex items-center text-accent-primary hover:text-white transition-colors duration-200 text-sm"
+                    >
                       <span>Verify</span>
                       <i class="fas fa-external-link-alt ml-1 text-xs"></i>
                     </a>
                   </div>
                 </div>
               </div>
-              
+
               <!-- Certified Scrum Developer -->
-              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg group hover:border-[#4ba6ef] transition-all duration-300 h-full flex flex-col">
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg group hover:border-accent transition-all duration-300 h-full flex flex-col"
+              >
                 <!-- Certificate Header -->
-                <div class="bg-[#232a3a] p-4 relative">
-                  <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#4ba6ef] to-[#1e3a70]"></div>
+                <div class="bg-elevated p-4 relative">
+                  <div
+                    class="absolute top-0 left-0 w-1 h-full bg-gradient-warm"
+                  ></div>
                   <div class="flex items-center">
-                    <div class="p-3 bg-[#1e3a70] rounded-lg shadow-md mr-4 group-hover:bg-[#4ba6ef] transition-all duration-300">
+                    <div
+                      class="p-3 bg-navy-dark rounded-lg shadow-md mr-4 group-hover:badge-animated transition-all duration-300"
+                    >
                       <i class="fas fa-users-cog text-xl text-white"></i>
                     </div>
                     <div>
-                      <h3 class="text-lg font-semibold text-white">Certified Scrum Developer</h3>
-                      <p class="text-[#4ba6ef] text-sm mt-1">Scrum Alliance</p>
+                      <h3 class="text-lg font-semibold text-white">
+                        Certified Scrum Developer
+                      </h3>
+                      <p class="text-accent-primary text-sm mt-1">
+                        Scrum Alliance
+                      </p>
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Certificate Content -->
                 <div class="p-5 flex-grow flex flex-col">
-                  <div class="mb-2 pb-2 border-b border-[#354056]">
-                    <div class="flex items-center text-sm text-gray-400">
-                      <i class="fas fa-calendar-alt text-[#4ba6ef] mr-2"></i>
+                  <div class="mb-2 pb-2 border-b border-accent">
+                    <div class="flex items-center text-sm text-tertiary">
+                      <i
+                        class="fas fa-calendar-alt text-accent-primary mr-2"
+                      ></i>
                       <span>Issued: 2022</span>
                       <span class="mx-2">•</span>
                       <span>Valid for 2 years</span>
                     </div>
                   </div>
-                  
-                  <p class="text-gray-300 mb-4 text-sm flex-grow">
-                    Acquired practical skills in Agile methodologies, Scrum practices, and teamwork, enabling me to 
-                    contribute effectively to agile development teams and deliver high-quality software iteratively.
+
+                  <p class="text-secondary mb-4 text-sm flex-grow">
+                    Acquired practical skills in Agile methodologies, Scrum
+                    practices, and teamwork, enabling me to contribute
+                    effectively to agile development teams and deliver
+                    high-quality software iteratively.
                   </p>
-                  
+
                   <div class="flex items-center justify-between mt-auto">
                     <div class="flex flex-wrap gap-2">
-                      <span class="bg-[#1e3a70] bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-blue-200">Agile</span>
-                      <span class="bg-[#1e3a70] bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-blue-200">Scrum</span>
+                      <span
+                        class="bg-navy-dark bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-accent-gold"
+                        >Agile</span
+                      >
+                      <span
+                        class="bg-navy-dark bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-accent-gold"
+                        >Scrum</span
+                      >
                     </div>
-                    
-                    <a href="https://www.linkedin.com/in/shyampatadia/details/certifications/1727168532659/single-media-viewer/?type=DOCUMENT&profileId=ACoAABwgP5MBGig335e2bdKco_sWHOZKwbBuM9g" 
-                       target="_blank" 
-                       class="inline-flex items-center text-[#4ba6ef] hover:text-white transition-colors duration-200 text-sm">
+
+                    <a
+                      href="https://www.linkedin.com/in/shyampatadia/details/certifications/1727168532659/single-media-viewer/?type=DOCUMENT&profileId=ACoAABwgP5MBGig335e2bdKco_sWHOZKwbBuM9g"
+                      target="_blank"
+                      class="inline-flex items-center text-accent-primary hover:text-white transition-colors duration-200 text-sm"
+                    >
                       <span>Verify</span>
                       <i class="fas fa-external-link-alt ml-1 text-xs"></i>
                     </a>
                   </div>
                 </div>
               </div>
-              
+
               <!-- Software Development Processes -->
-              <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] overflow-hidden shadow-lg group hover:border-[#4ba6ef] transition-all duration-300 h-full flex flex-col">
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg group hover:border-accent transition-all duration-300 h-full flex flex-col"
+              >
                 <!-- Certificate Header -->
-                <div class="bg-[#232a3a] p-4 relative">
-                  <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#4ba6ef] to-[#1e3a70]"></div>
+                <div class="bg-elevated p-4 relative">
+                  <div
+                    class="absolute top-0 left-0 w-1 h-full bg-gradient-warm"
+                  ></div>
                   <div class="flex items-center">
-                    <div class="p-3 bg-[#1e3a70] rounded-lg shadow-md mr-4 group-hover:bg-[#4ba6ef] transition-all duration-300">
+                    <div
+                      class="p-3 bg-navy-dark rounded-lg shadow-md mr-4 group-hover:badge-animated transition-all duration-300"
+                    >
                       <i class="fas fa-code-branch text-xl text-white"></i>
                     </div>
                     <div>
-                      <h3 class="text-lg font-semibold text-white">Software Development Processes</h3>
-                      <p class="text-[#4ba6ef] text-sm mt-1">Coursera</p>
+                      <h3 class="text-lg font-semibold text-white">
+                        Software Development Processes
+                      </h3>
+                      <p class="text-accent-primary text-sm mt-1">Coursera</p>
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Certificate Content -->
                 <div class="p-5 flex-grow flex flex-col">
-                  <div class="mb-2 pb-2 border-b border-[#354056]">
-                    <div class="flex items-center text-sm text-gray-400">
-                      <i class="fas fa-calendar-alt text-[#4ba6ef] mr-2"></i>
+                  <div class="mb-2 pb-2 border-b border-accent">
+                    <div class="flex items-center text-sm text-tertiary">
+                      <i
+                        class="fas fa-calendar-alt text-accent-primary mr-2"
+                      ></i>
                       <span>Issued: 2021</span>
                       <span class="mx-2">•</span>
                       <span>No Expiration</span>
                     </div>
                   </div>
-                  
-                  <p class="text-gray-300 mb-4 text-sm flex-grow">
-                    Enhanced understanding of various software development lifecycles, best practices, and methodologies, 
-                    enabling me to optimize project workflows and improve code quality through structured processes.
+
+                  <p class="text-secondary mb-4 text-sm flex-grow">
+                    Enhanced understanding of various software development
+                    lifecycles, best practices, and methodologies, enabling me
+                    to optimize project workflows and improve code quality
+                    through structured processes.
                   </p>
-                  
+
                   <div class="flex items-center justify-between mt-auto">
                     <div class="flex flex-wrap gap-2">
-                      <span class="bg-[#1e3a70] bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-blue-200">SDLC</span>
-                      <span class="bg-[#1e3a70] bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-blue-200">Methodology</span>
+                      <span
+                        class="bg-navy-dark bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-accent-gold"
+                        >SDLC</span
+                      >
+                      <span
+                        class="bg-navy-dark bg-opacity-40 px-2 py-0.5 rounded-full text-xs text-accent-gold"
+                        >Methodology</span
+                      >
                     </div>
-                    
-                    <a href="https://coursera.org/verify/LYMPLSJXAM5P" 
-                       target="_blank" 
-                       class="inline-flex items-center text-[#4ba6ef] hover:text-white transition-colors duration-200 text-sm">
+
+                    <a
+                      href="https://coursera.org/verify/LYMPLSJXAM5P"
+                      target="_blank"
+                      class="inline-flex items-center text-accent-primary hover:text-white transition-colors duration-200 text-sm"
+                    >
                       <span>Verify</span>
                       <i class="fas fa-external-link-alt ml-1 text-xs"></i>
                     </a>
@@ -1407,133 +2224,595 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Additional Section - Certification Journey -->
-            <div class="bg-[#1c222f] rounded-lg border border-[#232a3a] p-6 shadow-lg mb-6">
-              <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
-                <i class="fas fa-graduation-cap text-[#4ba6ef] mr-3"></i>
+            <div class="rounded-lg border border-default p-6 shadow-lg mb-6">
+              <h3
+                class="text-2xl font-semibold mb-6 flex items-center"
+                style="color: var(--text-primary)"
+              >
+                <i
+                  class="fas fa-graduation-cap mr-3"
+                  style="color: var(--accent-primary)"
+                ></i>
                 <span>Certification Journey</span>
               </h3>
-              
-              <div class="flex flex-col md:flex-row items-start gap-6">
-                <div class="w-full md:w-2/3">
-                  <p class="text-gray-300 mb-4">
-                    My certification journey reflects my commitment to continuous learning and professional growth in the fields of software development, cloud computing, and agile methodologies. Each certification has helped me enhance my skills and deliver more value in my professional roles.
+
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Key Learnings - Full width on mobile, 2 cols on desktop -->
+                <div class="lg:col-span-2">
+                  <p
+                    class="mb-6"
+                    style="
+                      color: var(--text-secondary);
+                      font-size: 18px;
+                      line-height: 1.7;
+                    "
+                  >
+                    My certification journey reflects my commitment to
+                    continuous learning and professional growth in the fields of
+                    software development, cloud computing, and agile
+                    methodologies. Each certification has helped me enhance my
+                    skills and deliver more value in my professional roles.
                   </p>
-                  
-                  <div class="bg-[#232a3a] rounded-lg p-4 border border-[#354056]">
-                    <h4 class="text-[#4ba6ef] font-medium mb-3 flex items-center">
+
+                  <div
+                    class="rounded-lg p-5"
+                    style="
+                      background-color: var(--bg-elevated);
+                      border: 1px solid var(--border-accent);
+                    "
+                  >
+                    <h4
+                      class="font-semibold mb-4 flex items-center"
+                      style="color: var(--accent-primary); font-size: 20px"
+                    >
                       <i class="fas fa-lightbulb mr-2"></i>
                       <span>Key Learnings</span>
                     </h4>
-                    
-                    <ul class="space-y-3">
+
+                    <ul class="space-y-4">
                       <li class="flex items-start">
-                        <div class="mr-3 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#4ba6ef]"></div>
-                        <span class="text-sm">Modern cloud architecture and services deployment on Azure</span>
+                        <div
+                          class="mr-3 mt-2 flex-shrink-0 w-2 h-2 rounded-full"
+                          style="background-color: var(--accent-primary)"
+                        ></div>
+                        <span
+                          style="
+                            color: var(--text-secondary);
+                            font-size: 16px;
+                            line-height: 1.6;
+                          "
+                          >Modern cloud architecture and services deployment on
+                          Azure</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="mr-3 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#4ba6ef]"></div>
-                        <span class="text-sm">Agile and Scrum methodologies for team collaboration and efficient software delivery</span>
+                        <div
+                          class="mr-3 mt-2 flex-shrink-0 w-2 h-2 rounded-full"
+                          style="background-color: var(--accent-primary)"
+                        ></div>
+                        <span
+                          style="
+                            color: var(--text-secondary);
+                            font-size: 16px;
+                            line-height: 1.6;
+                          "
+                          >Agile and Scrum methodologies for team collaboration
+                          and efficient software delivery</span
+                        >
                       </li>
                       <li class="flex items-start">
-                        <div class="mr-3 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#4ba6ef]"></div>
-                        <span class="text-sm">Software development lifecycle optimization and best practices</span>
+                        <div
+                          class="mr-3 mt-2 flex-shrink-0 w-2 h-2 rounded-full"
+                          style="background-color: var(--accent-primary)"
+                        ></div>
+                        <span
+                          style="
+                            color: var(--text-secondary);
+                            font-size: 16px;
+                            line-height: 1.6;
+                          "
+                          >Software development lifecycle optimization and best
+                          practices</span
+                        >
                       </li>
                     </ul>
                   </div>
                 </div>
-                
-                <div class="w-full md:w-1/3 bg-[#232a3a] bg-opacity-50 rounded-lg p-4 border border-[#354056]">
-                  <h4 class="text-[#4ba6ef] font-medium mb-3 text-center">Certification Timeline</h4>
-                  
-                  <div class="relative pl-8 before:content-[''] before:absolute before:left-3 before:top-0 before:bottom-0 before:w-0.5 before:bg-[#1e3a70]">
-                    <div class="relative mb-4">
-                      <div class="absolute left-[-20px] top-1 w-4 h-4 rounded-full bg-[#4ba6ef]"></div>
-                      <div class="flex items-center justify-between">
-                        <p class="text-white text-sm">Azure DevOps</p>
-                        <span class="text-blue-200 text-xs">2024</span>
+
+                <!-- Certification Timeline - Full width on mobile, 1 col on desktop -->
+                <div class="lg:col-span-1">
+                  <div
+                    class="rounded-lg p-5 h-full"
+                    style="
+                      background-color: var(--bg-elevated);
+                      border: 1px solid var(--border-accent);
+                    "
+                  >
+                    <h4
+                      class="font-semibold mb-5 text-center"
+                      style="color: var(--accent-primary); font-size: 20px"
+                    >
+                      Certification Timeline
+                    </h4>
+
+                    <div class="certification-timeline">
+                      <div class="certification-item">
+                        <div class="certification-dot"></div>
+                        <div class="certification-content">
+                          <p class="certification-name">Azure DevOps</p>
+                          <span class="certification-year">2024</span>
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div class="relative mb-4">
-                      <div class="absolute left-[-20px] top-1 w-4 h-4 rounded-full bg-[#4ba6ef]"></div>
-                      <div class="flex items-center justify-between">
-                        <p class="text-white text-sm">Scrum Developer</p>
-                        <span class="text-blue-200 text-xs">2022</span>
+
+                      <div class="certification-item">
+                        <div class="certification-dot"></div>
+                        <div class="certification-content">
+                          <p class="certification-name">Scrum Developer</p>
+                          <span class="certification-year">2022</span>
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div class="relative">
-                      <div class="absolute left-[-20px] top-1 w-4 h-4 rounded-full bg-[#4ba6ef]"></div>
-                      <div class="flex items-center justify-between">
-                        <p class="text-white text-sm">SDLC Processes</p>
-                        <span class="text-blue-200 text-xs">2021</span>
+
+                      <div class="certification-item">
+                        <div class="certification-dot"></div>
+                        <div class="certification-content">
+                          <p class="certification-name">SDLC Processes</p>
+                          <span class="certification-year">2021</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <!-- Future Plans -->
-            <div class="bg-[#232a3a] rounded-lg p-5 border border-[#354056] text-center">
-              <div class="inline-flex justify-center items-center w-12 h-12 rounded-full bg-[#1e3a70] mb-3">
-                <i class="fas fa-rocket text-xl text-[#4ba6ef]"></i>
+            <div
+              class="bg-elevated rounded-lg p-5 border border-accent text-center"
+            >
+              <div
+                class="inline-flex justify-center items-center w-12 h-12 rounded-full bg-navy-dark mb-3"
+              >
+                <i class="fas fa-rocket text-xl text-accent-primary"></i>
               </div>
-              <h3 class="text-lg font-semibold text-white mb-2">Future Certification Goals</h3>
-              <p class="text-sm text-gray-400 max-w-2xl mx-auto">
-                I'm constantly looking to expand my knowledge and skills. My next certification goals include 
-                advanced Azure certifications, AI/ML specializations, and deepening my expertise in modern software architecture.
+              <h3 class="text-lg font-semibold text-white mb-2">
+                Future Certification Goals
+              </h3>
+              <p class="text-sm text-tertiary max-w-2xl mx-auto">
+                I'm constantly looking to expand my knowledge and skills. My
+                next certification goals include advanced Azure certifications,
+                AI/ML specializations, and deepening my expertise in modern
+                software architecture.
               </p>
+            </div>
+          </section>
+
+          <!-- Blog Section -->
+          <section
+            x-show="activeTab === 'blog'"
+            x-transition.opacity.duration.300ms
+            class="text-secondary"
+          >
+            <div class="section-header mb-6">
+              <h2 class="text-2xl font-bold text-white relative inline-block">
+                <span class="relative z-10">Blog</span>
+                <span
+                  class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-accent-primary to-transparent"
+                ></span>
+              </h2>
+              <p class="text-tertiary mt-2 text-sm max-w-3xl">
+                Thoughts, tutorials, and insights on software development
+              </p>
+            </div>
+
+            <!-- Filter/Search Section -->
+            <div class="mb-8 flex flex-wrap gap-2">
+              <button
+                class="blog-tag px-3 py-1.5 rounded-md badge-animated text-white text-sm font-medium"
+              >
+                All
+              </button>
+              <button
+                class="blog-tag px-3 py-1.5 rounded-md badge-animated text-accent-gold text-sm hover:bg-secondary"
+              >
+                Web Development
+              </button>
+              <button
+                class="blog-tag px-3 py-1.5 rounded-md badge-animated text-accent-gold text-sm hover:bg-secondary"
+              >
+                Cloud & DevOps
+              </button>
+              <button
+                class="blog-tag px-3 py-1.5 rounded-md badge-animated text-accent-gold text-sm hover:bg-secondary"
+              >
+                Data Science
+              </button>
+              <button
+                class="blog-tag px-3 py-1.5 rounded-md badge-animated text-accent-gold text-sm hover:bg-secondary"
+              >
+                Career
+              </button>
+            </div>
+
+            <!-- Blog Posts List -->
+            <div id="blog-posts" class="space-y-6">
+              <!-- Blog Post 1 -->
+              <article
+                class="blog-post-card p-6 bg-elevated rounded-lg border-l-4 border-transparent hover:border-accent transition-all"
+              >
+                <div class="flex justify-between items-start mb-3">
+                  <h3
+                    class="text-2xl font-semibold text-accent-primary hover:text-blue-300 cursor-pointer"
+                  >
+                    Getting Started with Azure DevOps
+                  </h3>
+                  <span class="text-sm text-tertiary">Dec 13, 2025</span>
+                </div>
+                <p class="text-secondary mb-4">
+                  A comprehensive guide to setting up Azure DevOps pipelines for
+                  continuous integration and deployment. Learn best practices
+                  and common pitfalls to avoid.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-3">
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >Azure</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >DevOps</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >CI/CD</span
+                  >
+                </div>
+                <a
+                  href="#"
+                  class="text-accent-primary hover:text-blue-300 text-sm"
+                >
+                  Read more <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+              </article>
+
+              <!-- Blog Post 2 -->
+              <article
+                class="blog-post-card p-6 bg-elevated rounded-lg border-l-4 border-transparent hover:border-accent transition-all"
+              >
+                <div class="flex justify-between items-start mb-3">
+                  <h3
+                    class="text-2xl font-semibold text-accent-primary hover:text-blue-300 cursor-pointer"
+                  >
+                    Building Responsive Web Applications with Tailwind CSS
+                  </h3>
+                  <span class="text-sm text-tertiary">Dec 10, 2025</span>
+                </div>
+                <p class="text-secondary mb-4">
+                  Discover how to create beautiful, responsive web applications
+                  using Tailwind CSS. Tips and tricks for efficient styling and
+                  component design.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-3">
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >Web Development</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >CSS</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >Tailwind</span
+                  >
+                </div>
+                <a
+                  href="#"
+                  class="text-accent-primary hover:text-blue-300 text-sm"
+                >
+                  Read more <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+              </article>
+
+              <!-- Blog Post 3 -->
+              <article
+                class="blog-post-card p-6 bg-elevated rounded-lg border-l-4 border-transparent hover:border-accent transition-all"
+              >
+                <div class="flex justify-between items-start mb-3">
+                  <h3
+                    class="text-2xl font-semibold text-accent-primary hover:text-blue-300 cursor-pointer"
+                  >
+                    Data Science with Python: A Beginner's Journey
+                  </h3>
+                  <span class="text-sm text-tertiary">Dec 5, 2025</span>
+                </div>
+                <p class="text-secondary mb-4">
+                  My journey into data science and machine learning using
+                  Python. Key libraries, resources, and projects that helped me
+                  get started.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-3">
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >Python</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >Data Science</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                    >Machine Learning</span
+                  >
+                </div>
+                <a
+                  href="#"
+                  class="text-accent-primary hover:text-blue-300 text-sm"
+                >
+                  Read more <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+              </article>
+            </div>
+          </section>
+
+          <!-- Bookshelf Section -->
+          <section
+            x-show="activeTab === 'bookshelf'"
+            x-transition.opacity.duration.300ms
+            class="text-secondary"
+          >
+            <div class="section-header mb-6">
+              <h2 class="text-2xl font-bold text-white relative inline-block">
+                <span class="relative z-10">My Bookshelf</span>
+                <span
+                  class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-accent-primary to-transparent"
+                ></span>
+              </h2>
+              <p class="text-tertiary mt-2 text-sm max-w-3xl">
+                Books that shaped my thinking and career
+              </p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="mb-8">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <button
+                  class="blog-tag px-3 py-1.5 rounded-md badge-animated text-white text-sm font-medium"
+                >
+                  All Books
+                </button>
+                <button
+                  class="blog-tag px-3 py-1.5 rounded-md badge-animated text-accent-gold text-sm hover:bg-secondary"
+                >
+                  Read
+                </button>
+                <button
+                  class="blog-tag px-3 py-1.5 rounded-md badge-animated text-accent-gold text-sm hover:bg-secondary"
+                >
+                  Currently Reading
+                </button>
+                <button
+                  class="blog-tag px-3 py-1.5 rounded-md badge-animated text-accent-gold text-sm hover:bg-secondary"
+                >
+                  To Read
+                </button>
+              </div>
+            </div>
+
+            <!-- Books Grid -->
+            <div
+              id="books-grid"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              <!-- Book 1 - Clean Code -->
+              <div
+                class="book-card bg-elevated rounded-lg overflow-hidden hover:transform hover:translateY(-8px) hover:scale-102 transition-all"
+              >
+                <div
+                  class="book-cover h-64 bg-navy-dark flex items-center justify-center relative"
+                >
+                  <span
+                    class="absolute top-3 right-3 px-2 py-1 bg-green-600 text-white rounded text-xs font-semibold"
+                    >Read</span
+                  >
+                  <div class="text-center p-4">
+                    <i
+                      class="fas fa-book text-6xl text-accent-primary mb-2"
+                    ></i>
+                    <h3 class="text-white font-semibold text-lg">Clean Code</h3>
+                    <p class="text-tertiary text-sm">Robert C. Martin</p>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="flex items-center mb-2">
+                    <div class="text-yellow-400">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <span class="text-tertiary text-sm ml-2">5.0</span>
+                  </div>
+                  <p class="text-secondary text-sm mb-3">
+                    Essential reading for any software developer. Teaches
+                    principles of writing clean, maintainable code.
+                  </p>
+                  <div class="flex flex-wrap gap-1">
+                    <span
+                      class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                      >Software Engineering</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Book 2 - Designing Data-Intensive Applications -->
+              <div
+                class="book-card bg-elevated rounded-lg overflow-hidden hover:transform hover:translateY(-8px) hover:scale-102 transition-all"
+              >
+                <div
+                  class="book-cover h-64 bg-navy-dark flex items-center justify-center relative"
+                >
+                  <span
+                    class="absolute top-3 right-3 px-2 py-1 bg-yellow-600 text-white rounded text-xs font-semibold"
+                    >Reading</span
+                  >
+                  <div class="text-center p-4">
+                    <i
+                      class="fas fa-book text-6xl text-accent-primary mb-2"
+                    ></i>
+                    <h3 class="text-white font-semibold text-lg">
+                      Designing Data-Intensive Applications
+                    </h3>
+                    <p class="text-tertiary text-sm">Martin Kleppmann</p>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="flex items-center mb-2">
+                    <div class="text-yellow-400">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-tertiary text-sm ml-2">4.5</span>
+                  </div>
+                  <p class="text-secondary text-sm mb-3">
+                    Deep dive into the architecture of scalable systems.
+                    Currently working through the distributed systems chapters.
+                  </p>
+                  <div class="flex flex-wrap gap-1">
+                    <span
+                      class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                      >Data Science</span
+                    >
+                    <span
+                      class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                      >Architecture</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Book 3 - The Pragmatic Programmer -->
+              <div
+                class="book-card bg-elevated rounded-lg overflow-hidden hover:transform hover:translateY(-8px) hover:scale-102 transition-all"
+              >
+                <div
+                  class="book-cover h-64 bg-navy-dark flex items-center justify-center relative"
+                >
+                  <span
+                    class="absolute top-3 right-3 px-2 py-1 bg-green-600 text-white rounded text-xs font-semibold"
+                    >Read</span
+                  >
+                  <div class="text-center p-4">
+                    <i
+                      class="fas fa-book text-6xl text-accent-primary mb-2"
+                    ></i>
+                    <h3 class="text-white font-semibold text-lg">
+                      The Pragmatic Programmer
+                    </h3>
+                    <p class="text-tertiary text-sm">
+                      David Thomas & Andrew Hunt
+                    </p>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="flex items-center mb-2">
+                    <div class="text-yellow-400">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <span class="text-tertiary text-sm ml-2">5.0</span>
+                  </div>
+                  <p class="text-secondary text-sm mb-3">
+                    Timeless wisdom on software craftsmanship. A must-read for
+                    developers at any stage of their career.
+                  </p>
+                  <div class="flex flex-wrap gap-1">
+                    <span
+                      class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                      >Software Engineering</span
+                    >
+                    <span
+                      class="text-xs px-2 py-1 badge-animated text-accent-gold rounded"
+                      >Career</span
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
         </div>
       </div>
     </div>
-    
+
     <!-- Footer Section -->
     <footer class="py-10 text-center relative">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
           <div class="mb-6">
             <div class="text-3xl font-bold text-white mb-4">Let's Connect</div>
-            <p class="text-gray-400 mb-6 max-w-lg mx-auto">
-              Looking for a developer with expertise in automation, AI, and GxP compliance? 
-              I'm open to discussing new opportunities and collaborations.
+            <p class="text-tertiary mb-6 max-w-lg mx-auto">
+              Looking for a developer with expertise in automation, AI, and GxP
+              compliance? I'm open to discussing new opportunities and
+              collaborations.
             </p>
-            
+
             <div class="flex justify-center gap-4 mb-8">
-              <a href="mailto:shyampatadia22@gmail.com" class="bg-gradient-to-r from-[#4ba6ef] to-[#3490d9] text-white font-medium py-2 px-6 rounded-md hover:shadow-lg transition-all duration-300 flex items-center">
+              <a
+                href="mailto:shyampatadia22@gmail.com"
+                class="bg-gradient-warm text-white font-medium py-2 px-6 rounded-md hover:shadow-lg transition-all duration-300 flex items-center"
+              >
                 <i class="fas fa-envelope mr-2"></i> Email Me
               </a>
-              <a href="https://www.linkedin.com/in/shyampatadia/" target="_blank" class="bg-[#232a3a] text-[#4ba6ef] border border-[#4ba6ef] font-medium py-2 px-6 rounded-md hover:bg-[#1e3a70] hover:text-white transition-all duration-300 flex items-center">
+              <a
+                href="https://www.linkedin.com/in/shyampatadia/"
+                target="_blank"
+                class="bg-elevated text-accent-primary border border-accent font-medium py-2 px-6 rounded-md hover:bg-secondary hover:text-white transition-all duration-300 flex items-center"
+              >
                 <i class="fab fa-linkedin-in mr-2"></i> LinkedIn
               </a>
             </div>
 
             <!-- Quick Links -->
             <div class="flex justify-center gap-6 mb-6 text-sm">
-              <a href="blog/index.html" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <a
+                href="#blog"
+                @click="changeTab('blog')"
+                class="text-tertiary hover:text-accent-primary transition-colors cursor-pointer"
+              >
                 <i class="fas fa-blog mr-1"></i> Blog
               </a>
-              <a href="bookshelf/index.html" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <a
+                href="#bookshelf"
+                @click="changeTab('bookshelf')"
+                class="text-tertiary hover:text-accent-primary transition-colors cursor-pointer"
+              >
                 <i class="fas fa-book mr-1"></i> Bookshelf
               </a>
             </div>
           </div>
-          
+
           <!-- <div class="border-t border-gray-800 pt-6">
-            <div class="text-sm text-gray-500">
+            <div class="text-sm text-tertiary">
               &copy; 2025 Shyam Patadia. All rights reserved.
             </div>
           </div> -->
         </div>
       </div>
-      
+
       <!-- Background Decoration -->
       <div class="absolute bottom-0 left-0 right-0 h-40 pointer-events-none">
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f17] to-transparent opacity-70"></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-70"
+        ></div>
       </div>
     </footer>
 
@@ -1541,4 +2820,3 @@
     <script src="assets/js/app.js"></script>
   </body>
 </html>
-

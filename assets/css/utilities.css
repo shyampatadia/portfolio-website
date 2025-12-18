@@ -3,48 +3,199 @@
    Helper classes and overrides
    ============================================== */
 
-/* Text Colors */
+/* ==============================================
+   TEXT COLORS
+   ============================================== */
+
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-tertiary {
+  color: var(--text-tertiary) !important;
+}
+
+.text-accent {
+  color: var(--text-accent) !important;
+}
+
+.text-accent-primary {
+  color: var(--accent-primary) !important;
+}
+
+.text-accent-secondary {
+  color: var(--accent-secondary) !important;
+}
+
+.text-success {
+  color: var(--success) !important;
+}
+
+.text-warning {
+  color: var(--warning) !important;
+}
+
+.text-error {
+  color: var(--error) !important;
+}
+
+/* Legacy color classes - mapped to CSS variables */
 .text-gray-100 {
-  color: #f3f4f6 !important;
+  color: var(--text-primary) !important;
 }
 
 .text-gray-300 {
-  color: #d1d5db !important;
+  color: var(--text-secondary) !important;
 }
 
 .text-gray-400 {
-  color: #9ca3af !important;
+  color: var(--text-tertiary) !important;
 }
 
 .text-blue-400 {
-  color: #4ba6ef !important;
+  color: var(--accent-primary) !important;
 }
 
 .text-blue-200 {
-  color: #bfdbfe !important;
+  color: var(--text-secondary) !important;
 }
 
 .text-white {
   color: #ffffff !important;
 }
 
-/* Background Colors */
-.bg-blue-700 {
-  background-color: #4ba6ef !important;
+.text-accent-gold {
+  color: var(--accent-primary) !important;
+}
+
+.border-accent {
+  border-color: var(--accent-primary) !important;
+}
+
+/* ==============================================
+   BACKGROUND COLORS
+   ============================================== */
+
+.bg-primary {
+  background-color: var(--bg-primary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary) !important;
+}
+
+.bg-elevated {
+  background-color: var(--bg-elevated) !important;
+}
+
+.bg-accent-primary {
+  background-color: var(--accent-primary) !important;
   color: #ffffff !important;
-  font-weight: 600;
-  box-shadow: 0 2px 5px rgba(75, 166, 239, 0.25);
 }
 
-.bg-gray-800, .bg-transparent {
-  background-color: #1a1f2e !important;
-  color: #9ca3af !important;
+.bg-accent-secondary {
+  background-color: var(--accent-secondary) !important;
+  color: #ffffff !important;
 }
 
-.bg-gray-800:hover, .bg-transparent:hover {
-  background-color: #232a3a !important;
-  color: #d1d5db !important;
+.bg-accent-subtle {
+  background-color: var(--accent-subtle) !important;
+}
+
+.bg-accent-light {
+  background-color: var(--accent-light) !important;
+}
+
+/* Legacy background classes - mapped to CSS variables */
+.bg-blue-700 {
+  background-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+  font-weight: var(--font-semibold);
+  box-shadow: var(--shadow-glow);
+}
+
+.bg-gray-800,
+.bg-transparent {
+  background-color: transparent !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-secondary) !important;
+}
+
+.bg-gray-800:hover,
+.bg-transparent:hover {
+  background-color: var(--accent-subtle) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--accent-primary) !important;
   transform: translateY(-1px);
+}
+
+/* Card background utilities */
+.bg-navy-dark {
+  background-color: var(--bg-secondary) !important;
+  border: 1.5px solid var(--border-primary) !important;
+}
+
+/* ==============================================
+   GRADIENT BACKGROUNDS
+   ============================================== */
+
+.bg-gradient-warm {
+  background: var(--gradient-warm);
+  color: #ffffff;
+}
+
+.bg-gradient-teal {
+  background: var(--gradient-teal);
+  color: #ffffff;
+}
+
+.bg-gradient-subtle {
+  background: var(--gradient-subtle);
+}
+
+/* ==============================================
+   BORDER UTILITIES
+   ============================================== */
+
+.border-primary {
+  border-color: var(--border-primary) !important;
+}
+
+.border-secondary {
+  border-color: var(--border-secondary) !important;
+}
+
+.border-accent {
+  border-color: var(--border-accent) !important;
+}
+
+/* Legacy support */
+.border-default {
+  border-color: var(--border-primary) !important;
+}
+
+/* ==============================================
+   SHADOW UTILITIES
+   ============================================== */
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-glow {
+  box-shadow: var(--shadow-glow);
 }
 
 /* Responsive Design */
