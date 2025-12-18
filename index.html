@@ -535,18 +535,23 @@
             <!-- Header -->
             <div class="skills-terminal-header">
               <h2 class="skills-terminal-title">$ ls ./skills</h2>
-              <p class="skills-terminal-subtitle">// Technical stack and expertise</p>
+              <p class="skills-terminal-subtitle">
+                // Technical stack and expertise
+              </p>
             </div>
 
             <!-- Terminal Container -->
-            <div class="skills-terminal-container" x-data="{ activeSkill: 'languages' }">
-
+            <div
+              class="skills-terminal-container"
+              x-data="{ activeSkill: 'languages' }"
+            >
               <!-- Tab Navigation -->
               <div class="terminal-tabs">
                 <button
                   @click="activeSkill = 'languages'"
                   :class="{ 'active': activeSkill === 'languages' }"
-                  class="terminal-tab">
+                  class="terminal-tab"
+                >
                   <i class="fas fa-code"></i>
                   <span>languages.ts</span>
                 </button>
@@ -554,7 +559,8 @@
                 <button
                   @click="activeSkill = 'ai'"
                   :class="{ 'active': activeSkill === 'ai' }"
-                  class="terminal-tab">
+                  class="terminal-tab"
+                >
                   <i class="fas fa-brain"></i>
                   <span>ai-ml.py</span>
                 </button>
@@ -562,7 +568,8 @@
                 <button
                   @click="activeSkill = 'testing'"
                   :class="{ 'active': activeSkill === 'testing' }"
-                  class="terminal-tab">
+                  class="terminal-tab"
+                >
                   <i class="fas fa-vial"></i>
                   <span>testing.spec</span>
                 </button>
@@ -570,7 +577,8 @@
                 <button
                   @click="activeSkill = 'cloud'"
                   :class="{ 'active': activeSkill === 'cloud' }"
-                  class="terminal-tab">
+                  class="terminal-tab"
+                >
                   <i class="fas fa-cloud"></i>
                   <span>cloud.yml</span>
                 </button>
@@ -578,7 +586,8 @@
                 <button
                   @click="activeSkill = 'data'"
                   :class="{ 'active': activeSkill === 'data' }"
-                  class="terminal-tab">
+                  class="terminal-tab"
+                >
                   <i class="fas fa-database"></i>
                   <span>data.sql</span>
                 </button>
@@ -586,7 +595,8 @@
                 <button
                   @click="activeSkill = 'backend'"
                   :class="{ 'active': activeSkill === 'backend' }"
-                  class="terminal-tab">
+                  class="terminal-tab"
+                >
                   <i class="fas fa-server"></i>
                   <span>backend.js</span>
                 </button>
@@ -594,9 +604,11 @@
 
               <!-- Content Area -->
               <div class="terminal-content">
-
                 <!-- Languages Panel -->
-                <div x-show="activeSkill === 'languages'" class="terminal-panel">
+                <div
+                  x-show="activeSkill === 'languages'"
+                  class="terminal-panel"
+                >
                   <div class="terminal-skills-grid">
                     <div class="terminal-skill-card">
                       <div class="terminal-skill-header">
@@ -604,7 +616,10 @@
                         <span class="terminal-skill-name">Python</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 95%"
+                        ></div>
                       </div>
                     </div>
 
@@ -614,7 +629,10 @@
                         <span class="terminal-skill-name">C# / .NET</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -624,7 +642,10 @@
                         <span class="terminal-skill-name">SQL</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -634,7 +655,10 @@
                         <span class="terminal-skill-name">Java</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 75%"
+                        ></div>
                       </div>
                     </div>
 
@@ -644,7 +668,10 @@
                         <span class="terminal-skill-name">Julia</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 70%"
+                        ></div>
                       </div>
                     </div>
 
@@ -654,17 +681,25 @@
                         <span class="terminal-skill-name">JavaScript</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 75%"
+                        ></div>
                       </div>
                     </div>
 
                     <div class="terminal-skill-card">
                       <div class="terminal-skill-header">
                         <i class="fas fa-terminal terminal-skill-icon"></i>
-                        <span class="terminal-skill-name">Bash / PowerShell</span>
+                        <span class="terminal-skill-name"
+                          >Bash / PowerShell</span
+                        >
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -674,7 +709,10 @@
                         <span class="terminal-skill-name">C++</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 65%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 65%"
+                        ></div>
                       </div>
                     </div>
 
@@ -684,7 +722,10 @@
                         <span class="terminal-skill-name">CUDA</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 70%"
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -699,17 +740,27 @@
                         <span class="terminal-skill-name">LLMs & VLMs</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
                     <div class="terminal-skill-card">
                       <div class="terminal-skill-header">
-                        <i class="fas fa-project-diagram terminal-skill-icon"></i>
-                        <span class="terminal-skill-name">RAG Architecture</span>
+                        <i
+                          class="fas fa-project-diagram terminal-skill-icon"
+                        ></i>
+                        <span class="terminal-skill-name"
+                          >RAG Architecture</span
+                        >
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -719,7 +770,10 @@
                         <span class="terminal-skill-name">PyTorch</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -729,7 +783,10 @@
                         <span class="terminal-skill-name">LangChain</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -739,17 +796,25 @@
                         <span class="terminal-skill-name">CrewAI</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
                     <div class="terminal-skill-card">
                       <div class="terminal-skill-header">
-                        <i class="fas fa-project-diagram terminal-skill-icon"></i>
+                        <i
+                          class="fas fa-project-diagram terminal-skill-icon"
+                        ></i>
                         <span class="terminal-skill-name">LangGraph</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 80%"
+                        ></div>
                       </div>
                     </div>
 
@@ -759,7 +824,10 @@
                         <span class="terminal-skill-name">DSPy</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 75%"
+                        ></div>
                       </div>
                     </div>
 
@@ -769,7 +837,10 @@
                         <span class="terminal-skill-name">vLLM</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 80%"
+                        ></div>
                       </div>
                     </div>
 
@@ -779,7 +850,10 @@
                         <span class="terminal-skill-name">NLP</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -789,7 +863,10 @@
                         <span class="terminal-skill-name">PySpark</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -799,7 +876,10 @@
                         <span class="terminal-skill-name">Pandas</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -809,7 +889,10 @@
                         <span class="terminal-skill-name">Scikit-learn</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -824,7 +907,10 @@
                         <span class="terminal-skill-name">Selenium</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 95%"
+                        ></div>
                       </div>
                     </div>
 
@@ -834,7 +920,10 @@
                         <span class="terminal-skill-name">Playwright</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 95%"
+                        ></div>
                       </div>
                     </div>
 
@@ -844,7 +933,10 @@
                         <span class="terminal-skill-name">PyTest</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -854,7 +946,10 @@
                         <span class="terminal-skill-name">SpecFlow</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -864,7 +959,10 @@
                         <span class="terminal-skill-name">Appium</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -874,7 +972,10 @@
                         <span class="terminal-skill-name">Cucumber</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 80%"
+                        ></div>
                       </div>
                     </div>
 
@@ -884,7 +985,10 @@
                         <span class="terminal-skill-name">Postman</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -899,7 +1003,10 @@
                         <span class="terminal-skill-name">AWS</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -909,7 +1016,10 @@
                         <span class="terminal-skill-name">Azure</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -919,7 +1029,10 @@
                         <span class="terminal-skill-name">Docker</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -929,7 +1042,10 @@
                         <span class="terminal-skill-name">Kubernetes</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -939,7 +1055,10 @@
                         <span class="terminal-skill-name">Terraform</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 75%"
+                        ></div>
                       </div>
                     </div>
 
@@ -949,7 +1068,10 @@
                         <span class="terminal-skill-name">CI/CD Pipelines</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -959,7 +1081,10 @@
                         <span class="terminal-skill-name">Redis</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 80%"
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -974,7 +1099,10 @@
                         <span class="terminal-skill-name">SQL Server</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 95%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 95%"
+                        ></div>
                       </div>
                     </div>
 
@@ -984,7 +1112,10 @@
                         <span class="terminal-skill-name">MySQL</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -994,7 +1125,10 @@
                         <span class="terminal-skill-name">PostgreSQL</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -1004,7 +1138,10 @@
                         <span class="terminal-skill-name">MongoDB</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
 
@@ -1014,17 +1151,25 @@
                         <span class="terminal-skill-name">DynamoDB</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 75%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 75%"
+                        ></div>
                       </div>
                     </div>
 
                     <div class="terminal-skill-card">
                       <div class="terminal-skill-header">
                         <i class="fas fa-vector-square terminal-skill-icon"></i>
-                        <span class="terminal-skill-name">Vector Databases</span>
+                        <span class="terminal-skill-name"
+                          >Vector Databases</span
+                        >
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 80%"
+                        ></div>
                       </div>
                     </div>
 
@@ -1034,7 +1179,10 @@
                         <span class="terminal-skill-name">Mem0</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 70%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 70%"
+                        ></div>
                       </div>
                     </div>
 
@@ -1044,7 +1192,10 @@
                         <span class="terminal-skill-name">Tableau</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 80%"
+                        ></div>
                       </div>
                     </div>
 
@@ -1054,7 +1205,10 @@
                         <span class="terminal-skill-name">Power BI</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -1069,7 +1223,10 @@
                         <span class="terminal-skill-name">FastAPI</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -1079,7 +1236,10 @@
                         <span class="terminal-skill-name">Flask</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 90%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 90%"
+                        ></div>
                       </div>
                     </div>
 
@@ -1089,7 +1249,10 @@
                         <span class="terminal-skill-name">Django</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 80%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 80%"
+                        ></div>
                       </div>
                     </div>
 
@@ -1099,12 +1262,14 @@
                         <span class="terminal-skill-name">.NET Core</span>
                       </div>
                       <div class="terminal-progress">
-                        <div class="terminal-progress-bar" style="width: 85%"></div>
+                        <div
+                          class="terminal-progress-bar"
+                          style="width: 85%"
+                        ></div>
                       </div>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </section>
@@ -1125,25 +1290,33 @@
                   style="background: var(--accent-primary)"
                 ></span>
               </h2>
-              <p class="mt-3" style="color: var(--text-secondary); font-size: 18px">
+              <p
+                class="mt-3"
+                style="color: var(--text-secondary); font-size: 18px"
+              >
                 xLM Continuous Validation - Jacksonville, FL (2021-2025)
               </p>
             </div>
 
             <div class="experience-timeline-new">
-
               <!-- Position 1: Lead Software Engineer - AI -->
               <div class="experience-card-modern">
                 <div class="experience-header">
                   <div class="experience-title-group">
-                    <h3 class="experience-position">Lead Software Engineer - AI</h3>
+                    <h3 class="experience-position">
+                      Lead Software Engineer - AI
+                    </h3>
                     <span class="experience-date">
                       <i class="fas fa-calendar-alt"></i>Nov 2023 – Jul 2025
                     </span>
                   </div>
                   <div class="experience-tldr">
                     <div class="tldr-label">TL;DR</div>
-                    <p>Architected AI test automation platform with RAG workflows, reducing manual effort by 90% while leading cross-functional team of 5 engineers.</p>
+                    <p>
+                      Architected AI test automation platform with RAG
+                      workflows, reducing manual effort by 90% while leading
+                      cross-functional team of 5 engineers.
+                    </p>
                   </div>
                 </div>
 
@@ -1151,29 +1324,69 @@
                   <div class="experience-achievements">
                     <h4 class="section-title">Key Achievements</h4>
                     <ul class="achievement-list">
-                      <li>Led cross-functional team delivering cIV AI Platform with RAG & prompt-engineering workflows, cutting manual test-authoring by 90% (21 CFR Part 11 compliant)</li>
-                      <li>Designed GPU-accelerated inference with PyTorch/vLLM on AWS/Azure with robust evaluation loops</li>
-                      <li>Instrumented Git/GitHub CI/CD pipelines and automated release governance with standardized SOPs</li>
-                      <li>Orchestrated Kubernetes/Selenium Grid device-farm for parallel experimentation</li>
-                      <li>Led SQL Server to cloud migration with extensive PowerShell automation</li>
+                      <li>
+                        Led cross-functional team delivering cIV AI Platform
+                        with RAG & prompt-engineering workflows, cutting manual
+                        test-authoring by 90% (21 CFR Part 11 compliant)
+                      </li>
+                      <li>
+                        Designed GPU-accelerated inference with PyTorch/vLLM on
+                        AWS/Azure with robust evaluation loops
+                      </li>
+                      <li>
+                        Instrumented Git/GitHub CI/CD pipelines and automated
+                        release governance with standardized SOPs
+                      </li>
+                      <li>
+                        Orchestrated Kubernetes/Selenium Grid device-farm for
+                        parallel experimentation
+                      </li>
+                      <li>
+                        Led SQL Server to cloud migration with extensive
+                        PowerShell automation
+                      </li>
                     </ul>
                   </div>
 
                   <div class="experience-tools">
                     <h4 class="section-title">Technologies</h4>
                     <div class="tools-grid">
-                      <span class="tool-badge"><i class="fas fa-brain"></i>LLMs & VLMs</span>
-                      <span class="tool-badge"><i class="fas fa-robot"></i>CrewAI</span>
-                      <span class="tool-badge"><i class="fas fa-project-diagram"></i>LangGraph</span>
-                      <span class="tool-badge"><i class="fas fa-database"></i>Vector DBs</span>
-                      <span class="tool-badge"><i class="fas fa-fire"></i>PyTorch</span>
-                      <span class="tool-badge"><i class="fas fa-microchip"></i>vLLM</span>
-                      <span class="tool-badge"><i class="fab fa-aws"></i>AWS</span>
-                      <span class="tool-badge"><i class="fab fa-microsoft"></i>Azure</span>
-                      <span class="tool-badge"><i class="fas fa-dharmachakra"></i>Kubernetes</span>
-                      <span class="tool-badge"><i class="fas fa-code-branch"></i>Git/GitHub</span>
-                      <span class="tool-badge"><i class="fab fa-microsoft"></i>Azure DevOps</span>
-                      <span class="tool-badge"><i class="fas fa-terminal"></i>PowerShell</span>
+                      <span class="tool-badge"
+                        ><i class="fas fa-brain"></i>LLMs & VLMs</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-robot"></i>CrewAI</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-project-diagram"></i>LangGraph</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-database"></i>Vector DBs</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-fire"></i>PyTorch</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-microchip"></i>vLLM</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fab fa-aws"></i>AWS</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fab fa-microsoft"></i>Azure</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-dharmachakra"></i>Kubernetes</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-code-branch"></i>Git/GitHub</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fab fa-microsoft"></i>Azure DevOps</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-terminal"></i>PowerShell</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -1190,7 +1403,11 @@
                   </div>
                   <div class="experience-tldr">
                     <div class="tldr-label">TL;DR</div>
-                    <p>Built enterprise automation frameworks reducing deployment cycles by 40%, led xLMCore NuGet development through 15+ versions.</p>
+                    <p>
+                      Built enterprise automation frameworks reducing deployment
+                      cycles by 40%, led xLMCore NuGet development through 15+
+                      versions.
+                    </p>
                   </div>
                 </div>
 
@@ -1198,26 +1415,60 @@
                   <div class="experience-achievements">
                     <h4 class="section-title">Key Achievements</h4>
                     <ul class="achievement-list">
-                      <li>Designed end-to-end automation frameworks with Selenium/Playwright/SpecFlow, cutting deployment cycles by 40%</li>
-                      <li>Led xLMCore NuGet package development (v0.0.1 to v2.0.15) for GxP test automation</li>
-                      <li>Integrated test suites into CI/CD pipelines with Azure DevOps and Docker</li>
-                      <li>Developed Jira/Azure DevOps integration eliminating duplicate reporting</li>
-                      <li>Conducted comprehensive API testing ensuring data integrity and system reliability</li>
+                      <li>
+                        Designed end-to-end automation frameworks with
+                        Selenium/Playwright/SpecFlow, cutting deployment cycles
+                        by 40%
+                      </li>
+                      <li>
+                        Led xLMCore NuGet package development (v0.0.1 to
+                        v2.0.15) for GxP test automation
+                      </li>
+                      <li>
+                        Integrated test suites into CI/CD pipelines with Azure
+                        DevOps and Docker
+                      </li>
+                      <li>
+                        Developed Jira/Azure DevOps integration eliminating
+                        duplicate reporting
+                      </li>
+                      <li>
+                        Conducted comprehensive API testing ensuring data
+                        integrity and system reliability
+                      </li>
                     </ul>
                   </div>
 
                   <div class="experience-tools">
                     <h4 class="section-title">Technologies</h4>
                     <div class="tools-grid">
-                      <span class="tool-badge"><i class="fas fa-robot"></i>Selenium</span>
-                      <span class="tool-badge"><i class="fas fa-theater-masks"></i>Playwright</span>
-                      <span class="tool-badge"><i class="fas fa-vial"></i>SpecFlow</span>
-                      <span class="tool-badge"><i class="fas fa-boxes"></i>NuGet</span>
-                      <span class="tool-badge"><i class="fab fa-microsoft"></i>Azure DevOps</span>
-                      <span class="tool-badge"><i class="fab fa-docker"></i>Docker</span>
-                      <span class="tool-badge"><i class="fab fa-jira"></i>Jira</span>
-                      <span class="tool-badge"><i class="fas fa-network-wired"></i>Postman</span>
-                      <span class="tool-badge"><i class="fas fa-code"></i>C#/.NET</span>
+                      <span class="tool-badge"
+                        ><i class="fas fa-robot"></i>Selenium</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-theater-masks"></i>Playwright</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-vial"></i>SpecFlow</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-boxes"></i>NuGet</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fab fa-microsoft"></i>Azure DevOps</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fab fa-docker"></i>Docker</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fab fa-jira"></i>Jira</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-network-wired"></i>Postman</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-code"></i>C#/.NET</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -1234,7 +1485,11 @@
                   </div>
                   <div class="experience-tldr">
                     <div class="tldr-label">TL;DR</div>
-                    <p>Automated enterprise application validation ensuring 21 CFR Part 11 compliance, deployed real-time Power BI dashboards for test visibility.</p>
+                    <p>
+                      Automated enterprise application validation ensuring 21
+                      CFR Part 11 compliance, deployed real-time Power BI
+                      dashboards for test visibility.
+                    </p>
                   </div>
                 </div>
 
@@ -1242,28 +1497,53 @@
                   <div class="experience-achievements">
                     <h4 class="section-title">Key Achievements</h4>
                     <ul class="achievement-list">
-                      <li>Performed UAT and API testing with SpecFlow ensuring 21 CFR Part 11 compliance</li>
-                      <li>Automated validation for enterprise apps (Veeva, Sage, Rhythm) using Selenium/Appium/WinAppDriver</li>
-                      <li>Established end-to-end reporting pipeline with automated data ingestion</li>
-                      <li>Deployed live Power BI dashboards for real-time test execution visibility</li>
+                      <li>
+                        Performed UAT and API testing with SpecFlow ensuring 21
+                        CFR Part 11 compliance
+                      </li>
+                      <li>
+                        Automated validation for enterprise apps (Veeva, Sage,
+                        Rhythm) using Selenium/Appium/WinAppDriver
+                      </li>
+                      <li>
+                        Established end-to-end reporting pipeline with automated
+                        data ingestion
+                      </li>
+                      <li>
+                        Deployed live Power BI dashboards for real-time test
+                        execution visibility
+                      </li>
                     </ul>
                   </div>
 
                   <div class="experience-tools">
                     <h4 class="section-title">Technologies</h4>
                     <div class="tools-grid">
-                      <span class="tool-badge"><i class="fas fa-vial"></i>SpecFlow</span>
-                      <span class="tool-badge"><i class="fas fa-robot"></i>Selenium</span>
-                      <span class="tool-badge"><i class="fas fa-mobile-alt"></i>Appium</span>
-                      <span class="tool-badge"><i class="fab fa-windows"></i>WinAppDriver</span>
-                      <span class="tool-badge"><i class="fas fa-chart-bar"></i>Power BI</span>
-                      <span class="tool-badge"><i class="fas fa-boxes"></i>xLMCore</span>
-                      <span class="tool-badge"><i class="fas fa-code"></i>C#/.NET</span>
+                      <span class="tool-badge"
+                        ><i class="fas fa-vial"></i>SpecFlow</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-robot"></i>Selenium</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-mobile-alt"></i>Appium</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fab fa-windows"></i>WinAppDriver</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-chart-bar"></i>Power BI</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-boxes"></i>xLMCore</span
+                      >
+                      <span class="tool-badge"
+                        ><i class="fas fa-code"></i>C#/.NET</span
+                      >
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </section>
           <!-- Education Section -->
@@ -2438,7 +2718,7 @@
             <!-- Blog Posts List -->
             <div id="blog-posts" class="space-y-6">
               <!-- Blog Post 1 -->
-              <article
+              <!-- <article
                 class="blog-post-card p-6 bg-elevated rounded-lg border-l-4 border-transparent hover:border-accent transition-all"
               >
                 <div class="flex justify-between items-start mb-3">
@@ -2474,10 +2754,10 @@
                 >
                   Read more <i class="fas fa-arrow-right ml-1"></i>
                 </a>
-              </article>
+              </article> -->
 
               <!-- Blog Post 2 -->
-              <article
+              <!-- <article
                 class="blog-post-card p-6 bg-elevated rounded-lg border-l-4 border-transparent hover:border-accent transition-all"
               >
                 <div class="flex justify-between items-start mb-3">
@@ -2513,10 +2793,10 @@
                 >
                   Read more <i class="fas fa-arrow-right ml-1"></i>
                 </a>
-              </article>
+              </article> -->
 
               <!-- Blog Post 3 -->
-              <article
+              <!-- <article
                 class="blog-post-card p-6 bg-elevated rounded-lg border-l-4 border-transparent hover:border-accent transition-all"
               >
                 <div class="flex justify-between items-start mb-3">
@@ -2552,7 +2832,7 @@
                 >
                   Read more <i class="fas fa-arrow-right ml-1"></i>
                 </a>
-              </article>
+              </article> -->
             </div>
           </section>
 
