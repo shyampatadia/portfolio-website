@@ -3,13 +3,10 @@
    Each skill appears as a successfully installed package
    ============================================== */
 
-/* Import distinctive monospace fonts */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Outfit:wght@500;600;700&display=swap');
-
-/* Skills Section */
+/* Skills Section - Using readable typography */
 .skills-terminal {
   padding: 4rem 0;
-  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  font-family: var(--font-body);
   position: relative;
 }
 
