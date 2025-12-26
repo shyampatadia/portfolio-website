@@ -69,28 +69,8 @@ document.addEventListener('alpine:init', () => {
       try {
         this.loading = true;
 
-        // Fetch all data in parallel
-        const [skills, experience, projects, education, certifications, blogPosts, books, bookStats] = await Promise.all([
-          window.api.getSkills().catch(err => {
-            console.warn('Failed to fetch skills:', err);
-            return [];
-          }),
-          window.api.getExperience().catch(err => {
-            console.warn('Failed to fetch experience:', err);
-            return [];
-          }),
-          window.api.getProjects().catch(err => {
-            console.warn('Failed to fetch projects:', err);
-            return [];
-          }),
-          window.api.getEducation().catch(err => {
-            console.warn('Failed to fetch education:', err);
-            return [];
-          }),
-          window.api.getCertifications().catch(err => {
-            console.warn('Failed to fetch certifications:', err);
-            return [];
-          }),
+        // Fetch blog posts and books
+        const [blogPosts, books, bookStats] = await Promise.all([
           window.api.getBlogPosts({ published_only: true, page: 1, page_size: 10 }).catch(err => {
             console.warn('Failed to fetch blog posts:', err);
             return { posts: [] };
@@ -105,21 +85,11 @@ document.addEventListener('alpine:init', () => {
           })
         ]);
 
-        this.skills = skills;
-        this.experience = experience;
-        this.projects = projects;
-        this.education = education;
-        this.certifications = certifications;
         this.blogPosts = blogPosts.posts || blogPosts;
         this.books = books;
         this.bookStats = bookStats;
 
         console.log('Data loaded successfully:', {
-          skills: this.skills.length,
-          experience: this.experience.length,
-          projects: this.projects.length,
-          education: this.education.length,
-          certifications: this.certifications.length,
           blogPosts: this.blogPosts.length,
           books: this.books.length
         });

@@ -15,6 +15,7 @@ class BookBase(BaseModel):
     review: Optional[str] = None
     tags: List[str] = []
     cover_image_url: Optional[str] = None
+    visible: bool = True
 
 
 class BookCreate(BookBase):
@@ -30,6 +31,7 @@ class BookUpdate(BaseModel):
     review: Optional[str] = None
     tags: Optional[List[str]] = None
     cover_image_url: Optional[str] = None
+    visible: Optional[bool] = None
 
 
 class BookResponse(BookBase):
