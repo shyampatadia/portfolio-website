@@ -1,0 +1,62 @@
+{
+  "languages": [
+    "Python",
+    "C# / .NET",
+    "SQL",
+    "Java",
+    "Julia",
+    "JavaScript",
+    "Bash / PowerShell",
+    "C++",
+    "CUDA"
+  ],
+  "ai": [
+    "LLMs & VLMs",
+    "RAG Architecture",
+    "PyTorch",
+    "LangChain",
+    "CrewAI",
+    "LangGraph",
+    "DSPy",
+    "vLLM",
+    "NLP",
+    "PySpark",
+    "Pandas",
+    "Scikit-learn"
+  ],
+  "testing": [
+    "Selenium",
+    "Playwright",
+    "PyTest",
+    "SpecFlow",
+    "Appium",
+    "Cucumber",
+    "Postman"
+  ],
+  "cloud": [
+    "AWS",
+    "Azure",
+    "Docker",
+    "Kubernetes",
+    "Terraform",
+    "CI/CD Pipelines",
+    "Redis"
+  ],
+  "data": [
+    "SQL Server",
+    "MySQL",
+    "PostgreSQL",
+    "MongoDB",
+    "DynamoDB",
+    "Vector Databases",
+    "Mem0",
+    "Tableau",
+    "Power BI"
+  ],
+  "backend": [
+    "FastAPI",
+    "Flask",
+    "Django",
+    ".NET Core"
+  ]
+}
