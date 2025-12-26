@@ -61,8 +61,34 @@ document.addEventListener('alpine:init', () => {
       console.log('Active tab:', this.activeTab);
       console.log('Theme:', this.theme);
 
-      // Load data from API
+      // Load skills data
+      this.loadSkills();
+
+      // Load dynamic data from API
       this.loadData();
+    },
+
+    async loadSkills() {
+      try {
+        const response = await fetch('assets/data/skills.json');
+        const skillsData = await response.json();
+
+        // Convert JSON structure to array format expected by templates
+        let id = 1;
+        this.skills = [];
+
+        for (const [category, skillNames] of Object.entries(skillsData)) {
+          for (const name of skillNames) {
+            this.skills.push({ id: id++, name, category });
+          }
+        }
+
+        console.log('Skills loaded:', this.skills.length);
+      } catch (error) {
+        console.error('Error loading skills:', error);
+        // Fallback to empty array - skills section will show but empty
+        this.skills = [];
+      }
     },
 
     async loadData() {

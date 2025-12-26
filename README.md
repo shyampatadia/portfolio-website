@@ -293,6 +293,37 @@ getApiBaseUrl() {
 - No need to modify code before commits or deployments
 - Works seamlessly when opening `index.html` directly or via a local server
 
+### Updating Skills
+
+Skills are managed via a simple JSON file for easy updates when your resume changes:
+
+**To update your skills:**
+
+1. Edit `assets/data/skills.json`
+2. Add, remove, or modify skills in any category:
+   ```json
+   {
+     "languages": ["Python", "JavaScript", "Your New Language"],
+     "ai": ["LLMs", "RAG Architecture", "New AI Tool"],
+     "testing": ["Selenium", "Playwright"],
+     "cloud": ["AWS", "Docker", "Kubernetes"],
+     "data": ["PostgreSQL", "MongoDB"],
+     "backend": ["FastAPI", "Django"]
+   }
+   ```
+3. Save the file
+4. Refresh your website - changes appear immediately!
+
+**No code changes needed** - just edit the JSON file and your skills section updates automatically.
+
+**Categories:**
+- `languages`: Programming languages
+- `ai`: AI/ML tools and frameworks
+- `testing`: Testing frameworks and tools
+- `cloud`: Cloud platforms and DevOps tools
+- `data`: Databases and data tools
+- `backend`: Backend frameworks
+
 ### Adding Content via Admin Panel
 
 All content can be managed through the admin panel:
