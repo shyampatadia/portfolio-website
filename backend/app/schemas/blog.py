@@ -14,6 +14,7 @@ class BlogPostBase(BaseModel):
     category: str
     tags: List[str] = []
     published: bool = False
+    image_url: Optional[str] = None
 
 
 class BlogPostCreate(BlogPostBase):
@@ -28,6 +29,7 @@ class BlogPostUpdate(BaseModel):
     category: Optional[str] = None
     tags: Optional[List[str]] = None
     published: Optional[bool] = None
+    image_url: Optional[str] = None
 
 
 class BlogPostResponse(BlogPostBase):

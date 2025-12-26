@@ -5,18 +5,25 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from typing import List
 from app.schemas.book import BookCreate, BookUpdate, BookResponse, BookStatsResponse
 from app.core.security import get_current_user
-from app.core.supabase import supabase_client
+from app.core.supabase import supabase_client, supabase_admin
 
 
 router = APIRouter(prefix="/api/books", tags=["Books"])
 
 
 @router.get("", response_model=List[BookResponse])
-async def get_books(status_filter: str = None):
+async def get_books(status_filter: str = None, include_hidden: bool = False):
     """
     Get all books, optionally filtered by status
+
+    - status_filter: Filter by reading status (read, reading, to-read)
+    - include_hidden: Include hidden books (default: False, only visible books)
     """
     query = supabase_client.table("books").select("*")
+
+    # Filter by visibility (public only sees visible books)
+    if not include_hidden:
+        query = query.eq("visible", True)
 
     if status_filter:
         query = query.eq("status", status_filter)
@@ -28,23 +35,13 @@ async def get_books(status_filter: str = None):
 @router.get("/stats", response_model=BookStatsResponse)
 async def get_book_stats():
     """
-    Get reading statistics
+    Get reading statistics (only counts visible books)
     """
-    response = supabase_client.rpc("reading_stats").execute()
-
-    if response.data and len(response.data) > 0:
-        stats = response.data[0]
-        return BookStatsResponse(
-            total_read=stats.get("total_read", 0),
-            currently_reading=stats.get("currently_reading", 0),
-            to_read=stats.get("to_read", 0)
-        )
-
-    # Fallback: calculate manually
-    all_books = supabase_client.table("books").select("status").execute()
-    total_read = sum(1 for book in all_books.data if book["status"] == "read")
-    currently_reading = sum(1 for book in all_books.data if book["status"] == "reading")
-    to_read = sum(1 for book in all_books.data if book["status"] == "to-read")
+    # Calculate manually to ensure we only count visible books
+    visible_books = supabase_client.table("books").select("status").eq("visible", True).execute()
+    total_read = sum(1 for book in visible_books.data if book["status"] == "read")
+    currently_reading = sum(1 for book in visible_books.data if book["status"] == "reading")
+    to_read = sum(1 for book in visible_books.data if book["status"] == "to-read")
 
     return BookStatsResponse(
         total_read=total_read,
@@ -74,7 +71,7 @@ async def create_book(
     """
     Create a new book (authenticated users only)
     """
-    response = supabase_client.table("books").insert(book.model_dump()).execute()
+    response = supabase_admin.table("books").insert(book.model_dump()).execute()
 
     if not response.data:
         raise HTTPException(status_code=400, detail="Failed to create book")
@@ -93,7 +90,7 @@ async def update_book(
     """
     update_data = book.model_dump(exclude_unset=True)
 
-    response = supabase_client.table("books").update(update_data).eq("id", book_id).execute()
+    response = supabase_admin.table("books").update(update_data).eq("id", book_id).execute()
 
     if not response.data:
         raise HTTPException(status_code=404, detail="Book not found")
@@ -109,7 +106,7 @@ async def delete_book(
     """
     Delete a book (authenticated users only)
     """
-    response = supabase_client.table("books").delete().eq("id", book_id).execute()
+    response = supabase_admin.table("books").delete().eq("id", book_id).execute()
 
     if not response.data:
         raise HTTPException(status_code=404, detail="Book not found")

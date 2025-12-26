@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, status, Depends, Query
 from typing import List, Optional
 from app.schemas.blog import BlogPostCreate, BlogPostUpdate, BlogPostResponse, BlogPostListResponse
 from app.core.security import get_current_user
-from app.core.supabase import supabase_client
+from app.core.supabase import supabase_client, supabase_admin
 from datetime import datetime
 
 
@@ -89,7 +89,7 @@ async def create_blog_post(
     if post.published:
         post_data["published_at"] = datetime.utcnow().isoformat()
 
-    response = supabase_client.table("blog_posts").insert(post_data).execute()
+    response = supabase_admin.table("blog_posts").insert(post_data).execute()
 
     if not response.data:
         raise HTTPException(status_code=400, detail="Failed to create blog post")
@@ -123,7 +123,7 @@ async def update_blog_post(
         word_count = len(post.content.split())
         update_data["read_time"] = f"{max(1, round(word_count / 200))} min"
 
-    response = supabase_client.table("blog_posts").update(update_data).eq("id", post_id).execute()
+    response = supabase_admin.table("blog_posts").update(update_data).eq("id", post_id).execute()
 
     if not response.data:
         raise HTTPException(status_code=400, detail="Failed to update blog post")
@@ -139,7 +139,7 @@ async def delete_blog_post(
     """
     Delete a blog post (authenticated users only)
     """
-    response = supabase_client.table("blog_posts").delete().eq("id", post_id).execute()
+    response = supabase_admin.table("blog_posts").delete().eq("id", post_id).execute()
 
     if not response.data:
         raise HTTPException(status_code=404, detail="Blog post not found")

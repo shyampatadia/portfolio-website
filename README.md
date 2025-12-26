@@ -78,51 +78,40 @@ portfolio-website/
 
 **Frontend:**
 - A modern web browser (Chrome, Firefox, Safari, Edge)
-- A local web server (optional, for development)
 
 **Backend:**
 - Python 3.9+
-- PostgreSQL database (Supabase recommended)
-- Vercel account (for deployment)
+- Supabase account (for database and storage)
+- Vercel account (for production deployment)
 
-### Frontend Setup
+### Quick Start (Local Development)
 
-1. Clone the repository:
+1. **Clone the repository**:
    ```bash
    git clone <repository-url>
    cd portfolio-website
    ```
 
-2. Open `index.html` in your browser, or use a local server:
-   ```bash
-   # Using Python
-   python -m http.server 8000
+2. **Set up Supabase**:
+   - Create a project at [supabase.com](https://supabase.com)
+   - Run the migration SQL files in Supabase SQL Editor (in order):
+     1. Database schema setup
+     2. Storage setup for images
+     3. Insert initial data (optional)
+   - Get your Supabase URL and keys from Project Settings → API
 
-   # Using Node.js (http-server)
-   npx http-server
-
-   # Using PHP
-   php -S localhost:8000
-   ```
-
-3. Navigate to `http://localhost:8000` in your browser
-
-### Backend Setup
-
-1. **Set up Supabase Database**:
-   - Create a new project at [supabase.com](https://supabase.com)
-   - Note your database URL and password
-   - The schema will be created automatically by SQLAlchemy
-
-2. **Configure Environment Variables**:
+3. **Configure Backend**:
    Create a `.env` file in the `backend/` directory:
    ```env
-   DATABASE_URL=postgresql://user:password@host:port/database
-   SECRET_KEY=your-secret-key-here
-   ENVIRONMENT=development
+   SUPABASE_URL=your-supabase-url
+   SUPABASE_ANON_KEY=your-anon-key
+   SUPABASE_SERVICE_KEY=your-service-role-key
+   JWT_SECRET_KEY=your-secret-key-here
+   ADMIN_USERNAME=admin
+   ADMIN_PASSWORD=your-secure-password
    ```
 
-3. **Install Dependencies**:
+4. **Install Backend Dependencies**:
    ```bash
    cd backend
    python -m venv venv
@@ -130,18 +119,18 @@ portfolio-website/
    pip install -r requirements.txt
    ```
 
-4. **Populate Database**:
-   Run the migration script to populate initial data:
-   ```bash
-   # Connect to your Supabase database and run:
-   psql -h your-host -U postgres -d your-database -f migration_insert_data.sql
-   ```
-
-5. **Run Locally**:
+5. **Run Backend Locally**:
    ```bash
    uvicorn app.main:app --reload
    ```
    Backend will be available at `http://localhost:8000`
+
+6. **Open Frontend**:
+   Simply open `index.html` in your browser. The frontend automatically detects:
+   - **Local Development**: Uses `http://localhost:8000` when opened from localhost
+   - **Production**: Uses Vercel URL when deployed
+
+   No configuration needed! The API URL switches automatically based on environment.
 
 ### Deployment
 
@@ -159,84 +148,94 @@ portfolio-website/
    ```
 
 3. Set environment variables in Vercel dashboard:
-   - `DATABASE_URL`
-   - `SECRET_KEY`
-   - `ENVIRONMENT=production`
+   - `SUPABASE_URL`
+   - `SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_KEY`
+   - `JWT_SECRET_KEY`
+   - `ADMIN_USERNAME`
+   - `ADMIN_PASSWORD`
 
 **Frontend Deployment:**
 - Deploy to any static hosting (Netlify, Vercel, GitHub Pages)
-- Update API URL in `assets/js/api.js` to your deployed backend URL
+- **No API URL configuration needed!** The frontend automatically detects the environment:
+  - When accessed via `localhost`, it uses `http://localhost:8000`
+  - When accessed via production domain, it uses the production Vercel URL
+- To change the production URL, edit `assets/js/app-config.js`
 
 ## API Documentation
 
-**Base URL:** `https://portfolio-website-nine-red-56.vercel.app`
+**Base URL:**
+- **Local Development**: `http://localhost:8000` (automatic)
+- **Production**: `https://portfolio-website-nine-red-56.vercel.app` (automatic)
+
+The frontend automatically detects and uses the correct URL based on your environment.
 
 ### Public Endpoints (No Authentication Required)
 
-#### Portfolio Content
-- `GET /api/content/profile` - Get profile information
-- `GET /api/content/skills` - Get all skills
-- `GET /api/content/experience` - Get work experience
-- `GET /api/content/projects` - Get projects
-- `GET /api/content/education` - Get education history
-- `GET /api/content/certifications` - Get certifications
-
 #### Blog
-- `GET /api/blog/posts` - Get all blog posts (supports pagination & filtering)
-  - Query params: `published_only`, `category`, `tag`, `page`, `page_size`
-- `GET /api/blog/posts/{id}` - Get single blog post
-- `GET /api/blog/categories` - Get all blog categories
-- `GET /api/blog/tags` - Get all blog tags
+- `GET /api/blog/posts` - Get all blog posts
+  - Query params: `published_only=true`, `page=1`, `page_size=10`, `category`
+  - Returns: `{ posts: [], total: 0, page: 1, page_size: 10 }`
+- `GET /api/blog/posts/{post_id}` - Get single blog post by ID
+- `GET /api/blog/posts/slug/{slug}` - Get single blog post by slug
 
 #### Bookshelf
-- `GET /api/books` - Get all books (supports status filter)
-  - Query params: `status_filter` (read/reading/to-read)
+- `GET /api/books` - Get all books
+  - Query params: `status_filter` (read/reading/to-read), `include_hidden=false`
+  - Returns: Array of books
 - `GET /api/books/stats` - Get reading statistics
-- `GET /api/books/{id}` - Get single book
+  - Returns: `{ total_read: 0, currently_reading: 0, to_read: 0 }`
+- `GET /api/books/{book_id}` - Get single book by ID
 
 ### Admin Endpoints (Authentication Required)
 
 **Authentication:**
-- `POST /api/admin/login` - Login with username/password, returns JWT token
+- `POST /api/auth/login` - Login with username/password
+  - Body: `{ username: "admin", password: "your-password" }`
+  - Returns: `{ access_token: "jwt-token", token_type: "bearer" }`
 - All admin endpoints require `Authorization: Bearer <token>` header
-
-#### Content Management
-- `POST /api/content/skills` - Create new skill
-- `PUT /api/content/skills/{id}` - Update skill
-- `DELETE /api/content/skills/{id}` - Delete skill
-- Similar CRUD endpoints exist for: experience, projects, education, certifications
 
 #### Blog Management
 - `POST /api/blog/posts` - Create new blog post
-- `PUT /api/blog/posts/{id}` - Update blog post
-- `DELETE /api/blog/posts/{id}` - Delete blog post
-- `PUT /api/blog/posts/{id}/publish` - Publish blog post
-- `PUT /api/blog/posts/{id}/unpublish` - Unpublish blog post
+- `PUT /api/blog/posts/{post_id}` - Update blog post
+- `DELETE /api/blog/posts/{post_id}` - Delete blog post
 
 #### Bookshelf Management
 - `POST /api/books` - Add new book
-- `PUT /api/books/{id}` - Update book
-- `DELETE /api/books/{id}` - Delete book
-- `PUT /api/books/{id}/status` - Update reading status
+- `PUT /api/books/{book_id}` - Update book
+- `DELETE /api/books/{book_id}` - Delete book
+
+#### Storage Management
+- `POST /api/storage/upload/blog` - Upload blog image
+- `POST /api/storage/upload/book-cover` - Upload book cover image
+- `DELETE /api/storage/delete/{path}` - Delete image from storage
 
 ### Example API Usage
 
-```javascript
-// Fetch all skills
-const skills = await fetch('https://portfolio-website-nine-red-56.vercel.app/api/content/skills')
-  .then(res => res.json());
+The frontend uses the centralized API service (`window.api`) which automatically handles environment detection:
 
-// Fetch blog posts with pagination
-const posts = await fetch('https://portfolio-website-nine-red-56.vercel.app/api/blog/posts?published_only=true&page=1&page_size=10')
-  .then(res => res.json());
+```javascript
+// Using the API service (recommended)
+const blogPosts = await window.api.getBlogPosts({
+  published_only: true,
+  page: 1,
+  page_size: 10
+});
+
+const books = await window.api.getBooks();
+const stats = await window.api.getBookStats();
+
+// Direct fetch (if needed)
+const response = await fetch(`${window.AppConfig.getApiBaseUrl()}/api/blog/posts`);
+const data = await response.json();
 
 // Admin login
-const response = await fetch('https://portfolio-website-nine-red-56.vercel.app/api/admin/login', {
+const loginResponse = await fetch(`${window.AppConfig.getApiBaseUrl()}/api/auth/login`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ username: 'admin', password: 'password' })
+  body: JSON.stringify({ username: 'admin', password: 'your-password' })
 });
-const { access_token } = await response.json();
+const { access_token } = await loginResponse.json();
 ```
 
 ## Development
@@ -256,76 +255,113 @@ All CSS is imported via `main.css`, which is loaded in the HTML.
 
 JavaScript is organized into modules in `assets/js/`:
 
+- **app-config.js**: Environment detection and API URL configuration
+  - Automatically detects localhost vs production
+  - Provides `window.AppConfig.getApiBaseUrl()` for environment-aware API calls
 - **api.js**: Centralized API service for all backend communication
+  - Uses app-config.js to automatically switch between local and production URLs
+  - Provides methods: `getBlogPosts()`, `getBooks()`, `getBookStats()`
 - **portfolio.js**: Alpine.js component with reactive state and data loading
+  - Handles blog and bookshelf data fetching
+  - Manages loading states and error handling
 - **app.js**: Navigation, routing, and tab management
 - **config.js**: Tailwind CSS configuration
+
+### Environment Configuration
+
+The application automatically detects whether it's running locally or in production:
+
+**How it works:**
+- `app-config.js` checks `window.location.hostname`
+- If hostname is `localhost` or `127.0.0.1`, uses `http://localhost:8000`
+- Otherwise, uses the production Vercel URL
+
+**Changing Production URL:**
+Edit `assets/js/app-config.js` and update the production URL:
+```javascript
+getApiBaseUrl() {
+  if (this.isDevelopment()) {
+    return 'http://localhost:8000';
+  } else {
+    return 'https://your-production-url.vercel.app';  // Update this
+  }
+}
+```
+
+**Benefits:**
+- No manual configuration when switching between development and production
+- No need to modify code before commits or deployments
+- Works seamlessly when opening `index.html` directly or via a local server
 
 ### Adding Content via Admin Panel
 
 All content can be managed through the admin panel:
 
-1. Navigate to `/backend/admin/login.html`
-2. Login with admin credentials
-3. Use the dashboard to add/edit/delete:
-   - Skills
-   - Experience
-   - Projects
-   - Education
-   - Certifications
-   - Blog posts
-   - Books
+1. Start your backend locally or access your deployed backend
+2. Navigate to `/admin/index.html` (or `/admin/login.html` if not logged in)
+3. Login with your admin credentials (configured in `.env`)
+4. Use the dashboard to add/edit/delete:
+   - **Blog posts**: Create, update, publish/unpublish posts
+   - **Books**: Add books, update reading status, upload cover images
+
+**Admin Features:**
+- JWT-based authentication
+- Image upload for blog posts and book covers (stored in Supabase Storage)
+- Rich text content editing
+- Published/draft status management for blog posts
+- Reading status tracking for books (read, reading, to-read)
 
 ### Adding Content Programmatically
 
 Use the API endpoints with authentication:
 
 ```javascript
-// Example: Add a new skill
+// Example: Add a new blog post
 const token = 'your-jwt-token';
-const newSkill = {
-  name: 'React',
-  category: 'frontend',
-  proficiency: 4,
-  icon_class: 'fab fa-react'
+const newPost = {
+  title: 'My First Blog Post',
+  slug: 'my-first-blog-post',
+  content: 'This is the content of my blog post...',
+  excerpt: 'A short summary',
+  cover_image: 'https://example.com/image.jpg',
+  category: 'Technology',
+  published: true
 };
 
-await fetch('https://your-backend-url/api/content/skills', {
+await fetch(`${window.AppConfig.getApiBaseUrl()}/api/blog/posts`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`
   },
-  body: JSON.stringify(newSkill)
+  body: JSON.stringify(newPost)
 });
 ```
 
 ## Portfolio Sections
 
 ### Main Portfolio (`/index.html`)
-All sections are dynamically loaded from the database via API:
 
+The portfolio is a single-page application with multiple sections:
+
+**Static Sections** (content embedded in HTML):
 - **Summary**: Professional overview and introduction
-- **Skills**: Technical skills organized by 6 categories (Languages, AI/ML, Testing, Cloud, Data, Backend)
+- **Skills**: Technical skills organized by categories (Languages, AI/ML, Testing, Cloud, Data, Backend)
   - Terminal/code editor aesthetic with proficiency indicators
-  - Dynamic rendering with Alpine.js
 - **Experience**: Professional work history with date ranges
 - **Education**: Academic background
 - **Projects**: Notable projects with descriptions and links
 - **Certifications**: Professional certifications
 
-### Blog (`/blog/index.html`)
-- Markdown-based blog posts with syntax highlighting
-- Category and tag organization
-- Published/draft status management
-- Pagination support
-- Admin panel for content creation
-
-### Bookshelf (`/bookshelf/index.html`)
-- Track reading progress (Read, Reading, To Read)
-- Rate and review books
-- Display reading statistics (total books, pages read, etc.)
-- Filter by reading status
+**Dynamic Sections** (loaded from Supabase via API):
+- **Blog**: Latest blog posts with excerpts
+  - Loads published posts from API
+  - Shows post title, excerpt, read time, and published date
+  - Responsive card layout
+- **Bookshelf**: Reading list with book covers
+  - Displays books with status (read, reading, to-read)
+  - Shows reading statistics
+  - Book covers loaded from Supabase Storage
 
 ## Customization
 

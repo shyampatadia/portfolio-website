@@ -3,8 +3,6 @@
  * Handles all backend API calls
  */
 
-const API_BASE_URL = 'https://portfolio-website-nine-red-56.vercel.app';
-
 class ApiService {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -31,36 +29,6 @@ class ApiService {
       console.error(`API Error (${endpoint}):`, error);
       throw error;
     }
-  }
-
-  // Profile API
-  async getProfile() {
-    return this.fetch('/api/profile');
-  }
-
-  // Skills API
-  async getSkills() {
-    return this.fetch('/api/content/skills');
-  }
-
-  // Experience API
-  async getExperience() {
-    return this.fetch('/api/content/experience');
-  }
-
-  // Projects API
-  async getProjects() {
-    return this.fetch('/api/content/projects');
-  }
-
-  // Education API
-  async getEducation() {
-    return this.fetch('/api/content/education');
-  }
-
-  // Certifications API
-  async getCertifications() {
-    return this.fetch('/api/content/certifications');
   }
 
   // Blog API
@@ -93,8 +61,8 @@ class ApiService {
   }
 }
 
-// Create singleton instance
-const api = new ApiService(API_BASE_URL);
+// Create singleton instance with environment-based URL
+const api = new ApiService(window.AppConfig.getApiBaseUrl());
 
 // Export for use in other scripts
 window.api = api;

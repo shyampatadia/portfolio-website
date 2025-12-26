@@ -62,3 +62,4 @@ backend/hello.py
 __pycache__/
 
 *.png
+.claude
