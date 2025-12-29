@@ -9,7 +9,7 @@ from app.core.security import create_access_token, verify_password, get_password
 from app.core.supabase import supabase_admin
 
 
-router = APIRouter(prefix="/api/auth", tags=["Authentication"])
+router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
 @router.post("/login", response_model=TokenResponse)
@@ -31,9 +31,10 @@ async def login(credentials: LoginRequest):
         )
 
     # Create access token
+    # Use a fixed UUID for the admin user (compatible with database UUID field)
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": credentials.email, "user_id": "admin"},
+        data={"sub": credentials.email, "user_id": "00000000-0000-0000-0000-000000000000"},
         expires_delta=access_token_expires
     )
 

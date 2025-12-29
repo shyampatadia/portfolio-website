@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Blog Post</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Marked.js for proper markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Config -->
+    <script src="../assets/js/app-config.js"></script>
+    <script src="../assets/js/api.js"></script>
+
+    <style>
+      /* System font stack like Hugo */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Blog content styling with better typography */
+      .blog-content {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #e5e7eb;
+      }
+
+      .blog-content h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+        color: #f9fafb;
+      }
+
+      .blog-content h2 {
+        font-size: 1.875rem;
+        font-weight: 600;
+        margin-top: 3rem;
+        margin-bottom: 1.25rem;
+        line-height: 1.3;
+        color: #f3f4f6;
+      }
+
+      .blog-content h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+        color: #f3f4f6;
+      }
+
+      .blog-content p {
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+      }
+
+      .blog-content a {
+        color: #60a5fa;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+      }
+
+      .blog-content a:hover {
+        color: #93c5fd;
+      }
+
+      .blog-content strong {
+        font-weight: 600;
+        color: #f9fafb;
+      }
+
+      .blog-content em {
+        font-style: italic;
+      }
+
+      .blog-content code {
+        background-color: #374151;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        color: #fbbf24;
+      }
+
+      .blog-content pre {
+        background-color: #1f2937;
+        padding: 1.25rem;
+        border-radius: 0.5rem;
+        margin: 1.5rem 0;
+        overflow-x: auto;
+        border: 1px solid #374151;
+      }
+
+      .blog-content pre code {
+        background-color: transparent;
+        padding: 0;
+        color: #e5e7eb;
+      }
+
+      .blog-content ul, .blog-content ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+      }
+
+      .blog-content ul {
+        list-style-type: disc;
+      }
+
+      .blog-content ol {
+        list-style-type: decimal;
+      }
+
+      .blog-content li {
+        margin-bottom: 0.5rem;
+        line-height: 1.7;
+      }
+
+      .blog-content blockquote {
+        border-left: 4px solid #60a5fa;
+        padding-left: 1.25rem;
+        font-style: italic;
+        margin: 1.5rem 0;
+        color: #d1d5db;
+      }
+
+      .blog-content img {
+        height: auto;
+      }
+
+      .blog-content figure {
+        margin: 2rem 0;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-900 text-gray-100 min-h-screen" x-data="blogPost">
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-gray-700">
+      <div class="max-w-4xl mx-auto px-4 py-6">
+        <a href="../index.html#blog" class="text-blue-400 hover:underline">
+          <i class="fas fa-arrow-left mr-2"></i>
+          Back to Blog
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+      <!-- Loading State -->
+      <div x-show="loading" class="text-center py-12">
+        <i class="fas fa-spinner fa-spin text-4xl text-blue-400"></i>
+        <p class="mt-4 text-gray-400">Loading post...</p>
+      </div>
+
+      <!-- Error State -->
+      <div x-show="error" class="text-center py-12">
+        <i class="fas fa-exclamation-circle text-4xl text-red-400 mb-4"></i>
+        <p class="text-red-400" x-text="error"></p>
+        <a href="../index.html#blog" class="inline-block mt-4 text-blue-400 hover:underline">
+          Return to Blog
+        </a>
+      </div>
+
+      <!-- Blog Post Content -->
+      <article x-show="!loading && !error && post" class="prose prose-invert max-w-none">
+        <!-- Header -->
+        <div class="mb-8">
+          <h1 class="text-4xl font-bold mb-4" x-text="post?.title"></h1>
+          <div class="flex items-center gap-4 text-gray-400 text-sm">
+            <time x-text="post && formatDate(post.created_at)"></time>
+            <span x-show="post?.read_time" x-text="post?.read_time"></span>
+            <span x-show="post?.category" class="px-3 py-1 bg-gray-800 rounded text-blue-400" x-text="post?.category"></span>
+          </div>
+        </div>
+
+        <!-- Featured Image -->
+        <div x-show="post?.image_url" class="mb-8">
+          <img :src="post?.image_url" :alt="post?.title" class="w-full rounded-lg" />
+        </div>
+
+        <!-- Content -->
+        <div class="blog-content text-gray-300" x-html="post ? renderMarkdown(post.content) : ''"></div>
+
+        <!-- Tags -->
+        <div x-show="post?.tags && post.tags.length > 0" class="mt-12 pt-8 border-t border-gray-700">
+          <h3 class="text-sm font-semibold text-gray-400 mb-3">Tags</h3>
+          <div class="flex flex-wrap gap-2">
+            <template x-for="tag in (post?.tags || [])" :key="tag">
+              <span class="px-3 py-1 bg-gray-800 text-blue-400 rounded-full text-sm" x-text="tag"></span>
+            </template>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-4xl mx-auto px-4 py-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+      <a href="../index.html" class="text-blue-400 hover:underline">Return to Portfolio</a>
+    </footer>
+
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('blogPost', () => ({
+          post: null,
+          loading: true,
+          error: null,
+
+          async init() {
+            // Get slug from URL query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+
+            if (!slug) {
+              this.error = 'No blog post specified';
+              this.loading = false;
+              return;
+            }
+
+            await this.loadPost(slug);
+          },
+
+          async loadPost(slug) {
+            try {
+              this.loading = true;
+              this.post = await window.api.getBlogPostBySlug(slug);
+
+              // Update page title
+              document.getElementById('page-title').textContent = this.post.title;
+              document.title = this.post.title;
+            } catch (error) {
+              console.error('Error loading blog post:', error);
+              this.error = 'Failed to load blog post. It may not exist or has been deleted.';
+            } finally {
+              this.loading = false;
+            }
+          },
+
+          formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            });
+          },
+
+          renderMarkdown(markdown) {
+            if (!markdown) return '';
+
+            // Configure marked.js
+            const renderer = new marked.Renderer();
+
+            // Custom image renderer - constrain width like Hugo blog
+            renderer.image = function(token) {
+              // Handle both old and new marked.js API
+              const href = typeof token === 'string' ? token : (token.href || '');
+              const title = typeof token === 'object' ? token.title : arguments[1];
+              const text = typeof token === 'object' ? token.text : arguments[2];
+
+              // Ensure all values are strings
+              const hrefStr = String(href || '');
+              const titleStr = title && title !== 'undefined' ? String(title) : '';
+              const textStr = text ? String(text) : '';
+
+              const titleAttr = titleStr ? `title="${titleStr}"` : '';
+              const caption = titleStr ? `<figcaption class="text-center text-sm text-gray-400 mt-2">${titleStr}</figcaption>` : '';
+
+              return `<figure class="my-6">
+                <img src="${hrefStr}" alt="${textStr}" ${titleAttr} class="max-w-full mx-auto block rounded-lg" style="max-width: 800px;" />
+                ${caption}
+              </figure>`;
+            };
+
+            // Custom link renderer - open in new tab
+            renderer.link = function(token) {
+              // Handle both old and new marked.js API
+              const href = typeof token === 'string' ? token : (token.href || '');
+              const title = typeof token === 'object' ? token.title : arguments[1];
+              const text = typeof token === 'object' ? token.text : arguments[2];
+
+              const hrefStr = String(href || '');
+              const titleStr = title ? String(title) : '';
+              const textStr = text ? String(text) : '';
+
+              return `<a href="${hrefStr}" target="_blank" ${titleStr ? `title="${titleStr}"` : ''}>${textStr}</a>`;
+            };
+
+            marked.setOptions({
+              renderer: renderer,
+              breaks: true,
+              gfm: true
+            });
+
+            return marked.parse(markdown);
+          }
+        }));
+      });
+    </script>
+  </body>
+</html>

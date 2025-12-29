@@ -63,3 +63,10 @@ __pycache__/
 
 *.png
 .claude
+
+# Vercel
+.vercel
+backend/.vercel
+
+# GitHub Pages
+_site/
