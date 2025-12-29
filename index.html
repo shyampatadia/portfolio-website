@@ -2533,8 +2533,10 @@
               <template x-for="post in blogPosts" :key="post.id">
                 <article class="blog-post-card p-6 bg-elevated rounded-lg border-l-4 border-transparent hover:border-accent transition-all">
                   <div class="flex justify-between items-start mb-3">
-                    <h3 class="text-2xl font-semibold text-accent-primary hover:text-blue-300 cursor-pointer" x-text="post.title"></h3>
-                    <span class="text-sm text-tertiary" x-text="new Date(post.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })"></span>
+                    <a :href="`blog/post.html?slug=${post.slug}`" class="text-2xl font-semibold text-accent-primary hover:text-blue-300">
+                      <span x-text="post.title"></span>
+                    </a>
+                    <time class="text-sm text-tertiary" x-text="new Date(post.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })"></time>
                   </div>
                   <p class="text-secondary mb-4" x-text="post.excerpt || post.content.substring(0, 150) + '...'"></p>
                   <div class="flex flex-wrap gap-2 mb-3">
@@ -2543,6 +2545,9 @@
                       <span class="text-xs px-2 py-1 badge-animated text-accent-gold rounded" x-text="tag"></span>
                     </template>
                   </div>
+                  <a :href="`blog/post.html?slug=${post.slug}`" class="text-accent-primary text-sm font-medium hover:underline">
+                    Read more →
+                  </a>
                 </article>
               </template>
             </div>

@@ -8,7 +8,7 @@ from app.core.security import get_current_user
 from app.core.supabase import supabase_client, supabase_admin
 
 
-router = APIRouter(prefix="/api/books", tags=["Books"])
+router = APIRouter(prefix="/books", tags=["Books"])
 
 
 @router.get("", response_model=List[BookResponse])

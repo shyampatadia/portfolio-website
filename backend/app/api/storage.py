@@ -3,9 +3,9 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, status, Depends
 from app.core.security import get_current_user
 from app.core.supabase import supabase_client, supabase_admin
 import uuid
-from typing import Dict
+from typing import Dict, List
 
-router = APIRouter(prefix="/api/storage", tags=["Storage"])
+router = APIRouter(prefix="/storage", tags=["Storage"])
 
 # Allowed file extensions
 ALLOWED_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}
@@ -76,7 +76,7 @@ async def upload_blog_image(
         return {
             "url": public_url,
             "filename": unique_filename,
-            "size": len(contents)
+            "size": f"{len(contents) / 1024:.2f} KB"
         }
     except Exception as e:
         raise HTTPException(
@@ -128,13 +128,87 @@ async def upload_book_cover(
         return {
             "url": public_url,
             "filename": unique_filename,
-            "size": len(contents)
+            "size": f"{len(contents) / 1024:.2f} KB"
         }
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to upload image: {str(e)}"
         )
+
+
+@router.post("/upload/blog/multiple", status_code=status.HTTP_201_CREATED)
+async def upload_multiple_blog_images(
+    files: List[UploadFile] = File(...),
+    current_user: dict = Depends(get_current_user)
+) -> List[Dict[str, str]]:
+    """
+    Upload multiple images for blog posts
+
+    - Requires authentication
+    - Max file size per image: 5MB
+    - Max files: 10
+    - Allowed formats: jpg, jpeg, png, gif, webp
+    - Returns: List of URLs that can be inserted into blog content
+    """
+    if len(files) > 10:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Maximum 10 images per upload"
+        )
+
+    uploaded_images = []
+    errors = []
+
+    for file in files:
+        try:
+            validate_image_file(file)
+
+            # Read file contents
+            contents = await file.read()
+
+            # Validate file size
+            if len(contents) > MAX_FILE_SIZE:
+                errors.append(f"{file.filename}: File too large (max 5MB)")
+                continue
+
+            # Generate unique filename
+            ext = '.' + file.filename.split('.')[-1].lower()
+            unique_filename = f"blog/{uuid.uuid4()}{ext}"
+
+            # Upload to Supabase Storage
+            supabase_admin.storage.from_("portfolio-images").upload(
+                unique_filename,
+                contents,
+                file_options={"content-type": file.content_type}
+            )
+
+            # Get public URL
+            public_url = supabase_admin.storage.from_("portfolio-images").get_public_url(unique_filename)
+
+            uploaded_images.append({
+                "url": public_url,
+                "filename": unique_filename,
+                "original_name": file.filename,
+                "size": f"{len(contents) / 1024:.2f} KB",
+                "markdown": f"![{file.filename}]({public_url})"  # Ready-to-use markdown
+            })
+        except HTTPException as e:
+            errors.append(f"{file.filename}: {e.detail}")
+        except Exception as e:
+            errors.append(f"{file.filename}: Upload failed - {str(e)}")
+
+    if not uploaded_images and errors:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"All uploads failed: {'; '.join(errors)}"
+        )
+
+    # Return successful uploads (and log errors if any)
+    if errors:
+        print(f"[WARNING] Some uploads failed: {errors}")
+
+    return uploaded_images
 
 
 @router.delete("/delete/{path:path}", status_code=status.HTTP_204_NO_CONTENT)

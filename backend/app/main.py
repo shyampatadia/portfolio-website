@@ -21,19 +21,38 @@ app = FastAPI(
 )
 
 # CORS middleware
+# Configure allowed origins based on environment
+if settings.ENVIRONMENT == "production":
+    # Production: Allow all origins (GitHub Pages can be on any subdomain)
+    # Vercel deployment handles security with proper headers
+    allowed_origins = ["*"]
+else:
+    # Development: Allow common localhost ports and Live Server
+    allowed_origins = [
+        "http://localhost:8000",
+        "http://localhost:3000",
+        "http://localhost:5500",
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5500",
+        "http://127.0.0.1:5501",
+        "http://127.0.0.1:5502",
+        "null",  # Allow file:// protocol
+    ]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(auth.router)
-app.include_router(blog.router)
-app.include_router(books.router)
-app.include_router(storage.router)
+# Include routers with /api prefix
+app.include_router(auth.router, prefix="/api")
+app.include_router(blog.router, prefix="/api")
+app.include_router(books.router, prefix="/api")
+app.include_router(storage.router, prefix="/api")
 
 # Mount static files (frontend)
 static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..")
