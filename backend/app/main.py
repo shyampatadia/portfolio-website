@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 import os
 
 from app.core.config import settings
-from app.api import auth, blog, books, storage
+from app.api import auth, blog, books, storage, analytics
 
 
 # Create FastAPI app
@@ -53,6 +53,7 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(blog.router, prefix="/api")
 app.include_router(books.router, prefix="/api")
 app.include_router(storage.router, prefix="/api")
+app.include_router(analytics.router, prefix="/api")
 
 # Mount static files (frontend)
 static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..")

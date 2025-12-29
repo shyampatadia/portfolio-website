@@ -20,6 +20,7 @@
     <!-- Config -->
     <script src="../assets/js/app-config.js"></script>
     <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/analytics.js"></script>
 
     <style>
       /* System font stack like Hugo */
@@ -242,6 +243,11 @@
               // Update page title
               document.getElementById('page-title').textContent = this.post.title;
               document.title = this.post.title;
+
+              // Track blog post view for analytics
+              if (window.analytics && this.post.id) {
+                window.analytics.trackBlogView(this.post.id, this.post.slug);
+              }
             } catch (error) {
               console.error('Error loading blog post:', error);
               this.error = 'Failed to load blog post. It may not exist or has been deleted.';
