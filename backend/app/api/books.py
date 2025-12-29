@@ -19,7 +19,10 @@ async def get_books(status_filter: str = None, include_hidden: bool = False):
     - status_filter: Filter by reading status (read, reading, to-read)
     - include_hidden: Include hidden books (default: False, only visible books)
     """
-    query = supabase_client.table("books").select("*")
+    # Use admin client when include_hidden=True to bypass RLS
+    client = supabase_admin if include_hidden else supabase_client
+
+    query = client.table("books").select("*")
 
     # Filter by visibility (public only sees visible books)
     if not include_hidden:
@@ -54,8 +57,10 @@ async def get_book_stats():
 async def get_book(book_id: str):
     """
     Get a single book by ID
+    Uses admin client to allow fetching hidden books (for admin panel editing)
     """
-    response = supabase_client.table("books").select("*").eq("id", book_id).execute()
+    # Use admin client to bypass RLS - this endpoint is primarily used by admin panel
+    response = supabase_admin.table("books").select("*").eq("id", book_id).execute()
 
     if not response.data:
         raise HTTPException(status_code=404, detail="Book not found")
