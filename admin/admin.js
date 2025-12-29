@@ -72,9 +72,12 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// Simplified load tab - only blog and books
+// Load tab content
 async function loadTab(tab) {
   switch(tab) {
+    case 'analytics':
+      await loadAnalyticsDashboard();
+      break;
     case 'blog':
       await loadBlogPosts();
       break;
@@ -82,7 +85,7 @@ async function loadTab(tab) {
       await loadBooks();
       break;
     default:
-      await loadBlogPosts();
+      await loadAnalyticsDashboard(); // Default to analytics dashboard
   }
 }
 

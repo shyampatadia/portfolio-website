@@ -60,9 +60,21 @@ temp/
 backend/.venv
 backend/hello.py
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
 
 *.png
 .claude
+
+# Personal files
+*.pdf
+*.docx
+resume*
+cv*
+*Resume*.pdf
 
 # Vercel
 .vercel
