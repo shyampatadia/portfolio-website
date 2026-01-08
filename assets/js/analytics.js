@@ -119,6 +119,36 @@ class Analytics {
   }
 
   /**
+   * Track portfolio tab views
+   * @param {string} tabName - Name of the tab (about, projects, blog, etc.)
+   */
+  async trackTabView(tabName) {
+    if (!tabName) return;
+
+    const data = {
+      tab_name: tabName,
+      visitor_id: this.visitorId,
+      page_path: window.location.pathname
+    };
+
+    try {
+      const response = await fetch(`${this.apiBase}/api/analytics/track/tab`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        console.log('[Analytics] Tab view tracked:', tabName);
+      }
+    } catch (error) {
+      console.error('[Analytics] Failed to track tab view:', error);
+    }
+  }
+
+  /**
    * Initialize analytics for the current page
    */
   init() {

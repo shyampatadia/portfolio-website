@@ -45,6 +45,20 @@ class BlogPostAnalytics(BaseModel):
     last_viewed: Optional[datetime] = None
 
 
+class TabViewCreate(BaseModel):
+    """Schema for tracking tab view"""
+    tab_name: str = Field(..., description="Tab name")
+    visitor_id: str = Field(..., description="Unique visitor identifier")
+    page_path: Optional[str] = Field(None, description="Page path where tab was clicked")
+
+
+class TabViewStats(BaseModel):
+    """Statistics for a specific tab"""
+    tab_name: str
+    total_visits: int
+    unique_visitors: int
+
+
 class OverallStats(BaseModel):
     """Overall website statistics"""
     total_page_views: int
@@ -53,8 +67,10 @@ class OverallStats(BaseModel):
     unique_visitors_week: int
     unique_visitors_month: int
     total_blog_views: int
+    total_blog_visitors: int = 0
     top_pages: list[PageViewStats]
     top_blog_posts: list[BlogPostAnalytics]
+    tab_stats: Optional[list[TabViewStats]] = None
 
 
 class RecentActivity(BaseModel):
@@ -68,3 +84,32 @@ class RecentActivity(BaseModel):
     country: Optional[str] = None
     city: Optional[str] = None
     created_at: datetime
+
+
+class BlogReactionCreate(BaseModel):
+    """Schema for creating/updating a blog reaction"""
+    blog_post_id: str = Field(..., description="Blog post UUID")
+    blog_post_slug: str = Field(..., description="Blog post slug")
+    visitor_id: str = Field(..., description="Unique visitor identifier")
+    reaction_type: str = Field(..., description="Reaction type: deploy, gem, learned, fire, clarity, issues, debatable, tldr")
+
+
+class BlogReactionStats(BaseModel):
+    """Reaction statistics for a blog post"""
+    reaction_type: str
+    count: int
+
+
+class IndividualBlogAnalytics(BaseModel):
+    """Detailed analytics for a single blog post"""
+    blog_post_id: str
+    title: str
+    slug: str
+    published_at: Optional[datetime] = None
+    total_views: int
+    unique_visitors: int
+    avg_time_spent: Optional[float] = None
+    avg_scroll_depth: Optional[float] = None
+    reactions: list[BlogReactionStats] = []
+    total_reactions: int
+    last_viewed: Optional[datetime] = None

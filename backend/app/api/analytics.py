@@ -12,7 +12,12 @@ from app.schemas.analytics import (
     PageViewStats,
     BlogPostAnalytics,
     OverallStats,
-    RecentActivity
+    RecentActivity,
+    TabViewCreate,
+    TabViewStats,
+    BlogReactionCreate,
+    BlogReactionStats,
+    IndividualBlogAnalytics
 )
 from app.core.security import get_current_user
 from app.core.supabase import supabase_client, supabase_admin
@@ -171,6 +176,23 @@ async def track_blog_view(view: BlogPostViewCreate, request: Request):
         return {"success": False, "message": "Tracking failed"}
 
 
+@router.post("/track/tab", status_code=status.HTTP_201_CREATED)
+async def track_tab_view(view: TabViewCreate, request: Request):
+    """
+    Track a portfolio tab view (public endpoint)
+    Called from frontend when user switches tabs
+    """
+    view_data = view.model_dump()
+
+    try:
+        # Use admin client to bypass RLS - backend API is trusted
+        response = supabase_admin.table("tab_views").insert(view_data).execute()
+        return {"success": True, "message": "Tab view tracked"}
+    except Exception as e:
+        print(f"[Analytics] Failed to track tab view: {e}")
+        return {"success": False, "message": "Tracking failed"}
+
+
 @router.get("/stats/overall", response_model=OverallStats)
 async def get_overall_stats(current_user: dict = Depends(get_current_user)):
     """
@@ -214,6 +236,12 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
     blog_views_response = supabase_admin.table("blog_post_views").select("id", count="exact").execute()
     total_blog_views = blog_views_response.count or 0
 
+    # Total unique blog visitors (across all blog posts)
+    blog_visitors_response = supabase_admin.table("blog_post_views")\
+        .select("visitor_id")\
+        .execute()
+    total_blog_visitors = len(set(v["visitor_id"] for v in blog_visitors_response.data))
+
     # Top pages (excluding API endpoints)
     all_page_views = supabase_admin.table("page_views")\
         .select("page_path, visitor_id, created_at")\
@@ -254,17 +282,24 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
             .select("blog_post_id, blog_post_slug, visitor_id, time_spent_seconds, scroll_depth, created_at")\
             .execute()
 
-        # Get blog post titles
+        # Get blog post titles (both published and unpublished for admin view)
         blog_posts = supabase_admin.table("blog_posts")\
-            .select("id, title, slug")\
+            .select("id, title, slug, published")\
             .execute()
 
         blog_post_map = {bp["id"]: bp for bp in blog_posts.data}
+        print(f"[Analytics] Found {len(blog_post_map)} blog posts in database")
+        print(f"[Analytics] Found {len(all_blog_views.data)} blog views")
 
         # Aggregate blog stats
         blog_stats_dict = {}
         for view in all_blog_views.data:
             post_id = view["blog_post_id"]
+            # Only aggregate stats for posts that exist in blog_posts table
+            if post_id not in blog_post_map:
+                print(f"[Analytics] Warning: View for non-existent blog post {post_id}")
+                continue
+
             if post_id not in blog_stats_dict:
                 blog_stats_dict[post_id] = {
                     "views": 0,
@@ -281,6 +316,8 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
                 blog_stats_dict[post_id]["scroll_depths"].append(view["scroll_depth"])
             if view["created_at"] > blog_stats_dict[post_id]["last_viewed"]:
                 blog_stats_dict[post_id]["last_viewed"] = view["created_at"]
+
+        print(f"[Analytics] Aggregated stats for {len(blog_stats_dict)} blog posts with views")
 
         top_blog_posts = []
         for post_id, stats in sorted(blog_stats_dict.items(), key=lambda x: x[1]["views"], reverse=True)[:10]:
@@ -299,6 +336,34 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
                     last_viewed=stats["last_viewed"]
                 ))
 
+        print(f"[Analytics] Returning {len(top_blog_posts)} blog posts in top_blog_posts")
+
+    # Tab tracking statistics
+    try:
+        all_tab_views = supabase_admin.table("tab_views")\
+            .select("tab_name, visitor_id")\
+            .execute()
+
+        tab_stats_dict = {}
+        for view in all_tab_views.data:
+            tab_name = view["tab_name"]
+            if tab_name not in tab_stats_dict:
+                tab_stats_dict[tab_name] = {"visits": 0, "visitors": set()}
+            tab_stats_dict[tab_name]["visits"] += 1
+            tab_stats_dict[tab_name]["visitors"].add(view["visitor_id"])
+
+        tab_stats = [
+            TabViewStats(
+                tab_name=tab_name,
+                total_visits=stats["visits"],
+                unique_visitors=len(stats["visitors"])
+            )
+            for tab_name, stats in sorted(tab_stats_dict.items(), key=lambda x: x[1]["visits"], reverse=True)
+        ]
+    except Exception as e:
+        print(f"[Analytics] Failed to get tab stats: {e}")
+        tab_stats = None
+
     return OverallStats(
         total_page_views=total_page_views,
         unique_visitors_total=unique_visitors_total,
@@ -306,8 +371,10 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
         unique_visitors_week=unique_visitors_week,
         unique_visitors_month=unique_visitors_month,
         total_blog_views=total_blog_views,
+        total_blog_visitors=total_blog_visitors,
         top_pages=top_pages,
-        top_blog_posts=top_blog_posts
+        top_blog_posts=top_blog_posts,
+        tab_stats=tab_stats
     )
 
 
@@ -368,3 +435,249 @@ async def get_blog_post_stats(
         avg_scroll_depth=avg_scroll_depth,
         last_viewed=last_viewed
     )
+
+
+@router.get("/stats/tabs", response_model=List[TabViewStats])
+async def get_tab_stats(current_user: dict = Depends(get_current_user)):
+    """
+    Get tab tracking statistics (authenticated only)
+    Returns total visits and unique visitors per tab
+    """
+    # Get all tab views
+    all_tab_views = supabase_admin.table("tab_views")\
+        .select("tab_name, visitor_id")\
+        .execute()
+
+    # Aggregate by tab_name
+    tab_stats_dict = {}
+    for view in all_tab_views.data:
+        tab_name = view["tab_name"]
+        if tab_name not in tab_stats_dict:
+            tab_stats_dict[tab_name] = {"visits": 0, "visitors": set()}
+        tab_stats_dict[tab_name]["visits"] += 1
+        tab_stats_dict[tab_name]["visitors"].add(view["visitor_id"])
+
+    # Convert to list of TabViewStats
+    tab_stats = [
+        TabViewStats(
+            tab_name=tab_name,
+            total_visits=stats["visits"],
+            unique_visitors=len(stats["visitors"])
+        )
+        for tab_name, stats in sorted(tab_stats_dict.items(), key=lambda x: x[1]["visits"], reverse=True)
+    ]
+
+    return tab_stats
+
+
+@router.get("/blog/{slug}/reactions")
+async def get_blog_reactions_public(slug: str):
+    """
+    Get reaction counts for a blog post by slug (public endpoint)
+    Returns counts for each reaction type
+    """
+    # Get blog post by slug
+    post = supabase_admin.table("blog_posts")\
+        .select("id")\
+        .eq("slug", slug)\
+        .eq("published", True)\
+        .execute()
+
+    if not post.data:
+        return {"gem": 0, "learned": 0, "clarity": 0, "issues": 0}
+
+    post_id = post.data[0]["id"]
+
+    # Get reactions for this post
+    reactions = supabase_admin.table("blog_reactions")\
+        .select("reaction_type")\
+        .eq("blog_post_id", post_id)\
+        .execute()
+
+    # Count reactions
+    counts = {"gem": 0, "learned": 0, "clarity": 0, "issues": 0}
+    for reaction in reactions.data:
+        r_type = reaction["reaction_type"]
+        if r_type in counts:
+            counts[r_type] += 1
+
+    return counts
+
+
+@router.post("/react", status_code=status.HTTP_201_CREATED)
+async def submit_reaction(reaction: BlogReactionCreate):
+    """
+    Submit or update a blog post reaction (public endpoint)
+    Uses UPSERT to replace existing reaction if visitor already reacted
+    """
+    # Validate reaction_type - only 4 allowed
+    valid_reactions = ['gem', 'learned', 'clarity', 'issues']
+    if reaction.reaction_type not in valid_reactions:
+        raise HTTPException(status_code=400, detail=f"Invalid reaction type. Must be one of: {', '.join(valid_reactions)}")
+
+    reaction_data = reaction.model_dump()
+
+    try:
+        # Use upsert to insert or update reaction (one reaction per visitor per post)
+        response = supabase_admin.table("blog_reactions")\
+            .upsert(reaction_data, on_conflict="blog_post_id,visitor_id")\
+            .execute()
+
+        return {"success": True, "message": "Reaction recorded"}
+    except Exception as e:
+        print(f"[Analytics] Failed to record reaction: {e}")
+        return {"success": False, "message": "Failed to record reaction"}
+
+
+@router.get("/blog/{post_id}/detailed", response_model=IndividualBlogAnalytics)
+async def get_blog_detailed_analytics(post_id: str, current_user: dict = Depends(get_current_user)):
+    """
+    Get comprehensive analytics for a specific blog post (authenticated)
+    Includes views, engagement metrics, and reaction breakdown
+    """
+    # Get blog post metadata
+    post = supabase_admin.table("blog_posts")\
+        .select("id, title, slug, published_at")\
+        .eq("id", post_id)\
+        .execute()
+
+    if not post.data:
+        raise HTTPException(status_code=404, detail="Blog post not found")
+
+    # Get view statistics
+    views = supabase_admin.table("blog_post_views")\
+        .select("visitor_id, time_spent_seconds, scroll_depth, created_at")\
+        .eq("blog_post_id", post_id)\
+        .execute()
+
+    total_views = len(views.data)
+    unique_visitors = len(set(v["visitor_id"] for v in views.data))
+
+    time_spent_values = [v["time_spent_seconds"] for v in views.data if v.get("time_spent_seconds")]
+    avg_time_spent = sum(time_spent_values) / len(time_spent_values) if time_spent_values else None
+
+    scroll_values = [v["scroll_depth"] for v in views.data if v.get("scroll_depth")]
+    avg_scroll_depth = sum(scroll_values) / len(scroll_values) if scroll_values else None
+
+    last_viewed = max((v["created_at"] for v in views.data), default=None) if views.data else None
+
+    # Get reaction statistics
+    reactions_response = supabase_admin.table("blog_reactions")\
+        .select("reaction_type")\
+        .eq("blog_post_id", post_id)\
+        .execute()
+
+    # Count reactions by type
+    reaction_counts = {}
+    for reaction in reactions_response.data:
+        r_type = reaction["reaction_type"]
+        reaction_counts[r_type] = reaction_counts.get(r_type, 0) + 1
+
+    reactions = [
+        BlogReactionStats(reaction_type=r_type, count=count)
+        for r_type, count in reaction_counts.items()
+    ]
+
+    total_reactions = sum(r.count for r in reactions)
+
+    return IndividualBlogAnalytics(
+        blog_post_id=post_id,
+        title=post.data[0]["title"],
+        slug=post.data[0]["slug"],
+        published_at=post.data[0].get("published_at"),
+        total_views=total_views,
+        unique_visitors=unique_visitors,
+        avg_time_spent=avg_time_spent,
+        avg_scroll_depth=avg_scroll_depth,
+        reactions=reactions,
+        total_reactions=total_reactions,
+        last_viewed=last_viewed
+    )
+
+
+@router.get("/blogs/all", response_model=List[IndividualBlogAnalytics])
+async def get_all_blogs_analytics(current_user: dict = Depends(get_current_user)):
+    """
+    Get analytics for all blog posts (authenticated)
+    For admin dashboard blog analytics table
+    """
+    # Get all blog posts
+    all_posts = supabase_admin.table("blog_posts")\
+        .select("id, title, slug, published_at")\
+        .order("published_at", desc=True)\
+        .execute()
+
+    if not all_posts.data:
+        return []
+
+    # Get all views
+    all_views = supabase_admin.table("blog_post_views")\
+        .select("blog_post_id, visitor_id, time_spent_seconds, scroll_depth, created_at")\
+        .execute()
+
+    # Get all reactions
+    all_reactions = supabase_admin.table("blog_reactions")\
+        .select("blog_post_id, reaction_type")\
+        .execute()
+
+    # Organize views by blog_post_id
+    views_by_post = {}
+    for view in all_views.data:
+        post_id = view["blog_post_id"]
+        if post_id not in views_by_post:
+            views_by_post[post_id] = []
+        views_by_post[post_id].append(view)
+
+    # Organize reactions by blog_post_id
+    reactions_by_post = {}
+    for reaction in all_reactions.data:
+        post_id = reaction["blog_post_id"]
+        if post_id not in reactions_by_post:
+            reactions_by_post[post_id] = []
+        reactions_by_post[post_id].append(reaction["reaction_type"])
+
+    # Build analytics for each post
+    blog_analytics = []
+    for post in all_posts.data:
+        post_id = post["id"]
+        post_views = views_by_post.get(post_id, [])
+        post_reactions = reactions_by_post.get(post_id, [])
+
+        total_views = len(post_views)
+        unique_visitors = len(set(v["visitor_id"] for v in post_views))
+
+        time_spent_values = [v["time_spent_seconds"] for v in post_views if v.get("time_spent_seconds")]
+        avg_time_spent = sum(time_spent_values) / len(time_spent_values) if time_spent_values else None
+
+        scroll_values = [v["scroll_depth"] for v in post_views if v.get("scroll_depth")]
+        avg_scroll_depth = sum(scroll_values) / len(scroll_values) if scroll_values else None
+
+        last_viewed = max((v["created_at"] for v in post_views), default=None) if post_views else None
+
+        # Count reactions by type
+        reaction_counts = {}
+        for r_type in post_reactions:
+            reaction_counts[r_type] = reaction_counts.get(r_type, 0) + 1
+
+        reactions = [
+            BlogReactionStats(reaction_type=r_type, count=count)
+            for r_type, count in reaction_counts.items()
+        ]
+
+        total_reactions = len(post_reactions)
+
+        blog_analytics.append(IndividualBlogAnalytics(
+            blog_post_id=post_id,
+            title=post["title"],
+            slug=post["slug"],
+            published_at=post.get("published_at"),
+            total_views=total_views,
+            unique_visitors=unique_visitors,
+            avg_time_spent=avg_time_spent,
+            avg_scroll_depth=avg_scroll_depth,
+            reactions=reactions,
+            total_reactions=total_reactions,
+            last_viewed=last_viewed
+        ))
+
+    return blog_analytics

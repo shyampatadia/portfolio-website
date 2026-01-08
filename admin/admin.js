@@ -17,6 +17,14 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
+  const errorDiv = document.getElementById('login-error');
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+
+  // Show loading state
+  const originalText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Logging in...';
+  errorDiv.classList.add('hidden');
 
   try {
     const response = await fetch(`${API_BASE}/auth/login`, {
@@ -26,16 +34,26 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     });
 
     if (!response.ok) {
-      throw new Error('Invalid credentials');
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || 'Invalid credentials');
     }
 
     const data = await response.json();
     authToken = data.access_token;
     localStorage.setItem('admin_token', authToken);
-    showDashboard();
+
+    // Success feedback
+    submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Success!';
+    submitBtn.classList.add('bg-green-600');
+    setTimeout(() => showDashboard(), 500);
+
   } catch (error) {
-    document.getElementById('login-error').textContent = error.message;
-    document.getElementById('login-error').classList.remove('hidden');
+    console.error('Login error:', error);
+    errorDiv.textContent = error.message;
+    errorDiv.classList.remove('hidden');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+    submitBtn.classList.remove('bg-green-600');
   }
 });
 
@@ -53,7 +71,7 @@ function showLogin() {
 function showDashboard() {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('dashboard').classList.remove('hidden');
-  loadTab('blog'); // Changed from 'profile' to 'blog'
+  loadTab('analytics'); // Default to analytics tab
 }
 
 // ===== TAB NAVIGATION =====
@@ -74,18 +92,45 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
 // Load tab content
 async function loadTab(tab) {
-  switch(tab) {
-    case 'analytics':
-      await loadAnalyticsDashboard();
-      break;
-    case 'blog':
-      await loadBlogPosts();
-      break;
-    case 'books':
-      await loadBooks();
-      break;
-    default:
-      await loadAnalyticsDashboard(); // Default to analytics dashboard
+  const contentArea = document.getElementById('content-area');
+
+  // Show loading indicator
+  contentArea.innerHTML = `
+    <div class="text-center py-12">
+      <i class="fas fa-spinner fa-spin text-4xl text-indigo-600 mb-4"></i>
+      <p class="text-gray-600">Loading...</p>
+    </div>
+  `;
+
+  try {
+    switch(tab) {
+      case 'analytics':
+        await loadAnalyticsDashboard();
+        break;
+      case 'blog-analytics':
+        await loadBlogAnalytics();
+        break;
+      case 'blog':
+        await loadBlogPosts();
+        break;
+      case 'books':
+        await loadBooks();
+        break;
+      default:
+        await loadAnalyticsDashboard(); // Default to analytics dashboard
+    }
+  } catch (error) {
+    contentArea.innerHTML = `
+      <div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+        <i class="fas fa-exclamation-circle text-red-600 text-3xl mb-3"></i>
+        <h3 class="font-semibold text-red-900 mb-2">Error Loading Content</h3>
+        <p class="text-sm text-red-700 mb-4">${error.message}</p>
+        <button onclick="loadTab('${tab}')" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors">
+          <i class="fas fa-redo mr-2"></i>Retry
+        </button>
+      </div>
+    `;
+    console.error('Tab load error:', error);
   }
 }
 
