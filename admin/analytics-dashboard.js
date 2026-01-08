@@ -74,6 +74,7 @@ function displayAnalytics(stats, recentActivity) {
           <div>
             <p class="text-purple-100 text-sm font-medium">Blog Views</p>
             <p class="text-3xl font-bold mt-2">${stats.total_blog_views.toLocaleString()}</p>
+            <p class="text-purple-100 text-xs mt-1">${stats.total_blog_visitors || 0} unique readers</p>
           </div>
           <div class="bg-purple-400 bg-opacity-30 rounded-full p-3">
             <i class="fas fa-blog text-2xl"></i>
@@ -94,6 +95,30 @@ function displayAnalytics(stats, recentActivity) {
         </div>
       </div>
     </div>
+
+    <!-- Tab Tracking Section -->
+    ${stats.tab_stats && stats.tab_stats.length > 0 ? `
+      <div class="bg-white rounded-lg shadow p-6 mb-8">
+        <h3 class="text-lg font-semibold mb-4 flex items-center">
+          <i class="fas fa-layer-group text-indigo-500 mr-2"></i>
+          Portfolio Tab Engagement
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          ${stats.tab_stats.map((tab, index) => `
+            <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4 border border-indigo-200 hover:shadow-md transition-shadow">
+              <div class="text-center">
+                <h4 class="font-semibold text-gray-800 capitalize text-sm mb-2">${tab.tab_name}</h4>
+                <p class="text-2xl font-bold text-indigo-600">${tab.total_visits}</p>
+                <p class="text-xs text-gray-600">visits</p>
+                <p class="text-sm text-gray-600 mt-2">
+                  <i class="fas fa-user text-xs text-indigo-500"></i> ${tab.unique_visitors} unique
+                </p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    ` : ''}
 
     <!-- Top Pages & Blog Posts -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">

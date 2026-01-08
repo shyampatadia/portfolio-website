@@ -61,6 +61,11 @@ document.addEventListener('alpine:init', () => {
       console.log('Active tab:', this.activeTab);
       console.log('Theme:', this.theme);
 
+      // Track initial tab view
+      if (window.analytics) {
+        window.analytics.trackTabView(this.activeTab);
+      }
+
       // Load skills data
       this.loadSkills();
 
@@ -270,6 +275,11 @@ document.addEventListener('alpine:init', () => {
       this.activeTab = tab;
       window.location.hash = tab;
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Track tab view via analytics
+      if (window.analytics) {
+        window.analytics.trackTabView(tab);
+      }
     },
 
     isActiveTab(tab) {
