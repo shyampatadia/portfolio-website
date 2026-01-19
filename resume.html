@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume - Shyam Patadia</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- PDF.js for cross-device PDF rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: #0f0f0f;
+        color: #e0e0e0;
+        line-height: 1.6;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .resume-header {
+        background: rgba(15, 15, 15, 0.98);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .back-link {
+        font-size: 0.9375rem;
+        color: #999;
+        transition: color 0.2s ease;
+        text-decoration: none;
+      }
+
+      .back-link:hover {
+        color: #fff;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(96, 165, 250, 0.15);
+        border: 1px solid rgba(96, 165, 250, 0.3);
+        border-radius: 0.5rem;
+        color: #60a5fa;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .download-btn:hover {
+        background: rgba(96, 165, 250, 0.25);
+        border-color: rgba(96, 165, 250, 0.5);
+        transform: translateY(-1px);
+      }
+
+      /* PDF Controls */
+      .pdf-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.5rem;
+        padding: 0.375rem;
+      }
+
+      .control-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.375rem;
+        color: #888;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .control-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+      }
+
+      .control-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .page-info {
+        font-size: 0.8125rem;
+        color: #888;
+        padding: 0 0.5rem;
+        min-width: 4rem;
+        text-align: center;
+      }
+
+      .zoom-info {
+        font-size: 0.75rem;
+        color: #666;
+        padding: 0 0.25rem;
+        min-width: 3rem;
+        text-align: center;
+      }
+
+      /* PDF Container */
+      .pdf-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .pdf-viewer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .pdf-page {
+        background: #fff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        border-radius: 0.25rem;
+        max-width: 100%;
+      }
+
+      /* Loading State */
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 1rem;
+        gap: 1rem;
+      }
+
+      .loading-spinner {
+        width: 3rem;
+        height: 3rem;
+        border: 3px solid rgba(96, 165, 250, 0.2);
+        border-top-color: #60a5fa;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .loading-text {
+        color: #888;
+        font-size: 0.9375rem;
+      }
+
+      /* Error State */
+      .error-container {
+        text-align: center;
+        padding: 4rem 1rem;
+      }
+
+      .error-icon {
+        font-size: 3rem;
+        color: #ef4444;
+        margin-bottom: 1rem;
+      }
+
+      .error-text {
+        color: #ef4444;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .retry-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1.25rem;
+        background: rgba(96, 165, 250, 0.15);
+        border: 1px solid rgba(96, 165, 250, 0.3);
+        border-radius: 0.5rem;
+        color: #60a5fa;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .retry-btn:hover {
+        background: rgba(96, 165, 250, 0.25);
+      }
+
+      /* Footer */
+      .resume-footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        font-size: 0.875rem;
+        color: #666;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        margin-top: 2rem;
+      }
+
+      .resume-footer a {
+        color: #60a5fa;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .resume-footer a:hover {
+        color: #93c5fd;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .header-container {
+          padding: 0.875rem 1rem;
+        }
+
+        .pdf-controls {
+          order: 3;
+          width: 100%;
+          justify-content: center;
+        }
+
+        .pdf-container {
+          padding: 1rem;
+        }
+
+        .download-btn span {
+          display: none;
+        }
+
+        .download-btn {
+          padding: 0.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .zoom-info {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="resume-header">
+      <div class="header-container">
+        <a href="index.html" class="back-link">
+          <i class="fas fa-arrow-left"></i> Back to Portfolio
+        </a>
+
+        <div class="pdf-controls" id="pdfControls" style="display: none;">
+          <button class="control-btn" id="zoomOut" title="Zoom Out">
+            <i class="fas fa-minus"></i>
+          </button>
+          <span class="zoom-info" id="zoomLevel">100%</span>
+          <button class="control-btn" id="zoomIn" title="Zoom In">
+            <i class="fas fa-plus"></i>
+          </button>
+          <div style="width: 1px; height: 1.5rem; background: rgba(255,255,255,0.1); margin: 0 0.25rem;"></div>
+          <button class="control-btn" id="prevPage" title="Previous Page">
+            <i class="fas fa-chevron-up"></i>
+          </button>
+          <span class="page-info" id="pageInfo">1 / 1</span>
+          <button class="control-btn" id="nextPage" title="Next Page">
+            <i class="fas fa-chevron-down"></i>
+          </button>
+        </div>
+
+        <div class="header-actions">
+          <a href="assets/Shyam_Patadia_Resume_Updated_17DEC2025.pdf" download class="download-btn">
+            <i class="fas fa-download"></i>
+            <span>Download PDF</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pdf-container">
+      <!-- Loading State -->
+      <div class="loading-container" id="loadingState">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading resume...</div>
+      </div>
+
+      <!-- Error State -->
+      <div class="error-container" id="errorState" style="display: none;">
+        <div class="error-icon"><i class="fas fa-exclamation-circle"></i></div>
+        <div class="error-text" id="errorText">Failed to load resume</div>
+        <button class="retry-btn" onclick="loadPDF()">
+          <i class="fas fa-redo"></i> Try Again
+        </button>
+      </div>
+
+      <!-- PDF Viewer -->
+      <div class="pdf-viewer" id="pdfViewer" style="display: none;"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="resume-footer">
+      <a href="index.html">Return to Portfolio</a>
+    </footer>
+
+    <script>
+      // PDF.js Configuration
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+      // Resume PDF path
+      const RESUME_PDF_PATH = 'assets/Shyam_Patadia_Resume_Updated_17DEC2025.pdf';
+
+      // State
+      let pdfDoc = null;
+      let currentPage = 1;
+      let totalPages = 0;
+      let scale = 1.0;
+      let baseScale = 1.0;
+      const MIN_SCALE = 0.5;
+      const MAX_SCALE = 2.5;
+
+      // DOM Elements
+      const loadingState = document.getElementById('loadingState');
+      const errorState = document.getElementById('errorState');
+      const errorText = document.getElementById('errorText');
+      const pdfViewer = document.getElementById('pdfViewer');
+      const pdfControls = document.getElementById('pdfControls');
+      const pageInfo = document.getElementById('pageInfo');
+      const zoomLevel = document.getElementById('zoomLevel');
+      const prevBtn = document.getElementById('prevPage');
+      const nextBtn = document.getElementById('nextPage');
+      const zoomInBtn = document.getElementById('zoomIn');
+      const zoomOutBtn = document.getElementById('zoomOut');
+
+      // Calculate optimal scale for viewport
+      function calculateOptimalScale(page) {
+        const viewport = page.getViewport({ scale: 1 });
+        const containerWidth = Math.min(window.innerWidth - 32, 900); // Max 900px, with padding
+        return containerWidth / viewport.width;
+      }
+
+      // Render a single page
+      async function renderPage(pageNum) {
+        const page = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: scale });
+
+        // Create canvas
+        const canvas = document.createElement('canvas');
+        canvas.className = 'pdf-page';
+        canvas.id = `page-${pageNum}`;
+        const context = canvas.getContext('2d');
+
+        // Set canvas dimensions (use device pixel ratio for sharp rendering)
+        const pixelRatio = window.devicePixelRatio || 1;
+        canvas.width = viewport.width * pixelRatio;
+        canvas.height = viewport.height * pixelRatio;
+        canvas.style.width = `${viewport.width}px`;
+        canvas.style.height = `${viewport.height}px`;
+        context.scale(pixelRatio, pixelRatio);
+
+        // Render PDF page
+        await page.render({
+          canvasContext: context,
+          viewport: viewport
+        }).promise;
+
+        return canvas;
+      }
+
+      // Render all pages
+      async function renderAllPages() {
+        pdfViewer.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+          const canvas = await renderPage(i);
+          pdfViewer.appendChild(canvas);
+        }
+
+        updateControls();
+      }
+
+      // Update control states
+      function updateControls() {
+        pageInfo.textContent = `${currentPage} / ${totalPages}`;
+        zoomLevel.textContent = `${Math.round(scale / baseScale * 100)}%`;
+
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+        zoomOutBtn.disabled = scale <= MIN_SCALE * baseScale;
+        zoomInBtn.disabled = scale >= MAX_SCALE * baseScale;
+      }
+
+      // Scroll to specific page
+      function scrollToPage(pageNum) {
+        const pageElement = document.getElementById(`page-${pageNum}`);
+        if (pageElement) {
+          pageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      // Load PDF
+      async function loadPDF() {
+        // Show loading, hide others
+        loadingState.style.display = 'flex';
+        errorState.style.display = 'none';
+        pdfViewer.style.display = 'none';
+        pdfControls.style.display = 'none';
+
+        try {
+          // Load the PDF document
+          pdfDoc = await pdfjsLib.getDocument(RESUME_PDF_PATH).promise;
+          totalPages = pdfDoc.numPages;
+
+          // Calculate optimal scale based on first page
+          const firstPage = await pdfDoc.getPage(1);
+          baseScale = calculateOptimalScale(firstPage);
+          scale = baseScale;
+
+          // Render all pages
+          await renderAllPages();
+
+          // Show viewer, hide loading
+          loadingState.style.display = 'none';
+          pdfViewer.style.display = 'flex';
+          pdfControls.style.display = 'flex';
+
+        } catch (error) {
+          console.error('Error loading PDF:', error);
+          loadingState.style.display = 'none';
+          errorState.style.display = 'block';
+          errorText.textContent = 'Failed to load resume. Please try again or download directly.';
+        }
+      }
+
+      // Event Listeners
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          scrollToPage(currentPage);
+          updateControls();
+        }
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          scrollToPage(currentPage);
+          updateControls();
+        }
+      });
+
+      zoomInBtn.addEventListener('click', async () => {
+        if (scale < MAX_SCALE * baseScale) {
+          scale = Math.min(scale + 0.25 * baseScale, MAX_SCALE * baseScale);
+          await renderAllPages();
+        }
+      });
+
+      zoomOutBtn.addEventListener('click', async () => {
+        if (scale > MIN_SCALE * baseScale) {
+          scale = Math.max(scale - 0.25 * baseScale, MIN_SCALE * baseScale);
+          await renderAllPages();
+        }
+      });
+
+      // Track which page is visible during scroll
+      let scrollTimeout;
+      window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const pages = document.querySelectorAll('.pdf-page');
+          let visiblePage = 1;
+          let maxVisibleArea = 0;
+
+          pages.forEach((page, index) => {
+            const rect = page.getBoundingClientRect();
+            const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+            if (visibleHeight > maxVisibleArea) {
+              maxVisibleArea = visibleHeight;
+              visiblePage = index + 1;
+            }
+          });
+
+          if (visiblePage !== currentPage) {
+            currentPage = visiblePage;
+            updateControls();
+          }
+        }, 100);
+      });
+
+      // Handle window resize
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(async () => {
+          if (pdfDoc) {
+            const firstPage = await pdfDoc.getPage(1);
+            const newBaseScale = calculateOptimalScale(firstPage);
+            const scaleRatio = scale / baseScale;
+            baseScale = newBaseScale;
+            scale = baseScale * scaleRatio;
+            await renderAllPages();
+          }
+        }, 250);
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          e.preventDefault();
+          prevBtn.click();
+        } else if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          e.preventDefault();
+          nextBtn.click();
+        } else if (e.key === '+' || e.key === '=') {
+          e.preventDefault();
+          zoomInBtn.click();
+        } else if (e.key === '-') {
+          e.preventDefault();
+          zoomOutBtn.click();
+        }
+      });
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', loadPDF);
+    </script>
+  </body>
+</html>

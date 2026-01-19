@@ -70,11 +70,7 @@ __pycache__/
 .claude
 
 # Personal files
-*.pdf
-*.docx
-resume*
-cv*
-*Resume*.pdf
+
 
 # Vercel
 .vercel
@@ -82,3 +78,6 @@ backend/.vercel
 
 # GitHub Pages
 _site/
+
+!resume.html
+!assets\Shyam_Patadia_Resume_Updated_17DEC2025.pdf
