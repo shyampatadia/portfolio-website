@@ -107,6 +107,9 @@ async function loadTab(tab) {
       case 'analytics':
         await loadAnalyticsDashboard();
         break;
+      case 'visitors':
+        await loadVisitorsDashboard();
+        break;
       case 'blog-analytics':
         await loadBlogAnalytics();
         break;
