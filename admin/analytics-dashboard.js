@@ -21,7 +21,15 @@ async function loadAnalyticsDashboard() {
     const stats = await apiCall('/analytics/stats/overall');
     const recentActivity = await apiCall('/analytics/activity/recent?limit=10');
 
-    displayAnalytics(stats, recentActivity);
+    // Fetch resume stats separately (may fail if table doesn't exist yet)
+    let resumeStats = null;
+    try {
+      resumeStats = await apiCall('/analytics/stats/resume');
+    } catch (e) {
+      console.log('Resume stats not available yet:', e.message);
+    }
+
+    displayAnalytics(stats, recentActivity, resumeStats);
   } catch (error) {
     console.error('Error loading analytics:', error);
     document.getElementById('analytics-loading').innerHTML = `
@@ -37,7 +45,7 @@ async function loadAnalyticsDashboard() {
   }
 }
 
-function displayAnalytics(stats, recentActivity) {
+function displayAnalytics(stats, recentActivity, resumeStats) {
   document.getElementById('analytics-loading').classList.add('hidden');
   document.getElementById('analytics-content').classList.remove('hidden');
 
@@ -95,6 +103,44 @@ function displayAnalytics(stats, recentActivity) {
         </div>
       </div>
     </div>
+
+    <!-- Resume Stats Section -->
+    ${resumeStats ? `
+      <div class="bg-white rounded-lg shadow p-6 mb-8">
+        <h3 class="text-lg font-semibold mb-4 flex items-center">
+          <i class="fas fa-file-alt text-teal-500 mr-2"></i>
+          Resume Engagement
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg p-4 border border-teal-200">
+            <div class="text-center">
+              <p class="text-xs text-gray-600 mb-1">Total Views</p>
+              <p class="text-2xl font-bold text-teal-600">${resumeStats.total_views}</p>
+              <p class="text-xs text-gray-500 mt-1">${resumeStats.unique_viewers} unique</p>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg p-4 border border-cyan-200">
+            <div class="text-center">
+              <p class="text-xs text-gray-600 mb-1">Total Downloads</p>
+              <p class="text-2xl font-bold text-cyan-600">${resumeStats.total_downloads}</p>
+              <p class="text-xs text-gray-500 mt-1">${resumeStats.unique_downloaders} unique</p>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-4 border border-emerald-200">
+            <div class="text-center">
+              <p class="text-xs text-gray-600 mb-1">Last Viewed</p>
+              <p class="text-sm font-semibold text-emerald-600">${resumeStats.last_viewed ? formatTimeAgo(resumeStats.last_viewed) : 'Never'}</p>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-sky-50 to-sky-100 rounded-lg p-4 border border-sky-200">
+            <div class="text-center">
+              <p class="text-xs text-gray-600 mb-1">Last Downloaded</p>
+              <p class="text-sm font-semibold text-sky-600">${resumeStats.last_downloaded ? formatTimeAgo(resumeStats.last_downloaded) : 'Never'}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ` : ''}
 
     <!-- Tab Tracking Section -->
     ${stats.tab_stats && stats.tab_stats.length > 0 ? `

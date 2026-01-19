@@ -113,3 +113,20 @@ class IndividualBlogAnalytics(BaseModel):
     reactions: list[BlogReactionStats] = []
     total_reactions: int
     last_viewed: Optional[datetime] = None
+
+
+class ResumeViewCreate(BaseModel):
+    """Schema for tracking resume view or download"""
+    visitor_id: str = Field(..., description="Unique visitor identifier")
+    action_type: str = Field(..., description="Action type: 'view' or 'download'")
+    user_agent: Optional[str] = Field(None, description="Browser user agent")
+
+
+class ResumeViewStats(BaseModel):
+    """Statistics for resume views and downloads"""
+    total_views: int
+    unique_viewers: int
+    total_downloads: int
+    unique_downloaders: int
+    last_viewed: Optional[datetime] = None
+    last_downloaded: Optional[datetime] = None

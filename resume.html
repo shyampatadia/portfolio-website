@@ -17,6 +17,10 @@
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+    <!-- App Config and Analytics -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/analytics.js"></script>
+
     <style>
       * {
         box-sizing: border-box;
@@ -313,7 +317,7 @@
         </div>
 
         <div class="header-actions">
-          <a href="assets/Shyam_Patadia_Resume_Updated_17DEC2025.pdf" download class="download-btn">
+          <a href="assets/Shyam_Patadia_Resume_Updated_17DEC2025.pdf" download class="download-btn" id="downloadBtn">
             <i class="fas fa-download"></i>
             <span>Download PDF</span>
           </a>
@@ -468,6 +472,11 @@
           pdfViewer.style.display = 'flex';
           pdfControls.style.display = 'flex';
 
+          // Track resume view
+          if (window.analytics) {
+            window.analytics.trackResumeView();
+          }
+
         } catch (error) {
           console.error('Error loading PDF:', error);
           loadingState.style.display = 'none';
@@ -566,7 +575,19 @@
       });
 
       // Initialize
-      document.addEventListener('DOMContentLoaded', loadPDF);
+      document.addEventListener('DOMContentLoaded', () => {
+        loadPDF();
+
+        // Track download button clicks
+        const downloadBtn = document.getElementById('downloadBtn');
+        if (downloadBtn) {
+          downloadBtn.addEventListener('click', () => {
+            if (window.analytics) {
+              window.analytics.trackResumeDownload();
+            }
+          });
+        }
+      });
     </script>
   </body>
 </html>

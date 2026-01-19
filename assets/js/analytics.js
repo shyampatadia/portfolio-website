@@ -149,6 +149,62 @@ class Analytics {
   }
 
   /**
+   * Track resume page view
+   * Called when user visits the resume page
+   */
+  async trackResumeView() {
+    const data = {
+      visitor_id: this.visitorId,
+      action_type: 'view',
+      user_agent: navigator.userAgent
+    };
+
+    try {
+      const response = await fetch(`${this.apiBase}/api/analytics/track/resume`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        console.log('[Analytics] Resume view tracked');
+      }
+    } catch (error) {
+      console.error('[Analytics] Failed to track resume view:', error);
+    }
+  }
+
+  /**
+   * Track resume download
+   * Called when user clicks the download button
+   */
+  async trackResumeDownload() {
+    const data = {
+      visitor_id: this.visitorId,
+      action_type: 'download',
+      user_agent: navigator.userAgent
+    };
+
+    try {
+      const response = await fetch(`${this.apiBase}/api/analytics/track/resume`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        console.log('[Analytics] Resume download tracked');
+      }
+    } catch (error) {
+      console.error('[Analytics] Failed to track resume download:', error);
+    }
+  }
+
+  /**
    * Initialize analytics for the current page
    */
   init() {
