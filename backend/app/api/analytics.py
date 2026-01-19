@@ -17,7 +17,9 @@ from app.schemas.analytics import (
     TabViewStats,
     BlogReactionCreate,
     BlogReactionStats,
-    IndividualBlogAnalytics
+    IndividualBlogAnalytics,
+    ResumeViewCreate,
+    ResumeViewStats
 )
 from app.core.security import get_current_user
 from app.core.supabase import supabase_client, supabase_admin
@@ -191,6 +193,79 @@ async def track_tab_view(view: TabViewCreate, request: Request):
     except Exception as e:
         print(f"[Analytics] Failed to track tab view: {e}")
         return {"success": False, "message": "Tracking failed"}
+
+
+@router.post("/track/resume", status_code=status.HTTP_201_CREATED)
+async def track_resume_action(view: ResumeViewCreate, request: Request):
+    """
+    Track a resume view or download (public endpoint)
+    Called from resume page when user views or downloads the resume
+
+    action_type can be 'view' or 'download'
+    """
+    # Get IP address from request
+    ip_address = request.client.host if request.client else None
+
+    view_data = view.model_dump()
+    view_data["ip_address"] = ip_address
+
+    # Parse user agent for device info
+    device_info = parse_user_agent(view.user_agent or "")
+    view_data.update(device_info)
+
+    # Get location from IP
+    location_info = await get_location_from_ip(ip_address or "")
+    view_data.update(location_info)
+
+    try:
+        # Use admin client to bypass RLS - backend API is trusted
+        response = supabase_admin.table("resume_views").insert(view_data).execute()
+        return {"success": True, "message": f"Resume {view.action_type} tracked"}
+    except Exception as e:
+        print(f"[Analytics] Failed to track resume {view.action_type}: {e}")
+        return {"success": False, "message": "Tracking failed"}
+
+
+@router.get("/stats/resume", response_model=ResumeViewStats)
+async def get_resume_stats(current_user: dict = Depends(get_current_user)):
+    """
+    Get resume view and download statistics (authenticated only)
+    """
+    try:
+        # Get all resume views
+        all_resume_views = supabase_admin.table("resume_views")\
+            .select("visitor_id, action_type, created_at")\
+            .execute()
+
+        views = [v for v in all_resume_views.data if v["action_type"] == "view"]
+        downloads = [v for v in all_resume_views.data if v["action_type"] == "download"]
+
+        total_views = len(views)
+        unique_viewers = len(set(v["visitor_id"] for v in views))
+        total_downloads = len(downloads)
+        unique_downloaders = len(set(v["visitor_id"] for v in downloads))
+
+        last_viewed = max((v["created_at"] for v in views), default=None) if views else None
+        last_downloaded = max((v["created_at"] for v in downloads), default=None) if downloads else None
+
+        return ResumeViewStats(
+            total_views=total_views,
+            unique_viewers=unique_viewers,
+            total_downloads=total_downloads,
+            unique_downloaders=unique_downloaders,
+            last_viewed=last_viewed,
+            last_downloaded=last_downloaded
+        )
+    except Exception as e:
+        print(f"[Analytics] Failed to get resume stats: {e}")
+        return ResumeViewStats(
+            total_views=0,
+            unique_viewers=0,
+            total_downloads=0,
+            unique_downloaders=0,
+            last_viewed=None,
+            last_downloaded=None
+        )
 
 
 @router.get("/stats/overall", response_model=OverallStats)
