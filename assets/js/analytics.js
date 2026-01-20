@@ -8,6 +8,21 @@ class Analytics {
     this.apiBase = window.AppConfig?.getApiBaseUrl() || 'http://localhost:8000';
     this.visitorId = this.getOrCreateVisitorId();
     this.initialized = false;
+    this.isLocalhost = this.checkIfLocalhost();
+  }
+
+  /**
+   * Check if the current page is being accessed from localhost
+   * Skip tracking for localhost to avoid polluting analytics data
+   */
+  checkIfLocalhost() {
+    const hostname = window.location.hostname;
+    return hostname === 'localhost' ||
+           hostname === '127.0.0.1' ||
+           hostname === '::1' ||
+           hostname.startsWith('192.168.') ||
+           hostname.startsWith('10.') ||
+           hostname.endsWith('.local');
   }
 
   /**
@@ -32,6 +47,12 @@ class Analytics {
   async trackPageView() {
     if (this.initialized) return; // Prevent duplicate tracking
     this.initialized = true;
+
+    // Skip tracking for localhost
+    if (this.isLocalhost) {
+      console.log('[Analytics] Skipping page view tracking (localhost)');
+      return;
+    }
 
     const data = {
       page_path: window.location.pathname + window.location.search,
@@ -66,6 +87,12 @@ class Analytics {
    * Track blog post view with engagement metrics
    */
   async trackBlogView(blogPostId, blogPostSlug) {
+    // Skip tracking for localhost
+    if (this.isLocalhost) {
+      console.log('[Analytics] Skipping blog view tracking (localhost)');
+      return;
+    }
+
     const startTime = Date.now();
     let maxScrollDepth = 0;
 
@@ -125,6 +152,12 @@ class Analytics {
   async trackTabView(tabName) {
     if (!tabName) return;
 
+    // Skip tracking for localhost
+    if (this.isLocalhost) {
+      console.log('[Analytics] Skipping tab view tracking (localhost)');
+      return;
+    }
+
     const data = {
       tab_name: tabName,
       visitor_id: this.visitorId,
@@ -153,6 +186,12 @@ class Analytics {
    * Called when user visits the resume page
    */
   async trackResumeView() {
+    // Skip tracking for localhost
+    if (this.isLocalhost) {
+      console.log('[Analytics] Skipping resume view tracking (localhost)');
+      return;
+    }
+
     const data = {
       visitor_id: this.visitorId,
       action_type: 'view',
@@ -181,6 +220,12 @@ class Analytics {
    * Called when user clicks the download button
    */
   async trackResumeDownload() {
+    // Skip tracking for localhost
+    if (this.isLocalhost) {
+      console.log('[Analytics] Skipping resume download tracking (localhost)');
+      return;
+    }
+
     const data = {
       visitor_id: this.visitorId,
       action_type: 'download',
