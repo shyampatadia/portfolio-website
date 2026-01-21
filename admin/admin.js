@@ -149,23 +149,37 @@ async function apiCall(endpoint, options = {}) {
     headers['Authorization'] = `Bearer ${authToken}`;
   }
 
-  const response = await fetch(`${API_BASE}${endpoint}`, {
-    ...options,
-    headers
-  });
+  try {
+    const response = await fetch(`${API_BASE}${endpoint}`, {
+      ...options,
+      headers
+    });
 
-  if (response.status === 401) {
-    localStorage.removeItem('admin_token');
-    showLogin();
-    throw new Error('Unauthorized');
+    if (response.status === 401) {
+      // Only logout if it's a true auth failure, not a network issue
+      const errorData = await response.json().catch(() => ({}));
+      if (errorData.detail === 'Could not validate credentials' || errorData.detail === 'Token expired') {
+        localStorage.removeItem('admin_token');
+        authToken = null;
+        showLogin();
+        throw new Error('Session expired. Please login again.');
+      }
+      throw new Error(errorData.detail || 'Unauthorized');
+    }
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ detail: 'Request failed' }));
+      throw new Error(error.detail || 'API request failed');
+    }
+
+    return response.status !== 204 ? response.json() : null;
+  } catch (error) {
+    // Don't logout on network errors
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      throw new Error('Network error. Please check your connection.');
+    }
+    throw error;
   }
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'API request failed');
-  }
-
-  return response.status !== 204 ? response.json() : null;
 }
 
 // ===== FILE UPLOAD HELPER =====
@@ -247,6 +261,10 @@ async function loadBlogPosts() {
     const data = await apiCall('/blog/posts?published_only=false');
     const posts = data.posts || [];
 
+    // Check for localStorage draft
+    const localDraft = loadDraft();
+    const hasLocalDraft = localDraft && (localDraft.title || localDraft.content);
+
     console.log('Blog API response:', data);
     console.log('Posts loaded:', posts.length, posts);
 
@@ -258,26 +276,51 @@ async function loadBlogPosts() {
             <i class="fas fa-plus mr-2"></i>New Post
           </button>
         </div>
+
+        ${hasLocalDraft ? `
+          <div class="mb-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-file-alt text-yellow-600"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-yellow-800">Unsaved Draft</p>
+                <p class="text-sm text-yellow-600">"${localDraft.title || 'Untitled'}" - Last saved ${new Date(localDraft.savedAt).toLocaleString()}</p>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="showBlogPostEditor()" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">
+                <i class="fas fa-edit mr-2"></i>Continue Editing
+              </button>
+              <button onclick="discardLocalDraft()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                <i class="fas fa-trash mr-2"></i>Discard
+              </button>
+            </div>
+          </div>
+        ` : ''}
+
         <div class="space-y-4">
-          ${posts.length === 0 ? '<p class="text-gray-500 text-center py-8">No blog posts yet. Click "New Post" to create one.</p>' : ''}
+          ${posts.length === 0 && !hasLocalDraft ? '<p class="text-gray-500 text-center py-8">No blog posts yet. Click "New Post" to create one.</p>' : ''}
           ${posts.map(post => `
-            <div class="border rounded-lg p-4 flex justify-between items-start">
+            <div class="border rounded-lg p-4 flex justify-between items-start hover:border-blue-200 transition-colors ${!post.published ? 'bg-gray-50' : ''}">
               <div class="flex-1">
-                <h3 class="font-semibold text-lg">${post.title}</h3>
-                <p class="text-sm text-gray-600">${post.excerpt}</p>
-                <div class="mt-2 flex gap-2 flex-wrap">
-                  <span class="px-2 py-1 bg-gray-100 rounded text-xs">${post.category}</span>
-                  ${post.tags.map(tag => `<span class="px-2 py-1 bg-gray-100 rounded text-xs">${tag}</span>`).join('')}
-                  <span class="px-2 py-1 ${post.published ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'} rounded text-xs">
+                <div class="flex items-center gap-2">
+                  <h3 class="font-semibold text-lg">${post.title}</h3>
+                  <span class="px-2 py-0.5 ${post.published ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'} rounded-full text-xs font-medium">
                     ${post.published ? 'Published' : 'Draft'}
                   </span>
                 </div>
+                <p class="text-sm text-gray-600 mt-1">${post.excerpt}</p>
+                <div class="mt-2 flex gap-2 flex-wrap">
+                  <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs">${post.category}</span>
+                  ${post.tags.map(tag => `<span class="px-2 py-1 bg-gray-100 rounded text-xs">${tag}</span>`).join('')}
+                </div>
               </div>
-              <div class="flex gap-2">
-                <button onclick="showBlogPostEditor('${post.id}')" class="text-blue-600 hover:text-blue-800" title="Edit">
+              <div class="flex gap-2 ml-4">
+                <button onclick="showBlogPostEditor('${post.id}')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Edit">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button onclick="deleteBlogPost('${post.id}')" class="text-red-600 hover:text-red-800" title="Delete">
+                <button onclick="deleteBlogPost('${post.id}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Delete">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
@@ -302,9 +345,134 @@ async function loadBlogPosts() {
   }
 }
 
+// Auto-save functionality
+const DRAFT_KEY = 'blog_draft';
+let autoSaveInterval = null;
+
+function saveDraft() {
+  const draft = {
+    title: document.getElementById('post-title')?.value || '',
+    slug: document.getElementById('post-slug')?.value || '',
+    excerpt: document.getElementById('post-excerpt')?.value || '',
+    category: document.getElementById('post-category')?.value || '',
+    tags: document.getElementById('post-tags')?.value || '',
+    content: document.getElementById('post-content')?.value || '',
+    image_url: document.getElementById('post-image-url')?.value || '',
+    published: document.getElementById('post-published')?.checked || false,
+    savedAt: new Date().toISOString()
+  };
+
+  // Only save if there's actual content
+  if (draft.title || draft.content) {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    showAutoSaveIndicator('Draft saved');
+  }
+}
+
+function loadDraft() {
+  try {
+    const draft = localStorage.getItem(DRAFT_KEY);
+    return draft ? JSON.parse(draft) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function clearDraft() {
+  localStorage.removeItem(DRAFT_KEY);
+}
+
+function showAutoSaveIndicator(message) {
+  let indicator = document.getElementById('autosave-indicator');
+  if (!indicator) return;
+
+  indicator.textContent = message;
+  indicator.classList.remove('opacity-0');
+  indicator.classList.add('opacity-100');
+
+  setTimeout(() => {
+    indicator.classList.remove('opacity-100');
+    indicator.classList.add('opacity-0');
+  }, 2000);
+}
+
+function startAutoSave() {
+  // Save every 30 seconds
+  autoSaveInterval = setInterval(saveDraft, 30000);
+
+  // Also save on input changes (debounced)
+  let debounceTimer;
+  const debouncedSave = () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(saveDraft, 5000); // Save 5 seconds after last input
+  };
+
+  document.getElementById('post-title')?.addEventListener('input', debouncedSave);
+  document.getElementById('post-content')?.addEventListener('input', debouncedSave);
+  document.getElementById('post-excerpt')?.addEventListener('input', debouncedSave);
+}
+
+function stopAutoSave() {
+  if (autoSaveInterval) {
+    clearInterval(autoSaveInterval);
+    autoSaveInterval = null;
+  }
+}
+
+// Paste image upload functionality
+async function handlePasteUpload(event) {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      event.preventDefault();
+
+      const file = item.getAsFile();
+      if (!file) continue;
+
+      // Show uploading indicator
+      const textarea = document.getElementById('post-content');
+      const cursorPos = textarea.selectionStart;
+      const placeholder = `![Uploading image...](uploading)`;
+
+      // Insert placeholder at cursor position
+      const textBefore = textarea.value.substring(0, cursorPos);
+      const textAfter = textarea.value.substring(cursorPos);
+      textarea.value = textBefore + placeholder + textAfter;
+
+      try {
+        const result = await uploadFile(file, 'blog');
+
+        if (result && result.url) {
+          // Replace placeholder with actual markdown
+          const markdown = `![${file.name || 'image'}](${result.url})`;
+          textarea.value = textarea.value.replace(placeholder, markdown);
+
+          // Update preview if visible
+          if (document.getElementById('show-preview')?.checked) {
+            updatePreview();
+          }
+
+          showAutoSaveIndicator('Image uploaded!');
+        }
+      } catch (error) {
+        // Remove placeholder on error
+        textarea.value = textarea.value.replace(placeholder, '');
+        alert('Failed to upload image: ' + error.message);
+      }
+
+      break; // Only handle first image
+    }
+  }
+}
+
 async function showBlogPostEditor(postId = null) {
   const content = document.getElementById('content-area');
   let post = null;
+
+  // Stop any existing auto-save
+  stopAutoSave();
 
   // Load existing post if editing
   if (postId) {
@@ -316,19 +484,45 @@ async function showBlogPostEditor(postId = null) {
     }
   }
 
+  // Check for unsaved draft if creating new post
+  const draft = !postId ? loadDraft() : null;
+  const hasDraft = draft && (draft.title || draft.content);
+
   const isEdit = !!post;
 
   content.innerHTML = `
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
       <!-- Header -->
       <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
-        <h2 class="text-2xl font-bold text-white">${isEdit ? 'Edit' : 'Create New'} Blog Post</h2>
-        <button onclick="loadBlogPosts()" class="text-white hover:text-gray-200 transition">
+        <div class="flex items-center gap-4">
+          <h2 class="text-2xl font-bold text-white">${isEdit ? 'Edit' : 'Create New'} Blog Post</h2>
+          <span id="autosave-indicator" class="text-sm text-blue-200 opacity-0 transition-opacity duration-300">
+            <i class="fas fa-check mr-1"></i>Saved
+          </span>
+        </div>
+        <button type="button" onclick="confirmLeaveEditor()" class="text-white hover:text-gray-200 transition">
           <i class="fas fa-times text-xl"></i>
         </button>
       </div>
 
-      <form id="blog-post-form" class="p-6">
+      ${hasDraft ? `
+        <div id="draft-recovery" class="bg-yellow-50 border-b border-yellow-200 px-6 py-3 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-yellow-800">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span class="text-sm font-medium">You have an unsaved draft from ${new Date(draft.savedAt).toLocaleString()}</span>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" onclick="restoreDraft()" class="px-3 py-1 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700 transition">
+              <i class="fas fa-undo mr-1"></i>Restore
+            </button>
+            <button type="button" onclick="dismissDraft()" class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition">
+              Dismiss
+            </button>
+          </div>
+        </div>
+      ` : ''}
+
+      <form id="blog-post-form" class="p-6" data-post-id="${postId || ''}">
         <!-- Title & Metadata Section -->
         <div class="mb-8">
           <h3 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">
@@ -410,9 +604,15 @@ async function showBlogPostEditor(postId = null) {
         <!-- Content Editor Section -->
         <div class="mb-8">
           <div class="flex justify-between items-center mb-3">
-            <h3 class="text-lg font-semibold text-gray-700">
-              <i class="fas fa-edit mr-2 text-blue-600"></i>Content (Markdown) *
-            </h3>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-700">
+                <i class="fas fa-edit mr-2 text-blue-600"></i>Content (Markdown) *
+              </h3>
+              <p class="text-xs text-gray-500 mt-1">
+                <i class="fas fa-lightbulb text-yellow-500 mr-1"></i>
+                Tip: Paste images directly (Ctrl+V) to auto-upload
+              </p>
+            </div>
             <label class="inline-flex items-center cursor-pointer bg-gray-100 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
               <input type="checkbox" id="show-preview" class="mr-2 w-4 h-4">
               <span class="text-sm font-medium">Live Preview</span>
@@ -420,28 +620,37 @@ async function showBlogPostEditor(postId = null) {
           </div>
 
           <!-- Markdown Toolbar -->
-          <div class="bg-gray-100 p-2 rounded-t-lg flex gap-2 border-2 border-gray-200 border-b-0">
-            <button type="button" onclick="insertMarkdown('**', '**')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Bold">
+          <div class="bg-gray-100 p-2 rounded-t-lg flex flex-wrap gap-2 border-2 border-gray-200 border-b-0">
+            <button type="button" onclick="insertMarkdown('**', '**')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Bold (Ctrl+B)">
               <i class="fas fa-bold"></i>
             </button>
-            <button type="button" onclick="insertMarkdown('*', '*')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Italic">
+            <button type="button" onclick="insertMarkdown('*', '*')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Italic (Ctrl+I)">
               <i class="fas fa-italic"></i>
             </button>
             <button type="button" onclick="insertMarkdown('[', '](url)')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Link">
               <i class="fas fa-link"></i>
             </button>
-            <button type="button" onclick="insertMarkdown('\\\`', '\\\`')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Code">
+            <button type="button" onclick="insertMarkdown('\`', '\`')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Inline Code">
               <i class="fas fa-code"></i>
             </button>
             <button type="button" onclick="insertMarkdown('\\n## ', '')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Heading">
               <i class="fas fa-heading"></i>
+            </button>
+            <button type="button" onclick="insertMarkdown('\\n- ', '')" class="px-3 py-1 hover:bg-gray-200 rounded" title="List Item">
+              <i class="fas fa-list-ul"></i>
+            </button>
+            <button type="button" onclick="insertMarkdown('\\n> ', '')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Quote">
+              <i class="fas fa-quote-right"></i>
+            </button>
+            <button type="button" onclick="insertMarkdown('\\n\`\`\`\\n', '\\n\`\`\`')" class="px-3 py-1 hover:bg-gray-200 rounded" title="Code Block">
+              <i class="fas fa-file-code"></i>
             </button>
           </div>
 
           <div class="grid grid-cols-1 gap-4" id="content-container">
             <textarea id="post-content" rows="20"
               class="w-full px-4 py-3 border-2 border-gray-200 rounded-b-lg focus:border-blue-500 focus:outline-none transition font-mono text-sm leading-relaxed resize-y"
-              style="min-height: 400px;" required>${post?.content || ''}</textarea>
+              style="min-height: 400px;" placeholder="Write your blog content here using Markdown...&#10;&#10;Paste images directly with Ctrl+V to auto-upload!" required>${post?.content || ''}</textarea>
             <div id="preview-pane" class="hidden border-2 border-gray-200 rounded-lg p-6 bg-white overflow-auto blog-preview" style="max-height: 600px;">
               <div id="preview-content" class="prose max-w-none"></div>
             </div>
@@ -449,22 +658,22 @@ async function showBlogPostEditor(postId = null) {
         </div>
 
         <!-- Actions -->
-        <div class="flex items-center justify-between pt-6 border-t-2">
-          <label class="inline-flex items-center cursor-pointer bg-green-50 px-4 py-2 rounded-lg border-2 border-green-200">
-            <input type="checkbox" id="post-published" ${post?.published ? 'checked' : ''} class="mr-2 w-5 h-5">
-            <span class="text-sm font-semibold text-green-700">
-              <i class="fas fa-check-circle mr-1"></i>Publish Immediately
-            </span>
-          </label>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-6 border-t-2 gap-4">
+          <input type="hidden" id="post-published" value="${post?.published ? 'true' : 'false'}">
+
+          <button type="button" onclick="confirmLeaveEditor()"
+            class="px-5 py-2.5 border-2 border-gray-300 rounded-lg hover:bg-gray-100 transition font-medium text-gray-600">
+            <i class="fas fa-times mr-2"></i>Cancel
+          </button>
 
           <div class="flex gap-3">
-            <button type="button" onclick="loadBlogPosts()"
-              class="px-6 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-100 transition font-medium">
-              <i class="fas fa-times mr-2"></i>Cancel
+            <button type="button" onclick="saveAsDraft()"
+              class="px-5 py-2.5 border-2 border-yellow-400 bg-yellow-50 text-yellow-700 rounded-lg hover:bg-yellow-100 transition font-medium">
+              <i class="fas fa-file-alt mr-2"></i>Save as Draft
             </button>
             <button type="submit"
-              class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition font-medium shadow-lg">
-              <i class="fas fa-save mr-2"></i>${isEdit ? 'Update' : 'Create'} Post
+              class="bg-green-600 text-white px-6 py-2.5 rounded-lg hover:bg-green-700 transition font-medium shadow-lg">
+              <i class="fas fa-paper-plane mr-2"></i>${isEdit ? 'Update & Publish' : 'Publish'}
             </button>
           </div>
         </div>
@@ -523,11 +732,152 @@ async function showBlogPostEditor(postId = null) {
     showImagePreview(post.image_url);
   }
 
+  // Add paste event listener for image upload
+  document.getElementById('post-content').addEventListener('paste', handlePasteUpload);
+
+  // Start auto-save and beforeunload handler (only for new posts)
+  if (!postId) {
+    startAutoSave();
+  }
+
+  // Add handler to save draft on accidental page close
+  addBeforeUnloadHandler();
+
   // Form submit
   document.getElementById('blog-post-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     await saveBlogPost(postId);
   });
+}
+
+// Confirm leaving editor - Cancel means discard
+function confirmLeaveEditor() {
+  const title = document.getElementById('post-title')?.value || '';
+  const content = document.getElementById('post-content')?.value || '';
+
+  if (title || content) {
+    if (confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
+      // Cancel = discard draft, don't save
+      clearDraft();
+      stopAutoSave();
+      removeBeforeUnloadHandler();
+      loadBlogPosts();
+    }
+  } else {
+    clearDraft();
+    stopAutoSave();
+    removeBeforeUnloadHandler();
+    loadBlogPosts();
+  }
+}
+
+// Handler for accidental page close/refresh - save draft
+function beforeUnloadHandler(e) {
+  const title = document.getElementById('post-title')?.value || '';
+  const content = document.getElementById('post-content')?.value || '';
+
+  if (title || content) {
+    saveDraft();
+    e.preventDefault();
+    e.returnValue = 'You have unsaved changes. Your draft has been saved.';
+    return e.returnValue;
+  }
+}
+
+function addBeforeUnloadHandler() {
+  window.addEventListener('beforeunload', beforeUnloadHandler);
+}
+
+function removeBeforeUnloadHandler() {
+  window.removeEventListener('beforeunload', beforeUnloadHandler);
+}
+
+// Restore draft to form
+function restoreDraft() {
+  const draft = loadDraft();
+  if (!draft) return;
+
+  document.getElementById('post-title').value = draft.title || '';
+  document.getElementById('post-slug').value = draft.slug || '';
+  document.getElementById('post-excerpt').value = draft.excerpt || '';
+  document.getElementById('post-category').value = draft.category || '';
+  document.getElementById('post-tags').value = draft.tags || '';
+  document.getElementById('post-content').value = draft.content || '';
+  document.getElementById('post-image-url').value = draft.image_url || '';
+  document.getElementById('post-published').checked = draft.published || false;
+
+  // Hide the draft recovery banner
+  const banner = document.getElementById('draft-recovery');
+  if (banner) banner.remove();
+
+  showAutoSaveIndicator('Draft restored!');
+}
+
+// Dismiss draft without restoring
+function dismissDraft() {
+  clearDraft();
+  const banner = document.getElementById('draft-recovery');
+  if (banner) banner.remove();
+}
+
+// Discard local draft from blog posts list
+function discardLocalDraft() {
+  if (confirm('Are you sure you want to discard this draft? This cannot be undone.')) {
+    clearDraft();
+    loadBlogPosts();
+  }
+}
+
+// Save as draft (unpublished) to database
+async function saveAsDraft() {
+  // Get the current post ID from the form if editing
+  const form = document.getElementById('blog-post-form');
+  const postId = form.dataset.postId || null;
+
+  const submitBtn = document.querySelector('#blog-post-form button[onclick="saveAsDraft()"]');
+  const originalText = submitBtn.innerHTML;
+
+  // Show saving state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+
+  const postData = {
+    title: document.getElementById('post-title').value,
+    slug: document.getElementById('post-slug').value,
+    excerpt: document.getElementById('post-excerpt').value,
+    content: document.getElementById('post-content').value,
+    category: document.getElementById('post-category').value,
+    tags: document.getElementById('post-tags').value.split(',').map(t => t.trim()).filter(t => t),
+    published: false, // Always save as draft
+    image_url: document.getElementById('post-image-url').value || null
+  };
+
+  try {
+    if (postId) {
+      await apiCall(`/blog/posts/${postId}`, {
+        method: 'PUT',
+        body: JSON.stringify(postData)
+      });
+      alert('Draft saved successfully!');
+    } else {
+      await apiCall('/blog/posts', {
+        method: 'POST',
+        body: JSON.stringify(postData)
+      });
+      alert('Draft saved successfully!');
+    }
+
+    // Clear localStorage draft and stop auto-save
+    clearDraft();
+    stopAutoSave();
+    removeBeforeUnloadHandler();
+
+    loadBlogPosts();
+  } catch (error) {
+    alert('Error saving draft: ' + error.message);
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+  }
 }
 
 function insertMarkdown(before, after) {
@@ -560,53 +910,54 @@ function updatePreview() {
     return;
   }
 
-  // Configure marked.js with same settings as blog post view
-  const renderer = new marked.Renderer();
-
-  renderer.image = function(token) {
-    // Handle both old and new marked.js API
-    const href = typeof token === 'string' ? token : (token.href || '');
-    const title = typeof token === 'object' ? token.title : arguments[1];
-    const text = typeof token === 'object' ? token.text : arguments[2];
-
-    // Ensure href is a string
-    const hrefStr = String(href || '');
-    const titleStr = title && title !== 'undefined' ? String(title) : '';
-    const textStr = text ? String(text) : '';
-
-    const titleAttr = titleStr ? `title="${titleStr}"` : '';
-    const caption = titleStr ? `<figcaption class="text-center text-sm text-gray-500 mt-2">${titleStr}</figcaption>` : '';
-
-    return `<figure class="my-6">
-      <img src="${hrefStr}" alt="${textStr}" ${titleAttr} class="max-w-full mx-auto block rounded-lg" style="max-width: 800px;" />
-      ${caption}
-    </figure>`;
-  };
-
-  renderer.link = function(token) {
-    // Handle both old and new marked.js API
-    const href = typeof token === 'string' ? token : (token.href || '');
-    const title = typeof token === 'object' ? token.title : arguments[1];
-    const text = typeof token === 'object' ? token.text : arguments[2];
-
-    const hrefStr = String(href || '');
-    const titleStr = title ? String(title) : '';
-    const textStr = text ? String(text) : '';
-
-    return `<a href="${hrefStr}" target="_blank" ${titleStr ? `title="${titleStr}"` : ''} class="text-blue-600 underline">${textStr}</a>`;
-  };
-
-  marked.setOptions({
-    renderer: renderer,
-    breaks: true,
-    gfm: true
-  });
-
   try {
-    preview.innerHTML = marked.parse(content);
+    // Configure marked.js - using simpler approach for compatibility
+    marked.setOptions({
+      breaks: true,
+      gfm: true
+    });
+
+    // Parse and render content
+    let html = marked.parse(content);
+
+    // Post-process images to add styling
+    html = html.replace(/<img\s+([^>]*?)src="([^"]*)"([^>]*)>/gi, (match, before, src, after) => {
+      const altMatch = match.match(/alt="([^"]*)"/);
+      const alt = altMatch ? altMatch[1] : '';
+      return `<figure class="my-6">
+        <img src="${src}" alt="${alt}" class="max-w-full mx-auto block rounded-lg shadow-md" style="max-width: 800px;" loading="lazy" />
+      </figure>`;
+    });
+
+    // Post-process links to open in new tab
+    html = html.replace(/<a\s+href="([^"]*)"/gi, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline"');
+
+    // Add styling to code blocks
+    html = html.replace(/<pre><code([^>]*)>/gi, '<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-4"><code$1>');
+
+    // Add styling to inline code
+    html = html.replace(/<code>([^<]*)<\/code>/gi, '<code class="bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm">$1</code>');
+
+    // Add styling to blockquotes
+    html = html.replace(/<blockquote>/gi, '<blockquote class="border-l-4 border-blue-500 pl-4 my-4 italic text-gray-600">');
+
+    // Add styling to headings
+    html = html.replace(/<h1>/gi, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gray-900">');
+    html = html.replace(/<h2>/gi, '<h2 class="text-2xl font-bold mt-6 mb-3 text-gray-800">');
+    html = html.replace(/<h3>/gi, '<h3 class="text-xl font-semibold mt-5 mb-2 text-gray-800">');
+    html = html.replace(/<h4>/gi, '<h4 class="text-lg font-semibold mt-4 mb-2 text-gray-700">');
+
+    // Add styling to lists
+    html = html.replace(/<ul>/gi, '<ul class="list-disc list-inside my-4 space-y-2">');
+    html = html.replace(/<ol>/gi, '<ol class="list-decimal list-inside my-4 space-y-2">');
+
+    // Add styling to paragraphs
+    html = html.replace(/<p>/gi, '<p class="my-4 leading-relaxed">');
+
+    preview.innerHTML = html;
   } catch (error) {
     console.error('Preview rendering error:', error);
-    preview.innerHTML = '<p class="text-red-500">Error rendering preview. Check console for details.</p>';
+    preview.innerHTML = `<p class="text-red-500">Error rendering preview: ${error.message}</p>`;
   }
 }
 
@@ -750,6 +1101,13 @@ function copyMarkdown(markdown) {
 }
 
 async function saveBlogPost(postId) {
+  const submitBtn = document.querySelector('#blog-post-form button[type="submit"]');
+  const originalText = submitBtn.innerHTML;
+
+  // Show saving state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Publishing...';
+
   const postData = {
     title: document.getElementById('post-title').value,
     slug: document.getElementById('post-slug').value,
@@ -757,7 +1115,7 @@ async function saveBlogPost(postId) {
     content: document.getElementById('post-content').value,
     category: document.getElementById('post-category').value,
     tags: document.getElementById('post-tags').value.split(',').map(t => t.trim()).filter(t => t),
-    published: document.getElementById('post-published').checked,
+    published: true, // Publish button always publishes
     image_url: document.getElementById('post-image-url').value || null
   };
 
@@ -767,17 +1125,25 @@ async function saveBlogPost(postId) {
         method: 'PUT',
         body: JSON.stringify(postData)
       });
-      alert('Post updated successfully!');
+      alert('Post published successfully!');
     } else {
       await apiCall('/blog/posts', {
         method: 'POST',
         body: JSON.stringify(postData)
       });
-      alert('Post created successfully!');
+      alert('Post published successfully!');
     }
+
+    // Clear draft, stop auto-save, and remove beforeunload handler on successful save
+    clearDraft();
+    stopAutoSave();
+    removeBeforeUnloadHandler();
+
     loadBlogPosts();
   } catch (error) {
-    alert('Error saving post: ' + error.message);
+    alert('Error publishing post: ' + error.message);
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
   }
 }
 
