@@ -68,20 +68,6 @@
   </head>
 
   <body x-data="portfolio" class="bg-pattern">
-    <!-- Loading Overlay -->
-    <div
-      x-show="loading"
-      x-cloak
-      class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
-    >
-      <div class="text-center">
-        <div
-          class="animate-spin rounded-full h-16 w-16 border-b-2 border-cyan-500 mx-auto mb-4"
-        ></div>
-        <p class="text-white text-lg">Loading portfolio data...</p>
-      </div>
-    </div>
-
     <!-- Error Message -->
     <div
       x-show="error"
@@ -1831,32 +1817,109 @@
               </h2>
             </div>
 
-            <!-- Featured Project -->
-            <div
-              class="mb-8 rounded-lg border border-default overflow-hidden shadow-lg"
-            >
-              <div class="flex flex-col md:flex-row">
-                <!-- Project Image/Icon -->
-                <div
-                  class="md:w-1/3 bg-navy-dark bg-opacity-30 flex items-center justify-center p-8"
-                >
-                  <div
-                    class="w-32 h-32 rounded-full bg-elevated flex items-center justify-center shadow-lg"
-                  >
-                    <i class="fas fa-robot text-5xl text-accent-primary"></i>
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- CATS Anomaly Detection -->
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg"
+              >
+                <div class="p-6">
+                  <div class="flex items-center mb-4">
+                    <div class="p-3 bg-elevated rounded-lg mr-4">
+                      <i
+                        class="fas fa-brain text-xl text-accent-primary"
+                      ></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white">
+                      CATS Anomaly Detection
+                    </h3>
+                  </div>
+
+                  <p class="text-secondary mb-4">
+                    Machine learning system for detecting anomalies in multivariate
+                    time series data using an ensemble approach. Achieves 97% accuracy
+                    with 0.9712 ROC-AUC on the CATS dataset with 5 million timestamps.
+                  </p>
+
+                  <div class="mb-4">
+                    <ul class="space-y-2">
+                      <li class="flex items-start">
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Implemented ensemble model combining Random Forest,
+                          Gradient Boosting, and Isolation Forest</span
+                        >
+                      </li>
+                      <li class="flex items-start">
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Built interactive Streamlit dashboard with real-time
+                          anomaly monitoring capabilities</span
+                        >
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Python</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Scikit-learn</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >PyTorch</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Streamlit</span
+                    >
+                  </div>
+
+                  <div class="flex items-center gap-4">
+                    <a
+                      href="https://github.com/shyampatadia/cats-anomaly-detection"
+                      target="_blank"
+                      class="inline-flex items-center text-accent-primary hover:text-white transition-colors duration-200"
+                    >
+                      <i class="fab fa-github mr-2"></i>
+                      <span>GitHub</span>
+                      <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                    </a>
+                    <a
+                      href="https://github.com/shyampatadia/cats-anomaly-detection/blob/master/report.pdf"
+                      target="_blank"
+                      class="inline-flex items-center text-accent-primary hover:text-white transition-colors duration-200"
+                    >
+                      <i class="fas fa-file-pdf mr-2"></i>
+                      <span>Report</span>
+                      <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                    </a>
                   </div>
                 </div>
+              </div>
 
-                <!-- Project Details -->
-                <div class="md:w-2/3 p-6">
+              <!-- AI-Powered Web Navigation Agent -->
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg"
+              >
+                <div class="p-6">
                   <div class="flex items-center mb-4">
-                    <h3 class="text-2xl font-bold text-white">
+                    <div class="p-3 bg-elevated rounded-lg mr-4">
+                      <i
+                        class="fas fa-robot text-xl text-accent-primary"
+                      ></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white">
                       AI-Powered Web Navigation Agent
                     </h3>
-                    <span
-                      class="ml-auto bg-navy-dark text-accent-gold px-3 py-1 rounded-full text-sm"
-                      >Featured</span
-                    >
                   </div>
 
                   <p class="text-secondary mb-4">
@@ -1867,13 +1930,7 @@
                   </p>
 
                   <div class="mb-4">
-                    <h4
-                      class="text-accent-primary font-semibold mb-2 flex items-center"
-                    >
-                      <i class="fas fa-tasks mr-2"></i>
-                      <span>Key Responsibilities</span>
-                    </h4>
-                    <ul class="space-y-2 pl-6">
+                    <ul class="space-y-2">
                       <li class="flex items-start">
                         <i
                           class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
@@ -1881,15 +1938,6 @@
                         <span
                           >Managed end-to-end product development from concept
                           to implementation, including agent coding</span
-                        >
-                      </li>
-                      <li class="flex items-start">
-                        <i
-                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
-                        ></i>
-                        <span
-                          >Created system architecture and led a
-                          cross-functional team through agile sprints</span
                         >
                       </li>
                       <li class="flex items-start">
@@ -1920,71 +1968,6 @@
                     <span
                       class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
                       >LLMs</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Other Projects Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <!-- GxP-Compliant Agile Development Service -->
-              <div
-                class="rounded-lg border border-default overflow-hidden shadow-lg"
-              >
-                <div class="p-6">
-                  <div class="flex items-center mb-4">
-                    <div class="p-3 bg-elevated rounded-lg mr-4">
-                      <i
-                        class="fas fa-clipboard-check text-xl text-accent-primary"
-                      ></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-white">
-                      GxP-Compliant Agile Development Service
-                    </h3>
-                  </div>
-
-                  <p class="text-secondary mb-4">
-                    A comprehensive service built on Atlassian Jira to enable
-                    GxP-compliant Agile sprint development, balancing regulatory
-                    requirements with Agile methodologies.
-                  </p>
-
-                  <div class="mb-4">
-                    <ul class="space-y-2">
-                      <li class="flex items-start">
-                        <i
-                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
-                        ></i>
-                        <span
-                          >Developed a comprehensive service on Atlassian Jira
-                          for GxP-based Agile sprint development</span
-                        >
-                      </li>
-                      <li class="flex items-start">
-                        <i
-                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
-                        ></i>
-                        <span
-                          >Ensured compliance with regulatory requirements while
-                          maintaining Agile principles</span
-                        >
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="flex flex-wrap gap-2">
-                    <span
-                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
-                      >Jira</span
-                    >
-                    <span
-                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
-                      >GxP</span
-                    >
-                    <span
-                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
-                      >Agile</span
                     >
                   </div>
                 </div>
@@ -2052,6 +2035,68 @@
                     <span
                       class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
                       >Finance</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- GxP-Compliant Agile Development Service -->
+              <div
+                class="rounded-lg border border-default overflow-hidden shadow-lg"
+              >
+                <div class="p-6">
+                  <div class="flex items-center mb-4">
+                    <div class="p-3 bg-elevated rounded-lg mr-4">
+                      <i
+                        class="fas fa-clipboard-check text-xl text-accent-primary"
+                      ></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white">
+                      GxP-Compliant Agile Development Service
+                    </h3>
+                  </div>
+
+                  <p class="text-secondary mb-4">
+                    A comprehensive service built on Atlassian Jira to enable
+                    GxP-compliant Agile sprint development, balancing regulatory
+                    requirements with Agile methodologies.
+                  </p>
+
+                  <div class="mb-4">
+                    <ul class="space-y-2">
+                      <li class="flex items-start">
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Developed a comprehensive service on Atlassian Jira
+                          for GxP-based Agile sprint development</span
+                        >
+                      </li>
+                      <li class="flex items-start">
+                        <i
+                          class="fas fa-check-circle text-accent-primary mt-1 mr-2 text-sm"
+                        ></i>
+                        <span
+                          >Ensured compliance with regulatory requirements while
+                          maintaining Agile principles</span
+                        >
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Jira</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >GxP</span
+                    >
+                    <span
+                      class="bg-elevated px-3 py-1 rounded-full text-xs text-accent-gold"
+                      >Agile</span
                     >
                   </div>
                 </div>
@@ -2536,8 +2581,14 @@
 
             <!-- Blog Posts List -->
             <div id="blog-posts" class="space-y-6">
+              <!-- Loading indicator -->
+              <div x-show="blogLoading" class="text-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-primary mx-auto mb-4"></div>
+                <p class="text-secondary">Loading blog posts...</p>
+              </div>
+
               <!-- Show message if no posts -->
-              <div x-show="blogPosts.length === 0" class="text-center py-12">
+              <div x-show="!blogLoading && blogPosts.length === 0" class="text-center py-12">
                 <i class="fas fa-newspaper text-6xl text-accent-primary mb-4"></i>
                 <p class="text-secondary">No blog posts yet. Check back soon!</p>
               </div>
@@ -2615,8 +2666,14 @@
               id="books-grid"
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
+              <!-- Loading indicator -->
+              <div x-show="booksLoading" class="col-span-full text-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-primary mx-auto mb-4"></div>
+                <p class="text-secondary">Loading books...</p>
+              </div>
+
               <!-- Show message if no books -->
-              <div x-show="books.length === 0" class="col-span-full text-center py-12">
+              <div x-show="!booksLoading && books.length === 0" class="col-span-full text-center py-12">
                 <i class="fas fa-book text-6xl text-accent-primary mb-4"></i>
                 <p class="text-secondary">No books yet. Check back soon!</p>
               </div>

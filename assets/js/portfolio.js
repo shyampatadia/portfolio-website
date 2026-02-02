@@ -21,7 +21,9 @@ document.addEventListener('alpine:init', () => {
     blogPosts: [],
     books: [],
     bookStats: null,
-    loading: true,
+    loading: false,
+    blogLoading: true,
+    booksLoading: true,
     error: null,
 
     init() {
@@ -97,38 +99,41 @@ document.addEventListener('alpine:init', () => {
     },
 
     async loadData() {
+      // Load blog posts and books in parallel without blocking UI
+      this.loadBlogPosts();
+      this.loadBooks();
+    },
+
+    async loadBlogPosts() {
       try {
-        this.loading = true;
-
-        // Fetch blog posts and books
-        const [blogPosts, books, bookStats] = await Promise.all([
-          window.api.getBlogPosts({ published_only: true, page: 1, page_size: 10 }).catch(err => {
-            console.warn('Failed to fetch blog posts:', err);
-            return { posts: [] };
-          }),
-          window.api.getBooks().catch(err => {
-            console.warn('Failed to fetch books:', err);
-            return [];
-          }),
-          window.api.getBookStats().catch(err => {
-            console.warn('Failed to fetch book stats:', err);
-            return null;
-          })
-        ]);
-
+        this.blogLoading = true;
+        const blogPosts = await window.api.getBlogPosts({ published_only: true, page: 1, page_size: 10 });
         this.blogPosts = blogPosts.posts || blogPosts;
+        console.log('Blog posts loaded:', this.blogPosts.length);
+      } catch (error) {
+        console.warn('Failed to fetch blog posts:', error);
+        this.blogPosts = [];
+      } finally {
+        this.blogLoading = false;
+      }
+    },
+
+    async loadBooks() {
+      try {
+        this.booksLoading = true;
+        const [books, bookStats] = await Promise.all([
+          window.api.getBooks(),
+          window.api.getBookStats()
+        ]);
         this.books = books;
         this.bookStats = bookStats;
-
-        console.log('Data loaded successfully:', {
-          blogPosts: this.blogPosts.length,
-          books: this.books.length
-        });
+        console.log('Books loaded:', this.books.length);
       } catch (error) {
-        console.error('Error loading data:', error);
-        this.error = 'Failed to load data. Please try again later.';
+        console.warn('Failed to fetch books:', error);
+        this.books = [];
+        this.bookStats = null;
       } finally {
-        this.loading = false;
+        this.booksLoading = false;
       }
     },
 
