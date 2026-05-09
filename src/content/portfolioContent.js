@@ -80,15 +80,6 @@ export const tabConfig = [
   },
 ];
 
-export const skillCategoryMeta = [
-  { id: "languages", label: "Languages", file: "languages.ts" },
-  { id: "ai", label: "AI & ML", file: "ai-ml.py" },
-  { id: "testing", label: "Testing", file: "testing.spec" },
-  { id: "cloud", label: "Cloud", file: "cloud.yml" },
-  { id: "data", label: "Data", file: "data.sql" },
-  { id: "backend", label: "Backend", file: "backend.js" },
-];
-
 export const experienceContent = {
   company: "xLM Continuous Validation / Jacksonville, FL / 2021-2025",
   roles: [
@@ -246,6 +237,8 @@ export const educationContent = [
 
 export const projectsContent = [
   {
+    slug: "spgd",
+    shortName: "SPGD",
     title: "SPGD on Non-Convex ML Loss Landscapes",
     category: "Research",
     featured: true,
@@ -274,6 +267,8 @@ export const projectsContent = [
     ],
   },
   {
+    slug: "manava",
+    shortName: "Manava",
     title: "Project Manava — AI Validation Automation",
     category: "AI Systems",
     summary:
@@ -292,6 +287,8 @@ export const projectsContent = [
     ],
   },
   {
+    slug: "driver-verif",
+    shortName: "Driver Verif",
     title: "Few-Shot Driver Verification from GPS Trajectories",
     category: "Deep Learning",
     summary:
@@ -314,6 +311,8 @@ export const projectsContent = [
     ],
   },
   {
+    slug: "param-golf",
+    shortName: "Param-Golf",
     title: "Parameter-Golf LLM Ablation Study",
     category: "Research",
     summary:
@@ -336,6 +335,8 @@ export const projectsContent = [
     ],
   },
   {
+    slug: "github-estimator",
+    shortName: "GH Estimator",
     title: "GitHub Account Population Estimator",
     category: "Statistics",
     summary:
@@ -358,6 +359,8 @@ export const projectsContent = [
     ],
   },
   {
+    slug: "olist",
+    shortName: "Olist",
     title: "Olist E-Commerce Customer Segmentation",
     category: "Analytics",
     summary:
@@ -370,6 +373,8 @@ export const projectsContent = [
     technologies: ["Python", "Scikit-learn", "Pandas"],
   },
   {
+    slug: "cats",
+    shortName: "CATS",
     title: "CATS Anomaly Detection",
     category: "ML Systems",
     summary:
@@ -381,6 +386,8 @@ export const projectsContent = [
     technologies: ["Python", "Flask", "AI/ML"],
   },
   {
+    slug: "sentiment",
+    shortName: "Sentiment",
     title: "Sentiment-Based Trading System",
     category: "Finance",
     summary:

@@ -1,4 +1,4 @@
-import { ArrowRight, Code2, Download, Link2, Mail } from "lucide-react";
+import { ArrowRight, Code2, Download, Link2, Mail, MapPin } from "lucide-react";
 
 import TextRotate from "@/components/fancy/text/text-rotate";
 import { Badge } from "@/components/ui/badge";
@@ -8,25 +8,28 @@ import { heroContent } from "@/content/portfolioContent";
 export function Hero({ onPrimaryAction }) {
   return (
     <section className="hero-shell">
-      <div className="hero-texture" aria-hidden="true" />
       <div className="hero-profile">
         <div className="hero-main">
           <div className="hero-title-row">
             <div>
-              <p className="section-kicker">Portfolio</p>
+              <p className="hero-kicker">Portfolio</p>
               <h1 className="hero-name">{heroContent.name}</h1>
-              <p className="hero-role">{heroContent.role}</p>
+              <p className="hero-role">AI Engineer / Data Scientist / Software Developer</p>
             </div>
-            <p className="hero-location">Worcester, Massachusetts</p>
+
+            <p className="hero-location">
+              <MapPin className="h-4 w-4" />
+              Worcester, Massachusetts
+            </p>
           </div>
 
           <div className="hero-summary">
             <p className="hero-statement">
-              I build dependable AI and automation systems for teams that need the work to
-              survive real constraints.
+              Dependable AI systems for real-world constraints.
             </p>
-            <p className="type-body-lg">
-              {heroContent.intro}
+            <p className="hero-intro">
+              I work across AI systems, automation infrastructure, validation, and engineering
+              delivery, turning complex workflows into reliable software teams can trust.
             </p>
           </div>
 
@@ -43,42 +46,40 @@ export function Hero({ onPrimaryAction }) {
             />
           </div>
 
-          <div className="hero-actions">
-            <Button onClick={onPrimaryAction}>
-              {heroContent.ctaLabel}
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button variant="secondary" asChild>
-              <a href={heroContent.resumeHref}>
-                <Download className="h-4 w-4" />
-                Resume
-              </a>
-            </Button>
-          </div>
+          <div className="hero-command-row">
+            <div className="hero-actions">
+              <Button onClick={onPrimaryAction}>
+                {heroContent.ctaLabel}
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button variant="secondary" asChild>
+                <a href={heroContent.resumeHref}>
+                  <Download className="h-4 w-4" />
+                  Resume
+                </a>
+              </Button>
+            </div>
 
-          <div className="hero-links" aria-label="External links">
-            <a href="https://github.com/shyampatadia" target="_blank" rel="noreferrer">
-              <Code2 className="h-4 w-4" />
-              GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/shyampatadia/" target="_blank" rel="noreferrer">
-              <Link2 className="h-4 w-4" />
-              LinkedIn
-            </a>
-            <a href={heroContent.emailHref}>
-              <Mail className="h-4 w-4" />
-              Email
-            </a>
+            <div className="hero-links" aria-label="External links">
+              <a href="https://github.com/shyampatadia" target="_blank" rel="noreferrer">
+                <Code2 className="h-4 w-4" />
+                <span>GitHub</span>
+              </a>
+              <a href="https://www.linkedin.com/in/shyampatadia/" target="_blank" rel="noreferrer">
+                <Link2 className="h-4 w-4" />
+                <span>LinkedIn</span>
+              </a>
+              <a href={heroContent.emailHref}>
+                <Mail className="h-4 w-4" />
+                <span>Email</span>
+              </a>
+            </div>
           </div>
         </div>
 
         <aside className="hero-side">
           <div className="hero-portrait">
-            <img
-              src={heroContent.portrait}
-              alt={heroContent.name}
-              className="object-center"
-            />
+            <img src={heroContent.portrait} alt={heroContent.name} />
           </div>
 
           <div className="hero-note">

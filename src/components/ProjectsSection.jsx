@@ -7,66 +7,73 @@ import { projectsContent } from "@/content/portfolioContent";
 
 function FeaturedCard({ project }) {
   const primaryLink = project.links?.[0];
-  const eyebrow = ["Featured", project.category].filter(Boolean).join(" · ");
+  const eyebrow = ["Featured", project.category].filter(Boolean).join(" / ");
 
   return (
     <article className="project-card-featured">
-      <div className="project-featured-stack">
-        <p className="section-kicker">{eyebrow}</p>
+      <div className="project-featured-layout">
+        <div className="project-featured-intro">
+          <p className="section-kicker">{eyebrow}</p>
 
-        <h3 className="project-featured-title">
-          {primaryLink ? (
-            <a href={primaryLink.href} target="_blank" rel="noreferrer">
-              <span>{project.title}</span>
-              <ArrowUpRight className="mt-1.5 h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
-            </a>
-          ) : (
-            project.title
-          )}
-        </h3>
+          <h3 className="project-featured-title">
+            {primaryLink ? (
+              <a href={primaryLink.href} target="_blank" rel="noreferrer">
+                <span>{project.title}</span>
+                <ArrowUpRight className="mt-1.5 h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
+              </a>
+            ) : (
+              project.title
+            )}
+          </h3>
 
-        <p className="reading-measure type-body">{project.summary}</p>
+          <p className="project-featured-summary">{project.summary}</p>
 
-        {project.metrics?.length ? (
-          <div className="project-kpi-strip" role="list">
-            {project.metrics.map((metric) => (
-              <div key={metric.label} className="project-kpi" role="listitem">
-                <span className="project-kpi-value">{metric.value}</span>
-                <span className="project-kpi-label">{metric.label}</span>
-              </div>
-            ))}
-          </div>
-        ) : null}
-
-        {project.achievements?.length ? (
-          <ul className="achievement-list">
-            {project.achievements.map((item) => (
-              <li key={item} className="achievement-item">
-                <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-orange-700" aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-
-        <div className="flex flex-wrap gap-2">
-          {project.technologies.map((tech) => (
-            <TechBadge key={tech} label={tech} variant="accent" />
-          ))}
+          {project.links?.length ? (
+            <div className="project-link-row">
+              {project.links.map((link) => (
+                <Button key={link.href} variant="secondary" size="sm" asChild>
+                  <a href={link.href} target="_blank" rel="noreferrer">
+                    {link.label}
+                    <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </a>
+                </Button>
+              ))}
+            </div>
+          ) : null}
         </div>
 
-        {project.links?.length ? (
-          <div className="project-link-row">
-            {project.links.map((link) => (
-              <Button key={link.href} variant="secondary" size="sm" asChild>
-                <a href={link.href} target="_blank" rel="noreferrer">
-                  {link.label}
-                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </a>
-              </Button>
-            ))}
+        <div className="project-featured-evidence">
+          {project.metrics?.length ? (
+            <div className="project-kpi-strip" role="list">
+              {project.metrics.map((metric) => (
+                <div key={metric.label} className="project-kpi" role="listitem">
+                  <span className="project-kpi-value">{metric.value}</span>
+                  <span className="project-kpi-label">{metric.label}</span>
+                </div>
+              ))}
+            </div>
+          ) : null}
+
+          {project.achievements?.length ? (
+            <ul className="project-achievement-list">
+              {project.achievements.map((item) => (
+                <li key={item} className="project-achievement-item">
+                  <ArrowUpRight aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          <div className="project-tech-strip">
+            <p className="section-kicker">Stack</p>
+            <div>
+              {project.technologies.map((tech) => (
+                <TechBadge key={tech} label={tech} variant="accent" />
+              ))}
+            </div>
           </div>
-        ) : null}
+        </div>
       </div>
     </article>
   );

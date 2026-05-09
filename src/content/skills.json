@@ -1,62 +1,72 @@
 {
-  "languages": [
-    "Python",
-    "C# / .NET",
-    "SQL",
-    "Java",
-    "Julia",
-    "JavaScript",
-    "Bash / PowerShell",
-    "C++",
-    "CUDA"
+  "categories": [
+    { "id": "languages", "label": "Languages" },
+    { "id": "ai", "label": "AI / ML" },
+    { "id": "backend", "label": "Backend" },
+    { "id": "cloud", "label": "Cloud" },
+    { "id": "data", "label": "Data" },
+    { "id": "testing", "label": "Testing" }
   ],
-  "ai": [
-    "LLMs & VLMs",
-    "RAG Architecture",
-    "PyTorch",
-    "LangChain",
-    "CrewAI",
-    "LangGraph",
-    "DSPy",
-    "vLLM",
-    "NLP",
-    "PySpark",
-    "Pandas",
-    "Scikit-learn"
-  ],
-  "testing": [
-    "Selenium",
-    "Playwright",
-    "PyTest",
-    "SpecFlow",
-    "Appium",
-    "Cucumber",
-    "Postman"
-  ],
-  "cloud": [
-    "AWS",
-    "Azure",
-    "Docker",
-    "Kubernetes",
-    "Terraform",
-    "CI/CD Pipelines",
-    "Redis"
-  ],
-  "data": [
-    "SQL Server",
-    "MySQL",
-    "PostgreSQL",
-    "MongoDB",
-    "DynamoDB",
-    "Vector Databases",
-    "Mem0",
-    "Tableau",
-    "Power BI"
-  ],
-  "backend": [
-    "FastAPI",
-    "Flask",
-    "Django",
-    ".NET Core"
-  ]
+  "skills": {
+    "languages": [
+      "Python",
+      "C# / .NET",
+      "SQL",
+      "JavaScript",
+      "Bash / PowerShell",
+      "Java",
+      "C++",
+      "Julia",
+      "CUDA"
+    ],
+    "ai": [
+      "PyTorch",
+      "LLMs & VLMs",
+      "RAG Architecture",
+      "Scikit-learn",
+      "Pandas",
+      "BERT / NLP",
+      "CrewAI",
+      "LangGraph",
+      "vLLM",
+      "LangChain",
+      "PySpark",
+      "DSPy"
+    ],
+    "backend": [
+      "FastAPI",
+      "Flask",
+      ".NET Core",
+      "Django"
+    ],
+    "cloud": [
+      "Docker",
+      "Azure",
+      "CI/CD Pipelines",
+      "AWS",
+      "Kubernetes",
+      "Terraform",
+      "Redis"
+    ],
+    "data": [
+      "PostgreSQL",
+      "MongoDB",
+      "Vector Databases",
+      "SQL Server",
+      "Power BI",
+      "MySQL",
+      "DynamoDB",
+      "Tableau",
+      "Mem0"
+    ],
+    "testing": [
+      "Selenium",
+      "SpecFlow",
+      "Postman",
+      "Playwright",
+      "PyTest",
+      "Appium",
+      "Cucumber"
+    ]
+  }
 }
