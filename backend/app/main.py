@@ -21,32 +21,37 @@ app = FastAPI(
 )
 
 # CORS middleware
-# Configure allowed origins based on environment
-if settings.ENVIRONMENT == "production":
-    # Production: Allow all origins (GitHub Pages can be on any subdomain)
-    # Vercel deployment handles security with proper headers
-    allowed_origins = ["*"]
-else:
-    # Development: Allow common localhost ports and Live Server
-    allowed_origins = [
-        "http://localhost:8000",
-        "http://localhost:3000",
-        "http://localhost:5500",
-        "http://127.0.0.1:8000",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:5500",
-        "http://127.0.0.1:5501",
-        "http://127.0.0.1:5502",
-        "null",  # Allow file:// protocol
-    ]
+# Development should accept localhost/127.0.0.1 on any port so Vite and other
+# local tooling do not break preflight requests when they pick a different port.
+cors_options = {
+    "allow_credentials": True,
+    "allow_methods": ["*"],
+    "allow_headers": ["*"],
+}
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+if settings.ENVIRONMENT == "production":
+    # Keep production explicit. The deployed frontend origin(s) should be
+    # configured via settings.ALLOWED_ORIGINS instead of a wildcard.
+    cors_options["allow_origins"] = settings.ALLOWED_ORIGINS
+else:
+    dev_origins = set(settings.ALLOWED_ORIGINS)
+    dev_origins.update(
+        {
+            "http://localhost:4173",
+            "http://127.0.0.1:4173",
+            "http://localhost:4174",
+            "http://127.0.0.1:4174",
+            "http://localhost:5500",
+            "http://127.0.0.1:5500",
+            "http://127.0.0.1:5501",
+            "http://127.0.0.1:5502",
+            "null",  # Allow file:// protocol during local development
+        }
+    )
+    cors_options["allow_origins"] = sorted(dev_origins)
+    cors_options["allow_origin_regex"] = r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$"
+
+app.add_middleware(CORSMiddleware, **cors_options)
 
 # Include routers with /api prefix
 app.include_router(auth.router, prefix="/api")

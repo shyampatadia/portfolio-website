@@ -28,6 +28,7 @@ bower_components/
 # Build outputs
 dist/
 build/
+.vite/
 *.min.js
 *.min.css
 
@@ -66,7 +67,6 @@ __pycache__/
 .Python
 .pytest_cache/
 
-*.png
 .claude
 
 # Personal files
@@ -79,5 +79,5 @@ backend/.vercel
 # GitHub Pages
 _site/
 
-!resume.html
-!assets\resume.pdf
+design.json
+.playwright-mcp/
