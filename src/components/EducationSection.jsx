@@ -13,7 +13,7 @@ const educationBrands = {
   },
   "Bachelor of Science in Applied Statistics & Analytics": {
     shortName: "NMIMS",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/8/85/NMIMS-logo.jpg",
+    logo: "https://www.nmims.edu/images/nmims-university-logo.png",
     accent: "nmims",
   },
 };
@@ -29,7 +29,10 @@ export function EducationSection() {
 
       <div className="education-list">
         {educationContent.map((entry) => (
-          <article key={entry.degree} className="education-card">
+          <article
+            key={entry.degree}
+            className={`education-card is-${educationBrands[entry.degree]?.accent ?? "default"}`}
+          >
             <header className="education-card-header">
               <div className="education-brand">
                 <img
@@ -56,71 +59,82 @@ export function EducationSection() {
               </div>
             </header>
 
+            {entry.courses ? (
+              <div className="education-courses">
+                <p>Notable courses</p>
+                <div className="flex flex-wrap gap-2">
+                  {entry.courses.map((course) => (
+                    <Badge key={course} variant="default" className="px-3.5 py-1.5 text-sm">
+                      {course}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
             <div className="education-card-body">
-              {entry.overview ? (
-                <div className="education-summary">
-                  <p>{entry.overview}</p>
-                  <strong>{entry.spotlight}</strong>
-                </div>
-              ) : null}
+              <div className="education-main-column">
+                {entry.overview ? (
+                  <div className="education-summary">
+                    <p>{entry.overview}</p>
+                    <strong>{entry.spotlight}</strong>
+                  </div>
+                ) : null}
 
-              {entry.focusAreas ? (
-                <div className="education-detail-grid">
-                  {entry.focusAreas.map((area) => (
-                    <div
-                      key={area.title}
-                      className="education-detail"
-                    >
-                      <h4>{area.title}</h4>
-                      <p>{area.detail}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
+                {entry.overviewPoints ? (
+                  <div className="education-overview-points">
+                    <h4>
+                      <BookOpen className="h-4 w-4 text-blue-700" />
+                      Program overview
+                    </h4>
+                    <ul>
+                      {entry.overviewPoints.map((point) => (
+                        <li key={point}>
+                          <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
 
-              {entry.overviewPoints ? (
-                <div className="education-overview-points">
-                  <h4>
-                    <BookOpen className="h-4 w-4 text-blue-700" />
-                    Program overview
-                  </h4>
-                  <ul>
-                    {entry.overviewPoints.map((point) => (
-                      <li key={point}>
-                        <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
-              {entry.skillAreas ? (
-                <div className="education-detail-grid">
-                  {entry.skillAreas.map((area) => (
-                    <div
-                      key={area.title}
-                      className="education-detail"
-                    >
-                      <h4>{area.title}</h4>
-                      <p>{area.detail}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-
-              {entry.courses ? (
-                <div className="education-courses">
-                  <p>Notable courses</p>
-                  <div className="flex flex-wrap gap-2">
-                    {entry.courses.map((course) => (
-                      <Badge key={course} variant="default" className="px-3.5 py-1.5 text-sm">
-                        {course}
-                      </Badge>
+              <div className="education-focus-column">
+                {entry.focusAreas ? (
+                  <div className="education-detail-grid">
+                    {entry.focusAreas.map((area, index) => (
+                      <div
+                        key={area.title}
+                        className="education-detail"
+                      >
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <div>
+                          <h4>{area.title}</h4>
+                          <p>{area.detail}</p>
+                        </div>
+                      </div>
                     ))}
                   </div>
-                </div>
-              ) : null}
+                ) : null}
+
+                {entry.skillAreas ? (
+                  <div className="education-detail-grid">
+                    {entry.skillAreas.map((area, index) => (
+                      <div
+                        key={area.title}
+                        className="education-detail"
+                      >
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <div>
+                          <h4>{area.title}</h4>
+                          <p>{area.detail}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+
+              </div>
             </div>
           </article>
         ))}
