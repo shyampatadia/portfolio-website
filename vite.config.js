@@ -20,4 +20,12 @@ export default defineConfig({
     port: 4174,
     strictPort: true,
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL("./index.html", import.meta.url)),
+        blogPost: fileURLToPath(new URL("./blog/post.html", import.meta.url)),
+      },
+    },
+  },
 });
