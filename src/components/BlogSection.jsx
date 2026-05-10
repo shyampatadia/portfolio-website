@@ -155,7 +155,9 @@ export function BlogSection() {
 
             <div className="flex items-start lg:justify-end">
               <Button variant="secondary" size="sm" asChild>
-                <a href={`blog/post.html?slug=${post.slug}`}>Read post</a>
+                <a href={`/blog/post.html?slug=${encodeURIComponent(post.slug)}`}>
+                  Read post
+                </a>
               </Button>
             </div>
           </article>

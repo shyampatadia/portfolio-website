@@ -79,9 +79,32 @@
   ::selection {
     background: oklch(77% 0.14 35 / 0.28);
   }
+
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+  }
 }
 
 @layer components {
+  .page-shell,
+  .page-canvas,
+  .hero-shell,
+  .workspace-shell,
+  .section-shell,
+  .content-card,
+  .quiet-panel,
+  .project-card-featured,
+  .project-card-compact,
+  .experience-card,
+  .education-card,
+  .credential-card,
+  .reading-card {
+    min-width: 0;
+  }
+
   .page-shell {
     @apply mx-auto min-h-screen w-full max-w-[1120px] px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8;
   }
@@ -122,7 +145,7 @@
   }
 
   .hero-location {
-    @apply inline-flex w-fit items-center gap-2 rounded-full border border-emerald-100 bg-white/55 px-3.5 py-2 text-[0.9rem] font-semibold text-emerald-900 shadow-[0_10px_24px_rgba(6,78,59,0.06)] sm:justify-end;
+    @apply inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-emerald-100 bg-white/55 px-3.5 py-2 text-[0.9rem] font-semibold text-emerald-900 shadow-[0_10px_24px_rgba(6,78,59,0.06)] sm:w-fit sm:justify-end;
   }
 
   .hero-summary {
@@ -148,7 +171,7 @@
   }
 
   .hero-rotator-word {
-    @apply inline-flex min-w-[12rem] font-semibold text-emerald-800;
+    @apply inline-flex min-w-0 max-w-full font-semibold text-emerald-800 sm:min-w-[12rem];
   }
 
   .hero-command-row {
@@ -337,24 +360,19 @@
   }
 
   .about-facts {
-    @apply flex gap-2 overflow-x-auto rounded-lg border border-slate-200/80 bg-[rgba(255,252,246,0.62)] p-2;
-    scrollbar-width: none;
-  }
-
-  .about-facts::-webkit-scrollbar {
-    display: none;
+    @apply grid gap-2 rounded-lg border border-slate-200/80 bg-[rgba(255,252,246,0.62)] p-2 sm:grid-cols-3;
   }
 
   .about-fact {
-    @apply flex min-w-fit items-center gap-2 rounded-md border border-slate-200/80 bg-white/60 px-3 py-2;
+    @apply grid min-w-0 gap-1 rounded-md border border-slate-200/80 bg-white/60 px-3 py-2;
   }
 
   .about-fact dt {
-    @apply flex items-center gap-1.5 text-[0.82rem] font-semibold text-slate-500;
+    @apply flex min-w-0 items-center gap-1.5 text-[0.82rem] font-semibold leading-5 text-slate-500;
   }
 
   .about-fact dd {
-    @apply text-[0.86rem] font-bold leading-none text-slate-950;
+    @apply min-w-0 text-[0.9rem] font-bold leading-5 text-slate-950;
   }
 
   .about-principles {
@@ -519,7 +537,7 @@
   }
 
   .experience-tech-pill {
-    @apply inline-flex min-h-9 items-center gap-2 rounded-full border border-slate-200/90 bg-[rgba(255,253,248,0.9)] px-3 py-1.5 text-[0.88rem] font-bold leading-none text-slate-800 shadow-[0_8px_18px_rgba(15,23,42,0.035)];
+    @apply inline-flex min-h-9 min-w-0 max-w-full items-center gap-2 rounded-full border border-slate-200/90 bg-[rgba(255,253,248,0.9)] px-3 py-1.5 text-[0.88rem] font-bold leading-tight text-slate-800 shadow-[0_8px_18px_rgba(15,23,42,0.035)];
   }
 
   .experience-tech-pill:nth-child(3n + 1) {
@@ -646,11 +664,11 @@
   }
 
   .project-kpi-strip {
-    @apply grid grid-cols-3 gap-2;
+    @apply grid gap-2 sm:grid-cols-3;
   }
 
   .project-kpi {
-    @apply grid min-h-20 place-items-center gap-1 rounded-xl border px-2 py-3 text-center shadow-[0_8px_18px_rgba(15,23,42,0.035)];
+    @apply grid min-h-20 min-w-0 place-items-center gap-1 rounded-xl border px-2 py-3 text-center shadow-[0_8px_18px_rgba(15,23,42,0.035)];
   }
 
   .project-kpi:nth-child(1) {
@@ -666,12 +684,12 @@
   }
 
   .project-kpi-value {
-    @apply text-[clamp(1.35rem,2.4vw,1.85rem)] font-extrabold leading-none text-slate-950;
+    @apply max-w-full overflow-hidden text-ellipsis text-[clamp(1.2rem,7vw,1.85rem)] font-extrabold leading-none text-slate-950 sm:text-[clamp(1.35rem,2.4vw,1.85rem)];
     font-family: "Manrope", system-ui, sans-serif;
   }
 
   .project-kpi-label {
-    @apply text-[0.7rem] font-bold uppercase tracking-wide text-slate-500;
+    @apply max-w-full text-balance text-[0.68rem] font-bold uppercase tracking-wide text-slate-500;
   }
 
   .project-achievement-list {
@@ -783,7 +801,7 @@
   }
 
   .skills-rotate {
-    @apply inline-flex min-w-[9rem] text-emerald-800;
+    @apply inline-flex min-w-0 max-w-full text-emerald-800 sm:min-w-[9rem];
   }
 
   .skills-atlas {
