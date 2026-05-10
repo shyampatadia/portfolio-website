@@ -117,14 +117,14 @@ export function TechBadge({ label, variant = "default" }) {
   return (
     <span
       className={cn(
-        "inline-flex min-h-9 items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium",
+        "inline-flex min-h-9 min-w-0 max-w-full items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium leading-tight",
         variant === "accent"
           ? "border-orange-200 bg-orange-50 text-slate-950"
           : "border-slate-200 bg-[rgba(255,252,246,0.86)] text-slate-700",
       )}
     >
       <SkillIcon label={label} />
-      {label}
+      <span className="min-w-0 truncate">{label}</span>
     </span>
   );
 }
