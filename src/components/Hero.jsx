@@ -1,8 +1,37 @@
-import { ArrowRight, Code2, Download, Link2, Mail, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  BrainCircuit,
+  Code2,
+  Download,
+  Link2,
+  Mail,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
+  Workflow,
+} from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { heroContent } from "@/content/portfolioContent";
+
+const heroSignals = [
+  {
+    label: "AI systems",
+    detail: "LLM workflows",
+    icon: BrainCircuit,
+  },
+  {
+    label: "Automation",
+    detail: "CI/CD and scripts",
+    icon: Workflow,
+  },
+  {
+    label: "Validation",
+    detail: "GxP delivery",
+    icon: ShieldCheck,
+  },
+];
 
 export function Hero({ onPrimaryAction }) {
   return (
@@ -24,12 +53,28 @@ export function Hero({ onPrimaryAction }) {
 
           <div className="hero-summary">
             <p className="hero-statement">
-              Dependable AI systems for real-world constraints.
+              Dependable <span>AI systems</span> for real-world constraints.
             </p>
             <p className="hero-intro">
               I work across AI systems, automation infrastructure, validation, and engineering
               delivery, turning complex workflows into reliable software teams can trust.
             </p>
+          </div>
+
+          <div className="hero-signal-shelf" aria-label="Core strengths">
+            {heroSignals.map((signal) => {
+              const Icon = signal.icon;
+
+              return (
+                <article key={signal.label} className="hero-signal-card">
+                  <Icon aria-hidden="true" />
+                  <div>
+                    <h2>{signal.label}</h2>
+                    <p>{signal.detail}</p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
 
           <div className="hero-rotator" aria-label="Focus areas">
@@ -77,6 +122,10 @@ export function Hero({ onPrimaryAction }) {
               height="400"
               fetchPriority="high"
             />
+            <div className="hero-portrait-tag">
+              <Sparkles className="h-4 w-4" aria-hidden="true" />
+              AI + automation
+            </div>
           </div>
 
           <div className="hero-note">

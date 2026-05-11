@@ -1,4 +1,12 @@
-import { CheckCircle2, Languages, MapPin, Timer } from "lucide-react";
+import {
+  BrainCircuit,
+  BriefcaseBusiness,
+  CheckCircle2,
+  ClipboardCheck,
+  Cog,
+  Languages,
+  MapPin,
+} from "lucide-react";
 
 import { aboutContent } from "@/content/portfolioContent";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -6,7 +14,13 @@ import { SectionHeading } from "@/components/SectionHeading";
 const factIcons = {
   "Based in": MapPin,
   Languages,
-  Experience: Timer,
+  Experience: BriefcaseBusiness,
+};
+
+const focusIcons = {
+  "AI systems": BrainCircuit,
+  "Automation infrastructure": Cog,
+  "Validation delivery": ClipboardCheck,
 };
 
 export function AboutSection() {
@@ -25,8 +39,8 @@ export function AboutSection() {
           return (
             <div key={fact.label} className="about-fact">
               <dt>
-                <Icon className="h-4 w-4 text-blue-700" />
-                {fact.label}
+                <Icon className="about-fact-icon" />
+                <span>{fact.label}</span>
               </dt>
               <dd>{fact.value}</dd>
             </div>
@@ -34,27 +48,38 @@ export function AboutSection() {
         })}
       </dl>
 
-      <div className="about-overview">
-        <article className="about-copy-panel">
-          <p className="about-lead">{aboutContent.summary}</p>
-          <div className="about-focus-list">
-            {aboutContent.focusAreas.map((item) => (
-              <div key={item.label} className="about-focus-item">
+      <div className="about-statement-band">
+        <p>{aboutContent.summary}</p>
+      </div>
+
+      <div className="about-focus-list">
+        {aboutContent.focusAreas.map((item) => {
+          const Icon = focusIcons[item.label] || BrainCircuit;
+
+          return (
+            <article key={item.label} className="about-focus-item">
+              <div className="about-focus-icon" aria-hidden="true">
+                <Icon />
+              </div>
+              <div>
                 <h3>{item.label}</h3>
                 <p>{item.detail}</p>
               </div>
-            ))}
-          </div>
-        </article>
+            </article>
+          );
+        })}
       </div>
 
       <aside className="about-principles" aria-label="Operating principles">
         <p className="about-principles-title">Operating mode</p>
         <div className="about-principle-list">
           {aboutContent.themes.map((item) => (
-            <div key={item} className="about-principle">
-              <CheckCircle2 className="h-4 w-4" />
-              <p>{item}</p>
+            <div key={item.label} className="about-principle">
+              <CheckCircle2 className="about-principle-icon" />
+              <div>
+                <p>{item.label}</p>
+                <span>{item.detail}</span>
+              </div>
             </div>
           ))}
         </div>

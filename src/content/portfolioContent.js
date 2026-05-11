@@ -41,9 +41,18 @@ export const aboutContent = {
     { label: "Experience", value: "4+ years" },
   ],
   themes: [
-    "Readable systems",
-    "Reliable delivery",
-    "Lower manual effort",
+    {
+      label: "Readable systems",
+      detail: "Clear, maintainable, and easy to extend.",
+    },
+    {
+      label: "Reliable delivery",
+      detail: "Built on automation, CI/CD, and best practices.",
+    },
+    {
+      label: "Lower manual effort",
+      detail: "Smart automation that reduces repetitive work.",
+    },
   ],
 };
 
