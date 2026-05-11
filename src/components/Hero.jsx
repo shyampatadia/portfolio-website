@@ -1,6 +1,5 @@
 import { ArrowRight, Code2, Download, Link2, Mail, MapPin } from "lucide-react";
 
-import TextRotate from "@/components/fancy/text/text-rotate";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { heroContent } from "@/content/portfolioContent";
@@ -35,15 +34,7 @@ export function Hero({ onPrimaryAction }) {
 
           <div className="hero-rotator" aria-label="Focus areas">
             <span>Focused on</span>
-            <TextRotate
-              texts={heroContent.highlights}
-              as="span"
-              splitBy="words"
-              rotationInterval={2400}
-              staggerDuration={0.012}
-              mainClassName="hero-rotator-word"
-              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-            />
+            <span className="hero-rotator-word">{heroContent.highlights[0]}</span>
           </div>
 
           <div className="hero-command-row">
@@ -79,7 +70,13 @@ export function Hero({ onPrimaryAction }) {
 
         <aside className="hero-side">
           <div className="hero-portrait">
-            <img src={heroContent.portrait} alt={heroContent.name} />
+            <img
+              src={heroContent.portrait}
+              alt={heroContent.name}
+              width="400"
+              height="400"
+              fetchPriority="high"
+            />
           </div>
 
           <div className="hero-note">

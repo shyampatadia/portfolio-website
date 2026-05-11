@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { IconCheck, IconCopy } from "@tabler/icons-react";
 
 export const CodeBlock = ({
@@ -14,8 +12,32 @@ export const CodeBlock = ({
 }) => {
   const [copied, setCopied] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState(0);
+  const [syntaxHighlighter, setSyntaxHighlighter] = React.useState(null);
+  const [syntaxTheme, setSyntaxTheme] = React.useState(null);
 
   const tabsExist = tabs.length > 0;
+
+  React.useEffect(() => {
+    let mounted = true;
+
+    async function loadHighlighter() {
+      const [highlighterModule, themeModule] = await Promise.all([
+        import("react-syntax-highlighter/dist/esm/prism-async-light"),
+        import("react-syntax-highlighter/dist/esm/styles/prism/atom-dark"),
+      ]);
+
+      if (!mounted) return;
+
+      setSyntaxHighlighter(() => highlighterModule.default);
+      setSyntaxTheme(themeModule.default || themeModule.atomDark);
+    }
+
+    loadHighlighter();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const copyToClipboard = async () => {
     const textToCopy = tabsExist ? tabs[activeTab].code : code;
@@ -44,9 +66,9 @@ export const CodeBlock = ({
                 key={tab.name}
                 type="button"
                 onClick={() => setActiveTab(index)}
-                className={`px-3 py-2 font-sans text-xs transition-colors ${
+                className={`code-tab-button px-3 py-2 font-sans text-xs transition-colors ${
                   activeTab === index
-                    ? "text-white"
+                    ? "text-zinc-100"
                     : "text-zinc-400 hover:text-zinc-200"
                 }`}
               >
@@ -62,7 +84,7 @@ export const CodeBlock = ({
             <button
               type="button"
               onClick={copyToClipboard}
-              className="flex shrink-0 items-center gap-1 font-sans text-xs text-zinc-400 transition-colors hover:text-zinc-200"
+              className="code-copy-button flex shrink-0 items-center justify-center gap-1 font-sans text-xs text-zinc-400 transition-colors hover:text-zinc-200"
               aria-label="Copy code"
             >
               {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
@@ -71,33 +93,41 @@ export const CodeBlock = ({
         ) : null}
       </div>
 
-      <SyntaxHighlighter
-        language={activeLanguage}
-        style={atomDark}
-        customStyle={{
-          margin: 0,
-          padding: 0,
-          background: "transparent",
-          fontSize: "0.875rem",
-          overflowX: "auto",
-          paddingBottom: "0.25rem",
-        }}
-        wrapLines
-        wrapLongLines={false}
-        showLineNumbers
-        lineProps={(lineNumber) => ({
-          style: {
-            backgroundColor: activeHighlightLines.includes(lineNumber)
-              ? "rgba(255,255,255,0.1)"
-              : "transparent",
-            display: "block",
-            width: "100%",
+      {syntaxHighlighter && syntaxTheme ? (
+        React.createElement(
+          syntaxHighlighter,
+          {
+            language: activeLanguage,
+            style: syntaxTheme,
+            customStyle: {
+              margin: 0,
+              padding: 0,
+              background: "transparent",
+              fontSize: "0.875rem",
+              overflowX: "auto",
+              paddingBottom: "0.25rem",
+            },
+            wrapLines: true,
+            wrapLongLines: false,
+            showLineNumbers: true,
+            lineProps: (lineNumber) => ({
+              style: {
+                backgroundColor: activeHighlightLines.includes(lineNumber)
+                  ? "rgba(248,250,252,0.1)"
+                  : "transparent",
+                display: "block",
+                width: "100%",
+              },
+            }),
+            PreTag: "div",
           },
-        })}
-        PreTag="div"
-      >
-        {String(activeCode || "")}
-      </SyntaxHighlighter>
+          String(activeCode || ""),
+        )
+      ) : (
+        <pre className="overflow-x-auto pb-1 text-[0.875rem] leading-6 text-zinc-100">
+          <code>{String(activeCode || "")}</code>
+        </pre>
+      )}
     </div>
   );
 };
