@@ -3,8 +3,7 @@ export const heroContent = {
   role: "Data Scientist & Software Developer",
   intro:
     "My work sits where AI systems, automation infrastructure, validation, and engineering delivery meet. I care about software that stays reliable under real constraints, cross-functional teams, and regulated environments.",
-  portrait:
-    "https://pbs.twimg.com/profile_images/2001431179023499265/BkfhU6LN_400x400.jpg",
+  portrait: "/portrait-shyam-patadia.jpg",
   highlights: ["AI Systems", "Automation Infrastructure", "Validation & Delivery"],
   ctaLabel: "Explore Experience",
   resumeHref: "resume.html",
@@ -20,10 +19,21 @@ export const heroContent = {
 export const aboutContent = {
   heading: "About",
   kicker: "Background and working style",
-  paragraphs: [
-    "Software Engineer with experience in developing test automation infrastructure using Selenium Grid and integrating CI/CD pipelines. Proficient in containerization with Docker and Azure DevOps to streamline deployment processes.",
-    "Experienced in implementing GxP-compliant software development life cycle processes and developing end-to-end test automation suites for web, desktop, and API applications.",
-    "Skilled in creating automation scripts for data processing using PowerShell and Python. Certified in Azure DevOps and Scrum methodologies, with a strong bias toward maintainable engineering systems.",
+  summary:
+    "I build dependable AI, automation, and validation systems for teams that need software to hold up under real delivery constraints.",
+  focusAreas: [
+    {
+      label: "AI systems",
+      detail: "Applied LLM workflows, evaluation loops, and engineering delivery around AI-enabled tools.",
+    },
+    {
+      label: "Automation infrastructure",
+      detail: "Selenium Grid, CI/CD pipelines, Docker, Azure DevOps, PowerShell, and Python automation.",
+    },
+    {
+      label: "Validation delivery",
+      detail: "GxP-aware SDLC, API, web, and desktop test automation for regulated environments.",
+    },
   ],
   quickFacts: [
     { label: "Based in", value: "Worcester, MA, United States" },
@@ -31,9 +41,18 @@ export const aboutContent = {
     { label: "Experience", value: "4+ years" },
   ],
   themes: [
-    "I like systems that remain understandable after they scale.",
-    "I care about the connective tissue between ideas and execution: tooling, process, validation, and delivery.",
-    "I prefer software that reduces friction for the people who have to depend on it every day.",
+    {
+      label: "Readable systems",
+      detail: "Clear, maintainable, and easy to extend.",
+    },
+    {
+      label: "Reliable delivery",
+      detail: "Built on automation, CI/CD, and best practices.",
+    },
+    {
+      label: "Lower manual effort",
+      detail: "Smart automation that reduces repetitive work.",
+    },
   ],
 };
 
