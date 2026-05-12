@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { CodeBlock } from "@/components/ui/code-block";
+import { trackBlogView, trackPageView } from "@/utils/analytics";
 import { getApiBaseUrl } from "@/utils/api";
 import "./styles/globals.css";
 
@@ -386,6 +387,16 @@ function BlogPostPage() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (!post) return;
+
+    trackPageView({
+      pagePath: `${window.location.pathname}${window.location.search}`,
+      pageTitle: document.title,
+    });
+    trackBlogView(post);
+  }, [post]);
 
   const blocks = useMemo(() => {
     const parsedBlocks = parseMarkdown(post?.content);

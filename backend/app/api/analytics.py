@@ -4,6 +4,7 @@ Analytics API routes for tracking and statistics
 from fastapi import APIRouter, HTTPException, status, Depends, Request
 from typing import List, Optional, Dict
 from datetime import datetime, timedelta
+from ipaddress import ip_address as parse_ip_address
 import re
 import httpx
 from app.schemas.analytics import (
@@ -26,6 +27,97 @@ from app.core.supabase import supabase_client, supabase_admin
 
 
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
+
+EXCLUDED_PAGE_PREFIXES = (
+    "/api",
+    "/admin",
+)
+
+EXCLUDED_PAGE_PATHS = {
+    "/admin",
+    "/admin/",
+    "/admin/index.html",
+}
+
+
+def get_client_ip(request: Request, fallback_ip: Optional[str] = None) -> Optional[str]:
+    """
+    Resolve the real client IP behind Vercel/proxy layers.
+    """
+    if fallback_ip:
+        return fallback_ip.strip()
+
+    forwarded_for = request.headers.get("x-forwarded-for")
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+
+    for header_name in ("cf-connecting-ip", "x-real-ip", "true-client-ip"):
+        header_value = request.headers.get(header_name)
+        if header_value:
+            return header_value.strip()
+
+    forwarded = request.headers.get("forwarded")
+    if forwarded:
+        match = re.search(r"for=\"?([^;,\"\s]+)", forwarded, flags=re.IGNORECASE)
+        if match:
+            return match.group(1).strip("[]")
+
+    return request.client.host if request.client else None
+
+
+def is_internal_ip(ip_address: Optional[str]) -> bool:
+    if not ip_address:
+        return False
+
+    try:
+        parsed = parse_ip_address(ip_address)
+    except ValueError:
+        return False
+
+    return (
+        parsed.is_private
+        or parsed.is_loopback
+        or parsed.is_link_local
+        or parsed.is_reserved
+        or parsed.is_multicast
+    )
+
+
+def is_public_page_view(view: dict) -> bool:
+    page_path = (view.get("page_path") or "").strip()
+    visitor_id = (view.get("visitor_id") or "").strip()
+
+    if not page_path or not visitor_id:
+        return False
+
+    if page_path in EXCLUDED_PAGE_PATHS:
+        return False
+
+    if any(page_path.startswith(prefix) for prefix in EXCLUDED_PAGE_PREFIXES):
+        return False
+
+    if is_internal_ip(view.get("ip_address")):
+        return False
+
+    return True
+
+
+def parse_created_at(value) -> Optional[datetime]:
+    if isinstance(value, datetime):
+        return value.replace(tzinfo=None)
+
+    if not value:
+        return None
+
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00")).replace(tzinfo=None)
+    except ValueError:
+        return None
+
+
+def is_since(view: dict, start: datetime) -> bool:
+    created_at = parse_created_at(view.get("created_at"))
+    return bool(created_at and created_at >= start)
 
 
 # Helper functions for parsing device info
@@ -85,7 +177,7 @@ async def get_location_from_ip(ip_address: str) -> Dict[str, Optional[str]]:
     Get location information from IP address using ipapi.co
     Free tier: 1,000 requests per day
     """
-    if not ip_address or ip_address == "127.0.0.1" or ip_address.startswith("192.168"):
+    if not ip_address or is_internal_ip(ip_address):
         print(f"[Analytics] Skipping location lookup for local IP: {ip_address}")
         return {
             "country": None,
@@ -126,8 +218,8 @@ async def track_page_view(view: PageViewCreate, request: Request, test_ip: Optio
 
     For local testing, you can pass ?test_ip=8.8.8.8 to simulate a public IP
     """
-    # Get IP address from request (or use test IP for local development)
-    ip_address = test_ip if test_ip else (request.client.host if request.client else None)
+    # Get IP address from proxy headers (or use test IP for local development)
+    ip_address = get_client_ip(request, test_ip)
 
     view_data = view.model_dump()
     view_data["ip_address"] = ip_address
@@ -156,8 +248,8 @@ async def track_blog_view(view: BlogPostViewCreate, request: Request):
     Track a blog post view with engagement metrics
     Called from blog post page
     """
-    # Get IP address from request
-    ip_address = request.client.host if request.client else None
+    # Get IP address from proxy headers
+    ip_address = get_client_ip(request)
 
     view_data = view.model_dump()
 
@@ -203,8 +295,8 @@ async def track_resume_action(view: ResumeViewCreate, request: Request):
 
     action_type can be 'view' or 'download'
     """
-    # Get IP address from request
-    ip_address = request.client.host if request.client else None
+    # Get IP address from proxy headers
+    ip_address = get_client_ip(request)
 
     view_data = view.model_dump()
     view_data["ip_address"] = ip_address
@@ -278,34 +370,23 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
     week_start = now - timedelta(days=7)
     month_start = now - timedelta(days=30)
 
-    # Total page views
-    total_views_response = supabase_admin.table("page_views").select("id", count="exact").execute()
-    total_page_views = total_views_response.count or 0
-
-    # Unique visitors - total
-    unique_total_response = supabase_admin.table("page_views").select("visitor_id").execute()
-    unique_visitors_total = len(set(v["visitor_id"] for v in unique_total_response.data))
-
-    # Unique visitors - today
-    unique_today_response = supabase_admin.table("page_views")\
-        .select("visitor_id")\
-        .gte("created_at", today_start.isoformat())\
+    # Fetch page views once and calculate public-facing KPIs consistently.
+    all_page_views = supabase_admin.table("page_views")\
+        .select("page_path, visitor_id, ip_address, created_at")\
         .execute()
-    unique_visitors_today = len(set(v["visitor_id"] for v in unique_today_response.data))
 
-    # Unique visitors - week
-    unique_week_response = supabase_admin.table("page_views")\
-        .select("visitor_id")\
-        .gte("created_at", week_start.isoformat())\
-        .execute()
-    unique_visitors_week = len(set(v["visitor_id"] for v in unique_week_response.data))
-
-    # Unique visitors - month
-    unique_month_response = supabase_admin.table("page_views")\
-        .select("visitor_id")\
-        .gte("created_at", month_start.isoformat())\
-        .execute()
-    unique_visitors_month = len(set(v["visitor_id"] for v in unique_month_response.data))
+    public_page_views = [view for view in all_page_views.data if is_public_page_view(view)]
+    total_page_views = len(public_page_views)
+    unique_visitors_total = len({view["visitor_id"] for view in public_page_views})
+    unique_visitors_today = len({
+        view["visitor_id"] for view in public_page_views if is_since(view, today_start)
+    })
+    unique_visitors_week = len({
+        view["visitor_id"] for view in public_page_views if is_since(view, week_start)
+    })
+    unique_visitors_month = len({
+        view["visitor_id"] for view in public_page_views if is_since(view, month_start)
+    })
 
     # Total blog views
     blog_views_response = supabase_admin.table("blog_post_views").select("id", count="exact").execute()
@@ -317,17 +398,10 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
         .execute()
     total_blog_visitors = len(set(v["visitor_id"] for v in blog_visitors_response.data))
 
-    # Top pages (excluding API endpoints)
-    all_page_views = supabase_admin.table("page_views")\
-        .select("page_path, visitor_id, created_at")\
-        .execute()
-
     # Aggregate top pages
     page_stats = {}
-    for view in all_page_views.data:
+    for view in public_page_views:
         path = view["page_path"]
-        if path.startswith("/api"):
-            continue
         if path not in page_stats:
             page_stats[path] = {"views": 0, "visitors": set(), "last_viewed": view["created_at"]}
         page_stats[path]["views"] += 1
@@ -416,16 +490,20 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
     # Tab tracking statistics
     try:
         all_tab_views = supabase_admin.table("tab_views")\
-            .select("tab_name, visitor_id")\
+            .select("tab_name, visitor_id, page_path")\
             .execute()
 
         tab_stats_dict = {}
         for view in all_tab_views.data:
+            page_path = view.get("page_path") or ""
+            visitor_id = view.get("visitor_id")
+            if not visitor_id or any(page_path.startswith(prefix) for prefix in EXCLUDED_PAGE_PREFIXES):
+                continue
             tab_name = view["tab_name"]
             if tab_name not in tab_stats_dict:
                 tab_stats_dict[tab_name] = {"visits": 0, "visitors": set()}
             tab_stats_dict[tab_name]["visits"] += 1
-            tab_stats_dict[tab_name]["visitors"].add(view["visitor_id"])
+            tab_stats_dict[tab_name]["visitors"].add(visitor_id)
 
         tab_stats = [
             TabViewStats(
@@ -461,13 +539,26 @@ async def get_recent_activity(
     """
     Get recent page view activity (authenticated only)
     """
+    safe_limit = max(1, min(limit, 250))
     response = supabase_admin.table("page_views")\
-        .select("page_path, page_title, visitor_id, device_type, os, browser, country, city, created_at")\
+        .select("page_path, page_title, visitor_id, ip_address, device_type, os, browser, country, city, created_at")\
         .order("created_at", desc=True)\
-        .limit(limit)\
+        .limit(safe_limit)\
         .execute()
 
-    return [RecentActivity(**view) for view in response.data]
+    activity = []
+    for view in response.data:
+        page_path = (view.get("page_path") or "").strip()
+        visitor_id = (view.get("visitor_id") or "").strip()
+        if not page_path or not visitor_id:
+            continue
+        if page_path in EXCLUDED_PAGE_PATHS:
+            continue
+        if any(page_path.startswith(prefix) for prefix in EXCLUDED_PAGE_PREFIXES):
+            continue
+        activity.append(RecentActivity(**view))
+
+    return activity
 
 
 @router.get("/blog/{post_id}/stats", response_model=BlogPostAnalytics)
@@ -520,17 +611,21 @@ async def get_tab_stats(current_user: dict = Depends(get_current_user)):
     """
     # Get all tab views
     all_tab_views = supabase_admin.table("tab_views")\
-        .select("tab_name, visitor_id")\
+        .select("tab_name, visitor_id, page_path")\
         .execute()
 
     # Aggregate by tab_name
     tab_stats_dict = {}
     for view in all_tab_views.data:
+        page_path = view.get("page_path") or ""
+        visitor_id = view.get("visitor_id")
+        if not visitor_id or any(page_path.startswith(prefix) for prefix in EXCLUDED_PAGE_PREFIXES):
+            continue
         tab_name = view["tab_name"]
         if tab_name not in tab_stats_dict:
             tab_stats_dict[tab_name] = {"visits": 0, "visitors": set()}
         tab_stats_dict[tab_name]["visits"] += 1
-        tab_stats_dict[tab_name]["visitors"].add(view["visitor_id"])
+        tab_stats_dict[tab_name]["visitors"].add(visitor_id)
 
     # Convert to list of TabViewStats
     tab_stats = [
