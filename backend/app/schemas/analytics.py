@@ -78,6 +78,7 @@ class RecentActivity(BaseModel):
     page_path: str
     page_title: Optional[str] = None
     visitor_id: str
+    ip_address: Optional[str] = None
     device_type: Optional[str] = None
     os: Optional[str] = None
     browser: Optional[str] = None

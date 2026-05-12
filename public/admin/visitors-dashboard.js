@@ -32,7 +32,7 @@ async function loadVisitorsDashboard() {
   `;
 
   try {
-    const recentActivity = await apiCall('/analytics/activity/recent?limit=50');
+    const recentActivity = await apiCall('/analytics/activity/recent?limit=200');
     displayVisitorsDashboard(recentActivity);
   } catch (error) {
     console.error('Error loading visitors:', error);
@@ -56,19 +56,13 @@ function displayVisitorsDashboard(recentActivity) {
   const contentDiv = document.getElementById('visitors-content');
   contentDiv.classList.remove('hidden');
 
-  // Filter out localhost entries
-  const filteredActivity = recentActivity.filter(activity => {
-    const ip = activity.ip_address || '';
-    return ip !== '127.0.0.1' &&
-           ip !== '::1' &&
-           !ip.startsWith('192.168.') &&
-           !ip.startsWith('10.') &&
-           activity.country !== null; // Also filter entries with no location data (likely localhost)
-  });
+  // Keep unknown/local rows visible. Backend KPIs filter internal noise; this tab is for debugging actual capture.
+  const visibleActivity = recentActivity.filter(activity => activity.visitor_id && activity.page_path);
+  const internalActivityCount = visibleActivity.filter(isInternalActivity).length;
 
   // Group visitors by visitor_id for unique visitor analysis
   const visitorMap = new Map();
-  filteredActivity.forEach(activity => {
+  visibleActivity.forEach(activity => {
     if (!visitorMap.has(activity.visitor_id)) {
       visitorMap.set(activity.visitor_id, {
         ...activity,
@@ -91,7 +85,7 @@ function displayVisitorsDashboard(recentActivity) {
   const browserStats = {};
   const countryStats = {};
 
-  filteredActivity.forEach(activity => {
+  visibleActivity.forEach(activity => {
     // Device
     if (activity.device_type) {
       deviceStats[activity.device_type] = (deviceStats[activity.device_type] || 0) + 1;
@@ -106,7 +100,7 @@ function displayVisitorsDashboard(recentActivity) {
     }
   });
 
-  const totalViews = filteredActivity.length;
+  const totalViews = visibleActivity.length;
   const totalDevices = Object.values(deviceStats).reduce((a, b) => a + b, 0);
 
   contentDiv.innerHTML = `
@@ -212,7 +206,7 @@ function displayVisitorsDashboard(recentActivity) {
         <h3 class="text-lg font-semibold text-gray-900 flex items-center">
           <i class="fas fa-clock text-indigo-500 mr-2"></i>Recent Visitors
         </h3>
-        <span class="text-sm text-gray-500">${filteredActivity.length} visits (excluding localhost)</span>
+        <span class="text-sm text-gray-500">${visibleActivity.length} visits${internalActivityCount ? ` (${internalActivityCount} local/unknown)` : ''}</span>
       </div>
 
       <div class="overflow-x-auto">
@@ -227,7 +221,7 @@ function displayVisitorsDashboard(recentActivity) {
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
-            ${filteredActivity.slice(0, 20).map((activity, index) => `
+            ${visibleActivity.slice(0, 30).map((activity, index) => `
               <tr class="hover:bg-gray-50 transition-colors">
                 <td class="px-6 py-4">
                   <div class="flex items-center">
@@ -266,7 +260,7 @@ function displayVisitorsDashboard(recentActivity) {
                     ${activity.city || activity.country ? `
                       <i class="fas fa-map-marker-alt mr-2 text-red-400"></i>
                       <span class="text-gray-700">${activity.city ? `${activity.city}, ` : ''}${activity.country || ''}</span>
-                    ` : '<span class="text-gray-400">Unknown</span>'}
+                    ` : `<span class="text-gray-400">${isInternalActivity(activity) ? 'Local / private' : 'Unknown'}</span>`}
                   </div>
                 </td>
                 <td class="px-6 py-4">
@@ -274,13 +268,13 @@ function displayVisitorsDashboard(recentActivity) {
                 </td>
               </tr>
             `).join('')}
-            ${filteredActivity.length === 0 ? `
+            ${visibleActivity.length === 0 ? `
               <tr>
                 <td colspan="5" class="px-6 py-12 text-center">
                   <div class="inline-flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl mb-3">
                     <i class="fas fa-users text-gray-400"></i>
                   </div>
-                  <p class="text-gray-500">No visitor data yet (localhost visits are hidden)</p>
+                  <p class="text-gray-500">No visitor data yet</p>
                 </td>
               </tr>
             ` : ''}
@@ -378,4 +372,29 @@ function getDeviceIcon(deviceType) {
     'desktop': 'desktop'
   };
   return icons[deviceType] || 'laptop';
+}
+
+function isInternalActivity(activity) {
+  const ip = activity.ip_address || '';
+  return !activity.country ||
+         ip === '127.0.0.1' ||
+         ip === '::1' ||
+         ip.startsWith('10.') ||
+         ip.startsWith('172.16.') ||
+         ip.startsWith('172.17.') ||
+         ip.startsWith('172.18.') ||
+         ip.startsWith('172.19.') ||
+         ip.startsWith('172.20.') ||
+         ip.startsWith('172.21.') ||
+         ip.startsWith('172.22.') ||
+         ip.startsWith('172.23.') ||
+         ip.startsWith('172.24.') ||
+         ip.startsWith('172.25.') ||
+         ip.startsWith('172.26.') ||
+         ip.startsWith('172.27.') ||
+         ip.startsWith('172.28.') ||
+         ip.startsWith('172.29.') ||
+         ip.startsWith('172.30.') ||
+         ip.startsWith('172.31.') ||
+         ip.startsWith('192.168.');
 }

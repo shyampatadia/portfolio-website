@@ -1,9 +1,15 @@
+const publicAsset = (path) => {
+  const base = import.meta.env.BASE_URL || "./";
+  const normalizedBase = base.endsWith("/") ? base : `${base}/`;
+  return `${normalizedBase}${path.replace(/^\/+/, "")}`;
+};
+
 export const heroContent = {
   name: "Shyam Patadia",
   role: "Data Scientist & Software Developer",
   intro:
     "My work sits where AI systems, automation infrastructure, validation, and engineering delivery meet. I care about software that stays reliable under real constraints, cross-functional teams, and regulated environments.",
-  portrait: "/portrait-shyam-patadia.jpg",
+  portrait: publicAsset("portrait-shyam-patadia.jpg"),
   highlights: ["AI Systems", "Automation Infrastructure", "Validation & Delivery"],
   ctaLabel: "Explore Experience",
   resumeHref: "resume.html",

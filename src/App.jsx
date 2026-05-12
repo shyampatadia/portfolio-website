@@ -14,6 +14,7 @@ import { TabNav } from "@/components/TabNav";
 import { Button } from "@/components/ui/button";
 import { Tabs } from "@/components/ui/tabs";
 import { heroContent } from "@/content/portfolioContent";
+import { trackPageView, trackTabView } from "@/utils/analytics";
 
 const HASH_TO_TAB = {
   summary: "about",
@@ -40,7 +41,12 @@ export default function App() {
   const deferredTab = useDeferredValue(activeTab);
 
   useEffect(() => {
+    trackPageView();
+  }, []);
+
+  useEffect(() => {
     window.location.hash = activeTab;
+    trackTabView(activeTab);
   }, [activeTab]);
 
   useEffect(() => {
