@@ -1,13 +1,10 @@
 import { getApiBaseUrl } from "@/utils/api";
+import { isAdminPath } from "@/utils/paths";
 
 const VISITOR_KEY = "portfolio_visitor_id";
 const trackedPageKeys = new Set();
 const trackedBlogKeys = new Set();
 const recentTabEvents = new Map();
-
-function isAdminPath() {
-  return window.location.pathname.startsWith("/admin");
-}
 
 export function getVisitorId() {
   try {

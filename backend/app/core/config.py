@@ -25,6 +25,16 @@ class Settings(BaseSettings):
     # Environment
     ENVIRONMENT: str = "development"
 
+    # Microsoft Clarity data export.
+    # The token is project-scoped, so no project id is needed for API calls;
+    # CLARITY_PROJECT_ID is only the tag id used by the frontend snippet.
+    # Generated at: Clarity -> Settings -> Data Export -> Generate new API token.
+    CLARITY_API_TOKEN: Optional[str] = None
+    CLARITY_PROJECT_ID: Optional[str] = None
+    # Clarity allows only 10 export calls per project per UTC day, so responses
+    # are cached for this long and served from cache in between.
+    CLARITY_CACHE_MINUTES: int = 360
+
     # CORS
     ALLOWED_ORIGINS: list = [
         "http://localhost:8000",

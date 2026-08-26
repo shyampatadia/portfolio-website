@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getBlogPosts } from "@/utils/api";
+import { withBase } from "@/utils/paths";
 import { cn } from "@/lib/utils";
 
 export function BlogSection() {
@@ -155,7 +156,7 @@ export function BlogSection() {
 
             <div className="flex items-start lg:justify-end">
               <Button variant="secondary" size="sm" asChild>
-                <a href={`/blog/post.html?slug=${encodeURIComponent(post.slug)}`}>
+                <a href={withBase(`blog/post.html?slug=${encodeURIComponent(post.slug)}`)}>
                   Read post
                 </a>
               </Button>

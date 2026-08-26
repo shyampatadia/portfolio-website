@@ -1,8 +1,6 @@
-const publicAsset = (path) => {
-  const base = import.meta.env.BASE_URL || "./";
-  const normalizedBase = base.endsWith("/") ? base : `${base}/`;
-  return `${normalizedBase}${path.replace(/^\/+/, "")}`;
-};
+import { withBase } from "@/utils/paths";
+
+const publicAsset = (path) => withBase(path);
 
 export const heroContent = {
   name: "Shyam Patadia",

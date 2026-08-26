@@ -3,7 +3,7 @@ Analytics API routes for tracking and statistics
 """
 from fastapi import APIRouter, HTTPException, status, Depends, Request
 from typing import List, Optional, Dict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from ipaddress import ip_address as parse_ip_address
 import re
 import httpx
@@ -20,24 +20,44 @@ from app.schemas.analytics import (
     BlogReactionStats,
     IndividualBlogAnalytics,
     ResumeViewCreate,
-    ResumeViewStats
+    ResumeViewStats,
+    DailyStat,
+    ClarityMetric,
+    ClarityInsights
 )
+from app.core.config import settings
 from app.core.security import get_current_user
 from app.core.supabase import supabase_client, supabase_admin
 
 
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
 
-EXCLUDED_PAGE_PREFIXES = (
-    "/api",
-    "/admin",
+EXCLUDED_PATH_SEGMENTS = ("api", "admin")
+
+# Matched on path *segments* rather than a leading prefix. The frontend is
+# served from a GitHub Pages project subpath, so admin pages arrive as
+# "/portfolio-website/admin/index.html" and would slip past a "/admin" prefix
+# check. Keep in sync with isAdminPath() in src/utils/paths.js.
+_EXCLUDED_PATH_RE = re.compile(
+    r"(^|/)({})(/|$)".format("|".join(EXCLUDED_PATH_SEGMENTS)),
+    flags=re.IGNORECASE,
 )
 
-EXCLUDED_PAGE_PATHS = {
-    "/admin",
-    "/admin/",
-    "/admin/index.html",
-}
+
+def is_excluded_page_path(page_path: Optional[str]) -> bool:
+    """
+    True for internal pages (API + admin panel) that must never count as
+    public traffic. An empty path is not treated as excluded; callers that
+    require a path check for it separately.
+    """
+    if not page_path:
+        return False
+
+    path = page_path.split("?", 1)[0].split("#", 1)[0].strip()
+    if not path:
+        return False
+
+    return bool(_EXCLUDED_PATH_RE.search(path))
 
 
 def get_client_ip(request: Request, fallback_ip: Optional[str] = None) -> Optional[str]:
@@ -90,10 +110,7 @@ def is_public_page_view(view: dict) -> bool:
     if not page_path or not visitor_id:
         return False
 
-    if page_path in EXCLUDED_PAGE_PATHS:
-        return False
-
-    if any(page_path.startswith(prefix) for prefix in EXCLUDED_PAGE_PREFIXES):
+    if is_excluded_page_path(page_path):
         return False
 
     if is_internal_ip(view.get("ip_address")):
@@ -497,7 +514,7 @@ async def get_overall_stats(current_user: dict = Depends(get_current_user)):
         for view in all_tab_views.data:
             page_path = view.get("page_path") or ""
             visitor_id = view.get("visitor_id")
-            if not visitor_id or any(page_path.startswith(prefix) for prefix in EXCLUDED_PAGE_PREFIXES):
+            if not visitor_id or is_excluded_page_path(page_path):
                 continue
             tab_name = view["tab_name"]
             if tab_name not in tab_stats_dict:
@@ -541,7 +558,7 @@ async def get_recent_activity(
     """
     safe_limit = max(1, min(limit, 250))
     response = supabase_admin.table("page_views")\
-        .select("page_path, page_title, visitor_id, ip_address, device_type, os, browser, country, city, created_at")\
+        .select("page_path, page_title, visitor_id, ip_address, device_type, os, browser, country, city, referrer, created_at")\
         .order("created_at", desc=True)\
         .limit(safe_limit)\
         .execute()
@@ -552,9 +569,7 @@ async def get_recent_activity(
         visitor_id = (view.get("visitor_id") or "").strip()
         if not page_path or not visitor_id:
             continue
-        if page_path in EXCLUDED_PAGE_PATHS:
-            continue
-        if any(page_path.startswith(prefix) for prefix in EXCLUDED_PAGE_PREFIXES):
+        if is_excluded_page_path(page_path):
             continue
         activity.append(RecentActivity(**view))
 
@@ -619,7 +634,7 @@ async def get_tab_stats(current_user: dict = Depends(get_current_user)):
     for view in all_tab_views.data:
         page_path = view.get("page_path") or ""
         visitor_id = view.get("visitor_id")
-        if not visitor_id or any(page_path.startswith(prefix) for prefix in EXCLUDED_PAGE_PREFIXES):
+        if not visitor_id or is_excluded_page_path(page_path):
             continue
         tab_name = view["tab_name"]
         if tab_name not in tab_stats_dict:
@@ -851,3 +866,241 @@ async def get_all_blogs_analytics(current_user: dict = Depends(get_current_user)
         ))
 
     return blog_analytics
+
+
+@router.get("/stats/daily", response_model=List[DailyStat])
+async def get_daily_stats(
+    days: int = 14,
+    current_user: dict = Depends(get_current_user)
+):
+    """
+    Public traffic grouped by calendar day (UTC), oldest first.
+
+    Days with no traffic are returned as zeroes so the trend line keeps an even
+    time axis instead of compressing the gaps.
+    """
+    span = max(1, min(days, 90))
+    start = datetime.utcnow().date() - timedelta(days=span - 1)
+
+    response = supabase_admin.table("page_views")\
+        .select("page_path, visitor_id, ip_address, created_at")\
+        .gte("created_at", start.isoformat())\
+        .execute()
+
+    buckets: Dict[str, dict] = {}
+    for offset in range(span):
+        key = (start + timedelta(days=offset)).isoformat()
+        buckets[key] = {"visitors": set(), "views": 0}
+
+    for view in response.data or []:
+        if not is_public_page_view(view):
+            continue
+
+        created_at = parse_created_at(view.get("created_at"))
+        if not created_at:
+            continue
+
+        bucket = buckets.get(created_at.date().isoformat())
+        if bucket is None:
+            continue
+
+        bucket["visitors"].add(view.get("visitor_id"))
+        bucket["views"] += 1
+
+    return [
+        DailyStat(
+            date=key,
+            unique_visitors=len(bucket["visitors"]),
+            page_views=bucket["views"],
+        )
+        for key, bucket in sorted(buckets.items())
+    ]
+
+
+# ===== MICROSOFT CLARITY =====
+
+CLARITY_ENDPOINT = "https://www.clarity.ms/export-data/api/v1/project-live-insights"
+
+# Clarity permits 10 export calls per project per UTC day. One cached snapshot
+# per process keeps normal dashboard use well under that; the cache is in-memory,
+# so a cold serverless instance costs one call.
+_clarity_cache: Dict[int, dict] = {}
+
+CLARITY_SIGNAL_METRICS = {
+    "RageClickCount": "rage_clicks",
+    "DeadClickCount": "dead_clicks",
+    "ExcessiveScroll": "excessive_scroll",
+    "QuickbackClick": "quickback_clicks",
+    "ScriptErrorCount": "script_errors",
+    "ErrorClickCount": "error_clicks",
+}
+
+
+def _as_number(value):
+    """Clarity returns counts as strings and percentages as floats."""
+    if value is None:
+        return None
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return value
+    try:
+        text = str(value).strip().replace(",", "")
+        return float(text) if "." in text else int(text)
+    except (TypeError, ValueError):
+        return None
+
+
+def _sum_metric(rows, *field_names):
+    """Total a metric across its dimension rows, ignoring non-numeric fields."""
+    total = 0
+    seen = False
+    for row in rows or []:
+        for field in field_names:
+            number = _as_number(row.get(field))
+            if number is not None:
+                total += number
+                seen = True
+                break
+    return total if seen else None
+
+
+def normalize_clarity(payload, num_of_days: int, fetched_at: datetime, from_cache: bool):
+    """
+    Flatten Clarity's [{metricName, information: [...]}] into something the
+    dashboard can render, while keeping every original row so a metric this code
+    does not model yet still reaches the UI.
+    """
+    blocks = payload if isinstance(payload, list) else []
+    by_name: Dict[str, List[dict]] = {}
+    for block in blocks:
+        if not isinstance(block, dict):
+            continue
+        name = str(block.get("metricName") or "").strip()
+        rows = block.get("information")
+        by_name[name] = [row for row in rows if isinstance(row, dict)] if isinstance(rows, list) else []
+
+    traffic_rows = by_name.get("Traffic", [])
+    # "distantUserCount" is the spelling in Microsoft's documented response.
+    distinct_users = _sum_metric(traffic_rows, "distinctUserCount", "distantUserCount")
+
+    pages_per_session = None
+    for row in traffic_rows:
+        value = _as_number(row.get("PagesPerSessionPercentage"))
+        if value is not None:
+            pages_per_session = value
+            break
+
+    signals = {}
+    for metric_name, key in CLARITY_SIGNAL_METRICS.items():
+        rows = by_name.get(metric_name)
+        if rows is None:
+            continue
+        total = _sum_metric(rows, "subTotal", "count", "value", metric_name)
+        if total is not None:
+            signals[key] = total
+
+    return ClarityInsights(
+        fetched_at=fetched_at,
+        num_of_days=num_of_days,
+        from_cache=from_cache,
+        sessions=_sum_metric(traffic_rows, "totalSessionCount"),
+        bot_sessions=_sum_metric(traffic_rows, "totalBotSessionCount"),
+        distinct_users=distinct_users,
+        pages_per_session=pages_per_session,
+        signals=signals,
+        metrics=[ClarityMetric(name=name, rows=rows) for name, rows in by_name.items()],
+    )
+
+
+@router.get("/clarity/insights", response_model=ClarityInsights)
+async def get_clarity_insights(
+    num_of_days: int = 3,
+    refresh: bool = False,
+    current_user: dict = Depends(get_current_user)
+):
+    """
+    Proxy Microsoft Clarity's Data Export API (authenticated admin only).
+
+    The API token never reaches the browser. Clarity caps the window at three
+    days and the quota at ten calls per project per UTC day, so responses are
+    cached and a stale snapshot is always preferred over burning quota.
+    """
+    span = max(1, min(num_of_days, 3))
+
+    if not settings.CLARITY_API_TOKEN:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Clarity is not configured. Add CLARITY_API_TOKEN to the backend environment.",
+        )
+
+    cached = _clarity_cache.get(span)
+    if cached and not refresh:
+        age = datetime.now(timezone.utc) - cached["fetched_at"]
+        if age < timedelta(minutes=settings.CLARITY_CACHE_MINUTES):
+            return normalize_clarity(cached["payload"], span, cached["fetched_at"], True)
+
+    try:
+        async with httpx.AsyncClient(timeout=20.0) as client:
+            response = await client.get(
+                CLARITY_ENDPOINT,
+                params={"numOfDays": span},
+                headers={
+                    "Authorization": f"Bearer {settings.CLARITY_API_TOKEN}",
+                    "Content-Type": "application/json",
+                },
+            )
+    except httpx.HTTPError as exc:
+        if cached:
+            return normalize_clarity(cached["payload"], span, cached["fetched_at"], True)
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Could not reach Clarity: {exc}",
+        )
+
+    if response.status_code == 429:
+        if cached:
+            return normalize_clarity(cached["payload"], span, cached["fetched_at"], True)
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Clarity's daily export limit of 10 calls is used up. It resets at UTC midnight.",
+        )
+
+    if response.status_code in (401, 403):
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="Clarity rejected the API token. Generate a new one under Settings > Data Export.",
+        )
+
+    # Clarity answers a valid token with "400 and an empty body" when the project
+    # has no sessions in the requested window. That is a normal empty state, not
+    # a failure, so it is reported as one instead of an error.
+    if response.status_code == 400 and not response.text.strip():
+        return ClarityInsights(
+            fetched_at=datetime.now(timezone.utc),
+            num_of_days=span,
+            from_cache=False,
+            note=(
+                "Clarity accepted the token but has no data for this window yet. "
+                "It starts reporting once the tracking script has collected sessions "
+                "on the live site."
+            ),
+        )
+
+    if response.status_code >= 400:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Clarity returned {response.status_code}. {response.text[:200]}".strip(),
+        )
+
+    try:
+        payload = response.json()
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="Clarity returned a response that was not JSON.",
+        )
+
+    fetched_at = datetime.now(timezone.utc)
+    _clarity_cache[span] = {"payload": payload, "fetched_at": fetched_at}
+    return normalize_clarity(payload, span, fetched_at, False)
