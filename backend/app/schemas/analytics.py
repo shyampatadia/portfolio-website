@@ -84,7 +84,35 @@ class RecentActivity(BaseModel):
     browser: Optional[str] = None
     country: Optional[str] = None
     city: Optional[str] = None
+    referrer: Optional[str] = None
     created_at: datetime
+
+
+class DailyStat(BaseModel):
+    """One calendar day of public traffic, oldest first"""
+    date: str
+    unique_visitors: int
+    page_views: int
+
+
+class ClarityMetric(BaseModel):
+    """One normalised Clarity metric block"""
+    name: str
+    rows: list[dict] = []
+
+
+class ClarityInsights(BaseModel):
+    """Snapshot of Clarity's Data Export API, served from cache between calls"""
+    fetched_at: datetime
+    num_of_days: int
+    from_cache: bool
+    note: Optional[str] = None
+    sessions: Optional[int] = None
+    bot_sessions: Optional[int] = None
+    distinct_users: Optional[int] = None
+    pages_per_session: Optional[float] = None
+    signals: dict = {}
+    metrics: list[ClarityMetric] = []
 
 
 class BlogReactionCreate(BaseModel):

@@ -28,8 +28,15 @@
     }
   }
 
+  // Matched on path segments, not a leading prefix: the deployed path is
+  // "/portfolio-website/admin/index.html", not "/admin/index.html".
+  // Keep in sync with isAdminPath() in src/utils/paths.js.
+  function isAdminPath() {
+    return /(^|\/)admin(\/|$)/.test(window.location.pathname);
+  }
+
   function post(endpoint, payload) {
-    if (window.location.pathname.startsWith("/admin")) return;
+    if (isAdminPath()) return;
 
     const body = JSON.stringify({
       ...payload,
