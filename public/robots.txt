@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /portfolio-website/
+Disallow: /portfolio-website/admin/
+
+Sitemap: https://shyampatadia.github.io/portfolio-website/sitemap.xml
