@@ -10,6 +10,7 @@ import {
   NotebookPen,
   Plus,
   Sun,
+  TrendingUp,
   Users,
 } from "lucide-react";
 
@@ -23,6 +24,7 @@ import { PostEditor } from "@/admin/screens/PostEditor";
 import { Reading } from "@/admin/screens/Reading";
 import { Visitors } from "@/admin/screens/Visitors";
 import { Writing } from "@/admin/screens/Writing";
+import { Trading } from "@/admin/screens/Trading";
 import { useHashRoute, useTheme, useToasts } from "@/admin/lib/useAdmin";
 import { clockTime } from "@/admin/lib/format";
 import { withBase } from "@/utils/paths";
@@ -33,6 +35,7 @@ const SCREENS = [
   { id: "visitors", label: "Visitors", icon: Users, title: "Visitors", source: "live" },
   { id: "writing", label: "Writing", icon: NotebookPen, title: "Writing", source: null },
   { id: "reading", label: "Reading", icon: BookOpen, title: "Bookshelf", source: null },
+  { id: "trading", label: "Trading", icon: TrendingUp, title: "Trading", source: null },
 ];
 
 export function AdminApp() {
@@ -144,7 +147,7 @@ export function AdminApp() {
           <span className="admin-nav-label" style={{ marginTop: "0.9rem" }}>
             Content
           </span>
-          {SCREENS.slice(3).map((screen) => (
+          {SCREENS.slice(3, 5).map((screen) => (
             <NavItem
               key={screen.id}
               screen={screen}
@@ -152,6 +155,12 @@ export function AdminApp() {
               onClick={() => navigate(screen.id)}
             />
           ))}
+          <span className="admin-nav-label" style={{ marginTop: "0.9rem" }}>Personal</span>
+          <NavItem
+            screen={SCREENS[5]}
+            active={active.id === "trading"}
+            onClick={() => navigate("trading")}
+          />
         </div>
 
         <div className="admin-sidebar-foot">
@@ -220,6 +229,7 @@ export function AdminApp() {
             />
           ))}
         {active.id === "reading" && <Reading toast={push} />}
+        {active.id === "trading" && <Trading toast={push} />}
       </main>
 
       <CommandPalette

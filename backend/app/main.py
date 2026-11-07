@@ -3,12 +3,11 @@ Main FastAPI application
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
 
 from app.core.config import settings
-from app.api import auth, blog, books, storage, analytics
+from app.api import auth, blog, books, storage, analytics, trading
 
 
 # Create FastAPI app
@@ -59,11 +58,22 @@ app.include_router(blog.router, prefix="/api")
 app.include_router(books.router, prefix="/api")
 app.include_router(storage.router, prefix="/api")
 app.include_router(analytics.router, prefix="/api")
+app.include_router(trading.router, prefix="/api")
 
-# Mount static files (frontend)
+
+@app.middleware("http")
+async def protect_private_responses(request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith("/api/trading"):
+        response.headers["Cache-Control"] = "no-store, private"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["X-Robots-Tag"] = "noindex, nofollow"
+        response.headers["Referrer-Policy"] = "no-referrer"
+    return response
+
+# Only the explicit portfolio route below may serve repository files. Mounting
+# the repository at /static also exposed backend/.env and other private files.
 static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..")
-if os.path.exists(static_path):
-    app.mount("/static", StaticFiles(directory=static_path), name="static")
 
 
 @app.get("/")

@@ -35,6 +35,14 @@ class Settings(BaseSettings):
     # are cached for this long and served from cache in between.
     CLARITY_CACHE_MINUTES: int = 360
 
+    # Private, server-side Kite integration. Never use VITE_ for these values.
+    KITE_API_KEY: Optional[str] = None
+    KITE_API_SECRET: Optional[str] = None
+    KITE_REDIRECT_URL: Optional[str] = None
+    TRADING_ENCRYPTION_KEY: Optional[str] = None
+    TRADING_ADMIN_URL: str = "https://shyampatadia.github.io/portfolio-website/admin/index.html"
+    TRADING_CRON_SECRET: Optional[str] = None
+
     # CORS
     ALLOWED_ORIGINS: list = [
         "http://localhost:8000",
