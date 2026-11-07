@@ -7,3 +7,4 @@ __pycache__
 htmlcov/
 .python-version
 hello.py
+.playwright-mcp/

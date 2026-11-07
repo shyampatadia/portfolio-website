@@ -72,6 +72,7 @@ async function send(path, { method = "GET", body, formData, auth = true, signal 
       headers,
       body: formData ?? (body === undefined ? undefined : JSON.stringify(body)),
       signal,
+      cache: "no-store",
     });
   } catch (error) {
     if (error?.name === "AbortError") throw error;
@@ -105,6 +106,28 @@ export async function login(email, password) {
 }
 
 export const whoAmI = () => send("/auth/me");
+
+/* ---------- private trading (credentials stay on the backend) ---------- */
+
+export const getTradingDashboard = (year, signal) =>
+  send(`/trading/dashboard?year=${year}`, { signal });
+export const syncTrading = (year, signal) =>
+  send(`/trading/sync?year=${year}`, { method: "POST", signal });
+export const connectTrading = () => send("/trading/connect", { method: "POST" });
+export const disconnectTrading = () => send("/trading/connection", { method: "DELETE" });
+export const getTradingHistory = (year, signal) => send(`/trading/history?year=${year}`, { signal });
+export const getTradePage = (params, signal) => send(`/trading/trades?${new URLSearchParams(params)}`, { signal });
+export function previewTradingImport(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  return send("/trading/imports/preview", { method: "POST", formData });
+}
+export function commitTradingImport(file, hash) {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("expected_hash", hash);
+  return send("/trading/imports", { method: "POST", formData });
+}
 
 /* ---------- analytics (live from Supabase) ---------- */
 
